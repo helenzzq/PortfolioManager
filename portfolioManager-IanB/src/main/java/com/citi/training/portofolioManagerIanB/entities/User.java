@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,13 +19,13 @@ public class User implements Serializable {
     // add attributes for all the remaining properties
     @Column(name = "name")
     private String name;
-    @JoinColumn(name = "account_activity_id", referencedColumnName="id")
-    @OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "account_activity_id", referencedColumnName = "id")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<AccountActivity> accountActivity;
 
 
-    @JoinColumn(name="portfolio_id", referencedColumnName="id")
-    @OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "portfolio_id", referencedColumnName = "id")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Investments> investments = new ArrayList<>();
 
     public List<Investments> getInvestments() {
@@ -35,6 +36,10 @@ public class User implements Serializable {
     public User(String name) {
         this.name = name;
 
+    }
+
+    public AccountActivity getTodayAccountActivity() {
+        return accountActivity.get(accountActivity.size() - 1);
     }
 
     public void setAccountActivity(List<AccountActivity> accountActivity) {

@@ -10,21 +10,28 @@ import java.util.Date;
 
 // add an annotations specifying the table that this will map to
 @Entity
-@Table(name="account_activity")
+@Table(name = "account_activity")
 public class AccountActivity implements Serializable {
     @Id
-    @Column(name="date") private Date date;
-    @Column(name="net_worth")  private Double netWorth;
-    @Column(name="cash_value")  private Double cashValue;
-    @Column(name="investment_value")  private Double investmentValue;
-    @Column(name="total_equity")  private Double totalEquity;
-    public AccountActivity(Date date, Double netWorth, Double cashValue, Double investmentValue, Double totalEquity){
+    @Column(name = "date")
+    private Date date;
+    @Column(name = "net_worth")
+    private Double netWorth;
+    @Column(name = "cash_value")
+    private Double cashValue;
+    @Column(name = "investment_value")
+    private Double investmentValue;
+    @Column(name = "total_equity")
+    private Double totalEquity;
+
+    public AccountActivity(Date date, Double netWorth, Double cashValue, Double investmentValue, Double totalEquity) {
         this.date = date;
         this.netWorth = netWorth;
         this.cashValue = cashValue;
         this.investmentValue = investmentValue;
         this.totalEquity = totalEquity;
     }
+
 
     public Date getDate() {
         return date;
@@ -48,6 +55,14 @@ public class AccountActivity implements Serializable {
 
     public void setCashValue(Double cashValue) {
         this.cashValue = cashValue;
+    }
+
+    public void deposit(Double cashValue) {
+        this.cashValue += cashValue;
+    }
+
+    public void withdraw(Double cashValue) {
+        this.cashValue += cashValue;
     }
 
     public Double getInvestmentValue() {
