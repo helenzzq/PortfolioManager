@@ -2,6 +2,9 @@ package com.citi.training.portofolioManagerIanB.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -22,7 +25,12 @@ public class User implements Serializable {
     @Column(name = "TOTAL_EQUITY")
     private Double totalEquity;
 
-    public User() {
+    @JoinColumn(name="PORTFOLIO_ID", referencedColumnName="id")
+    @OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    private List<Investments> investments = new ArrayList<>();
+
+    public List<Investments> getInvestments() {
+        return investments;
     }
 
     //Constructor

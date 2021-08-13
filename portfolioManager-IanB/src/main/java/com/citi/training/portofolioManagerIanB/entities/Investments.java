@@ -13,6 +13,7 @@ public class Investments {
     Double profitNLoss;
     Double percentRetained;
     Double percentInPort;
+    Integer portfolioId;
     public Investments(String ticker,Double quantity,Double buyInPrice, Double marketPrice){
         this.ticker = ticker;
         this.marketPrice = marketPrice;
@@ -24,7 +25,14 @@ public class Investments {
         this.percentInPort = 0.0;
     }
 
-     
+    public void setPortfolioId(Integer portfolioId) {
+        this.portfolioId = portfolioId;
+    }
+
+    public Integer getPortfolioId() {
+        return portfolioId;
+    }
+
     public Double getMarketValue() {
         return marketValue;
     }
