@@ -12,17 +12,15 @@ public interface PortfolioManagerService {
     void deposit(Date date, Double cash, Integer userId);
 
 
-
-
     Double getNetWorth(Date date);
 
     void deleteAccountActivity(AccountActivity accountAct);
 
     void withdraw(Date date, Double cash, Integer userId);
 
-    void updateNetWorth(User user, Date date);
+    void updateNetWorth(Integer id, Date date);
 
-    Double getCashAccountByDate(User user, Date date);
+    Double getCashAccountByDate(Date date);
 
     Collection<Investments> getAllInvestments();
 

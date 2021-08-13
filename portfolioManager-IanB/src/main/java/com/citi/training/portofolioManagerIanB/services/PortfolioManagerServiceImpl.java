@@ -30,9 +30,6 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     }
 
 
-
-
-
     public AccountActivity getAccountActivityByDate(Date date) {
         Optional<AccountActivity> accountOptional = accountActivityDao.findById(date);
         if (accountOptional.isPresent()) {
@@ -60,9 +57,9 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     //It should be called everytime when updatingMarketPrice and at the time
 
     @Override
-    public void updateNetWorth(User user, Date date) {
+    public void updateNetWorth(Integer id, Date date) {
         AccountActivity accountActivity = accountActivityDao.getById(date);
-        List<Investments> investments = user.getInvestments();
+        List<Investments> investments = userRepository.getById(id).getInvestments();
         Double sum = 0.0;
         for (Investments securities : investments) {
             sum += securities.getProfitNLoss();
@@ -85,8 +82,8 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     }
 
     @Override
-    public Double getCashAccountByDate(User user, Date date) {
-        return user.getTodayAccountActivity().getCashValue();
+    public Double getCashAccountByDate(Date date) {
+        return accountActivityDao.getById(date).getCashValue();
     }
 
     @Override
