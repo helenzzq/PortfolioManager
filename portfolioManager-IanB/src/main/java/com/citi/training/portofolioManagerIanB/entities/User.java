@@ -16,16 +16,14 @@ public class User implements Serializable {
     private int id;
 
     // add attributes for all the remaining properties
-    @Column(name = "NAME")
+    @Column(name = "name")
     private String name;
-    @Column(name = "CASH")
-    private Double cash;
-    @Column(name = "MARKET_VALUE")
-    private Double marketValue;
-    @Column(name = "TOTAL_EQUITY")
-    private Double totalEquity;
+    @JoinColumn(name = "account_activity_id", referencedColumnName="id")
+    @OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    private List<AccountActivity> accountActivity;
 
-    @JoinColumn(name="PORTFOLIO_ID", referencedColumnName="id")
+
+    @JoinColumn(name="portfolio_id", referencedColumnName="id")
     @OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
     private List<Investments> investments = new ArrayList<>();
 
@@ -36,12 +34,20 @@ public class User implements Serializable {
     //Constructor
     public User(String name) {
         this.name = name;
-        this.cash = 0.0;
-        this.marketValue = 0.0;
-        this.totalEquity = 0.0;
 
     }
 
+    public void setAccountActivity(List<AccountActivity> accountActivity) {
+        this.accountActivity = accountActivity;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<AccountActivity> getAccountActivity() {
+        return accountActivity;
+    }
     //Setter and getter for methods
     //Id is fixed and cannot be reset.
 
@@ -49,29 +55,6 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public void setCash(Double cash) {
-        this.cash = cash;
-    }
-
-    public void setMarketValue(Double marketValue) {
-        this.marketValue = marketValue;
-    }
-
-    public void setTotalEquity(Double totalEquity) {
-        this.totalEquity = totalEquity;
-    }
-
-    public Double getCash() {
-        return cash;
-    }
-
-    public Double getMarketValue() {
-        return marketValue;
-    }
-
-    public Double getTotalEquity() {
-        return totalEquity;
-    }
 
     public int getId() {
         return id;
