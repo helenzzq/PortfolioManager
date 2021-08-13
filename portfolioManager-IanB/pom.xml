@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.citi.training</groupId>
-	<artifactId>portofolioManager-IanB</artifactId>
+	<artifactId>portfolioManager-IanB</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>portofolioManager-IanB</name>
-	<description>portofolioManager</description>
+	<name>portfolioManager-IanB</name>
+	<description>portfolioManager</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
