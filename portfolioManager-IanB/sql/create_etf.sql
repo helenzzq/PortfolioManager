@@ -1,5 +1,6 @@
 CREATE TABLE `conygre`.`etf` (
                                          `ticker` VARCHAR(5) NOT NULL,
+                                         `portfolio_id` INT NOT NULL,
                                          `currency` VARCHAR(10) NOT NULL,
                                          `quantity` DECIMAL NOT NULL,
                                          `cost_per_share` DECIMAL NOT NULL,
