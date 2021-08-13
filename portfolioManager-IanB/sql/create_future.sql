@@ -1,7 +1,6 @@
-CREATE TABLE `conygre`.`investments` (
+CREATE TABLE `conygre`.`future` (
                                          `ticker` VARCHAR(5) NOT NULL,
                                          `currency` VARCHAR(10) NOT NULL,
-                                         `asset_type` VARCHAR(45) NOT NULL,
                                          `quantity` DECIMAL NOT NULL,
                                          `cost_per_share` DECIMAL NOT NULL,
                                          `post_cost` DECIMAL NOT NULL,
