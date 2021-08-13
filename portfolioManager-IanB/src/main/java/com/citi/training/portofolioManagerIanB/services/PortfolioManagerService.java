@@ -6,6 +6,8 @@ import com.citi.training.portofolioManagerIanB.entities.User;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Dictionary;
+import java.util.List;
 
 public interface PortfolioManagerService {
 
@@ -31,6 +33,12 @@ public interface PortfolioManagerService {
     void sellInvestment(String ticker, Double quantity);
 
     void deleteInvestment(String ticker);
+
+    List<Investments> calculateTopFiveGainers();
+
+    List<Investments> calculateTopFiveLosers();
+
+    Dictionary<String, Double> getIndices();
 }
 
 

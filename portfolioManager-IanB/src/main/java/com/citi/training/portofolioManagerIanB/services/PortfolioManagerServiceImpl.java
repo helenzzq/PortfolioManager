@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import javax.persistence.criteria.CriteriaBuilder;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     @Autowired
@@ -115,5 +112,20 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     @Override
     public void deleteInvestment(String ticker) {
         portfolioManagerRepository.deleteById(ticker);
+    }
+    @Override
+    public List<Investments> calculateTopFiveGainers() {
+        return null;
+    }
+
+    @Override
+    public List<Investments> calculateTopFiveLosers() {
+        return null;
+    }
+
+    @Override
+    public Dictionary<String, Double> getIndices() {
+
+        return null;
     }
 }
