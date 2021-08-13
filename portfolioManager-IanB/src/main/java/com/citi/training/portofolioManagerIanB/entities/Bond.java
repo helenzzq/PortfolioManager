@@ -8,8 +8,8 @@ import java.io.Serializable;
 
 // add an annotations specifying the table that this will map to
 @Entity
-@Table(name="etf")
-public class Etf extends Investments implements Serializable {
+@Table(name="bond")
+public class Bond extends Investments implements Serializable {
     @Id
     @Column(name="ticker") String ticker;
     @Column(name="currency")  String currency;
@@ -21,7 +21,7 @@ public class Etf extends Investments implements Serializable {
     @Column(name="percent_retained")  Double percentRetained;
     @Column(name="percent_port")  Double percentInPort;
 
-    public Etf(String ticker, Double quantity, Double buyInPrice, Double marketPrice){
+    public Bond(String ticker, Double quantity, Double buyInPrice, Double marketPrice){
         super(ticker,quantity,buyInPrice,marketPrice);
     }
 
