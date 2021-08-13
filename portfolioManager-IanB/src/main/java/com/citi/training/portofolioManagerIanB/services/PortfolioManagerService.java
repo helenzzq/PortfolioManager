@@ -8,16 +8,30 @@ import java.util.Collection;
 import java.util.Date;
 
 public interface PortfolioManagerService {
-    void deposit(Date date, Double cash, User user);
 
-    void withdraw(Date date, Double cash, User user);
+    void deposit(Date date, Double cash, Integer userId);
+
+
+
+
+    Double getNetWorth(Date date);
 
     void deleteAccountActivity(AccountActivity accountAct);
 
+    void withdraw(Date date, Double cash, Integer userId);
+
+    void updateNetWorth(User user, Date date);
+
+    Double getCashAccountByDate(User user, Date date);
+
     Collection<Investments> getAllInvestments();
+
     Double getInvestmentValue(String ticker);
+
     void buyInvestment(String ticker, Double quantity);
+
     void sellInvestment(String ticker, Double quantity);
+
     void deleteInvestment(String ticker);
 }
 
