@@ -1,6 +1,6 @@
 package com.citi.training.portofolioManagerIanB.services;
 
-public interface InvestmentsManagerServices {
+public interface InvestmentsUpdaterServices {
 
 
 }
