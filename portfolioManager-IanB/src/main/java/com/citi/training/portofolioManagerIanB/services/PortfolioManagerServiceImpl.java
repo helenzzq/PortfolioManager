@@ -113,6 +113,7 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     public void deleteInvestment(String ticker) {
         portfolioManagerRepository.deleteById(ticker);
     }
+    
     @Override
     public List<Investments> calculateTopFiveGainers() {
         return null;
@@ -125,7 +126,6 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
     @Override
     public Dictionary<String, Double> getIndices() {
-
         return null;
     }
 }
