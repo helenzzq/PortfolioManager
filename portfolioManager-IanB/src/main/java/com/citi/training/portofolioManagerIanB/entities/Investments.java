@@ -3,8 +3,9 @@ package com.citi.training.portofolioManagerIanB.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
+@Entity
 public class Investments {
+    @Id
     String ticker;
     String currency;
     Double quantity;
@@ -25,6 +26,10 @@ public class Investments {
         this.profitNLoss = 0.0;
         this.percentRetained = 0.0;
         this.percentInPort = 0.0;
+    }
+
+    public Investments() {
+
     }
 
     public void setPortfolioId(Integer portfolioId) {

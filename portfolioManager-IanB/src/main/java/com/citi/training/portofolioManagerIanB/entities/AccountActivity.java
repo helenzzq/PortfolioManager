@@ -15,13 +15,13 @@ public class AccountActivity implements Serializable {
     @Id
     @Column(name = "date")
     private Date date;
-    @Column(name = "net_worth")
+    @Column(name = "netWorth")
     private Double netWorth;
-    @Column(name = "cash_value")
+    @Column(name = "cashValue")
     private Double cashValue;
-    @Column(name = "investment_value")
+    @Column(name = "investmentValue")
     private Double investmentValue;
-    @Column(name = "total_equity")
+    @Column(name = "totalEquity")
     private Double totalEquity;
 
     public AccountActivity(Date date, Double netWorth, Double cashValue, Double investmentValue, Double totalEquity) {

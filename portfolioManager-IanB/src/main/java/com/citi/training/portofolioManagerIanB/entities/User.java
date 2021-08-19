@@ -19,12 +19,12 @@ public class User implements Serializable {
     // add attributes for all the remaining properties
     @Column(name = "name")
     private String name;
-    @JoinColumn(name = "account_activity_id", referencedColumnName = "id")
+    @JoinColumn(name = "accountActivityId", referencedColumnName = "id")
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<AccountActivity> accountActivity;
 
 
-    @JoinColumn(name = "portfolio_id", referencedColumnName = "id")
+    @JoinColumn(name = "portfolioId", referencedColumnName = "id")
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Investments> investments = new ArrayList<>();
 
