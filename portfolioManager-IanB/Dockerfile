@@ -1,6 +1,6 @@
 #This is a test deployment, I'm not sure if this code works yet
 FROM maven:3.6.3-openjdk-11 AS compile
-COPY . /usr/src/mymaven
+COPY portfolioManager-IanB /usr/src/mymaven
 WORKDIR /usr/src/mymaven
 RUN mvn -Dmaven.test.skip=true clean package
 
