@@ -6,6 +6,7 @@ import com.citi.training.portofolioManagerIanB.entities.User;
 import com.citi.training.portofolioManagerIanB.repo.AccountRepository;
 import com.citi.training.portofolioManagerIanB.repo.PortfolioManagerRepository;
 import com.citi.training.portofolioManagerIanB.repo.UserRepository;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -19,6 +20,8 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     private UserRepository userRepository;
     @Autowired
     private AccountRepository accountActivityDao;
+    @Autowired
+    private InvestmentsUpdaterServices investmentsUpdaterServices;
 
     public List<AccountActivity> getAccountHistory() {
 
@@ -94,16 +97,46 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
 
     @Override
-    public void buyInvestment(String ticker, Double quantity) {
+    public Double buyInvestment(String ticker, Double quantity) throws UnirestException {
         Double currentQuantity = 0.0;
         Investments investment = portfolioManagerRepository.getById(ticker);
+        Double price = investmentsUpdaterServices.getStockPrice(ticker);
+        Date today = new Date();
+        AccountActivity accountActivity = accountActivityDao.getById(today);
+
+        // If no enough cash value:
+        if(quantity * price > accountActivity.getCashValue()) return null;
+
+        // If no such investment in investment table:
+        if(investment == null) {
+            investment = new Investments(ticker,0.0, price, price);
+        }
+
+        // buy it successfully
         currentQuantity = investment.getQuantity();
-        investment.setQuantity(currentQuantity + quantity);
+        Double resultQuantity = currentQuantity + quantity;
+        accountActivity.withdraw(quantity * price);
+        investment.setQuantity(resultQuantity);
+        return resultQuantity;
     }
 
     @Override
-    public void sellInvestment(String ticker, Double quantity) {
+    public Double sellInvestment(String ticker, Double quantity) {
+        Double currentQuantity = 0.0;
+        Investments investment = portfolioManagerRepository.getById(ticker);
 
+        if(investment == null) return null;
+
+        currentQuantity = investment.getQuantity();
+        if(currentQuantity < quantity) return null;
+        if(currentQuantity == quantity) {
+            portfolioManagerRepository.deleteById(ticker);
+            return 0.0;
+        }
+
+        Double resultQuantity = currentQuantity - quantity;
+        investment.setQuantity(resultQuantity);
+        return resultQuantity;
     }
 
 //    @Override

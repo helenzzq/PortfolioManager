@@ -3,6 +3,7 @@ package com.citi.training.portofolioManagerIanB.services;
 import com.citi.training.portofolioManagerIanB.entities.AccountActivity;
 import com.citi.training.portofolioManagerIanB.entities.Investments;
 import com.citi.training.portofolioManagerIanB.entities.User;
+import com.mashape.unirest.http.exceptions.UnirestException;
 
 import java.util.Collection;
 import java.util.Date;
@@ -27,9 +28,11 @@ public interface PortfolioManagerService {
 
     Double getInvestmentValue(String ticker);
 
-    void buyInvestment(String ticker, Double quantity);
+    /* buy and sell investment return its current quantity after buying/selling
+    * returns null if failed */
+    Double buyInvestment(String ticker, Double quantity) throws UnirestException;
 
-    void sellInvestment(String ticker, Double quantity);
+    Double sellInvestment(String ticker, Double quantity);
 
 //    void deleteInvestment(String ticker);
 

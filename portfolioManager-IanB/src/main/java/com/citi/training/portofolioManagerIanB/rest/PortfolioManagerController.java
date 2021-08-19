@@ -3,6 +3,7 @@ package com.citi.training.portofolioManagerIanB.rest;
 import com.citi.training.portofolioManagerIanB.entities.Investments;
 import com.citi.training.portofolioManagerIanB.services.InvestmentsUpdaterServices;
 import com.citi.training.portofolioManagerIanB.services.PortfolioManagerService;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -75,7 +76,7 @@ public class PortfolioManagerController {
 
 
 	@PostMapping("/buy/{ticker}/{quantity}")
-	public void buyInvestment(@PathVariable("ticker") String ticker, @PathVariable("ticker") Double quantity) {
+	public void buyInvestment(@PathVariable("ticker") String ticker, @PathVariable("ticker") Double quantity) throws UnirestException {
 		portfolioManagerService.buyInvestment(ticker, quantity);
 	}
 
@@ -94,10 +95,5 @@ public class PortfolioManagerController {
 	public void deleteAccountActivity(@PathVariable("date") long date) {
 		portfolioManagerService.deleteAccountActivity(new Date(date));
 	}
-
-
-
-
-
 
 }
