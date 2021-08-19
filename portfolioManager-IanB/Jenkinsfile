@@ -10,7 +10,7 @@ pipeline {
      stage('Build docker image') {
           // this stage also builds and tests the Java project using Maven
           steps {
-            sh "docker build -t ${dockerImageTag} ."
+            sh "docker build -f portfolioManager-IanB/Dockerfile -t ${dockerImageTag} ."
           }
       }
     stage('Deploy Container To Openshift') {
