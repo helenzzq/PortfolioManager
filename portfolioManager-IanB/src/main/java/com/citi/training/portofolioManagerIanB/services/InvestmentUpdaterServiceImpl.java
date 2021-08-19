@@ -5,15 +5,15 @@ import com.citi.training.portofolioManagerIanB.services.yahooFinanceDownloader.M
 import com.citi.training.portofolioManagerIanB.services.yahooFinanceDownloader.StockDownloader;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-
+@Service
 public class InvestmentUpdaterServiceImpl implements InvestmentsUpdaterServices {
     @Autowired
     private PortfolioManagerRepository portfolioManagerRepository;
-    @Autowired
+
     private MarkerMovers marketMovers;
-    @Autowired
     private StockDownloader stockDownloader;
 
     public void initDownloader() throws Exception {

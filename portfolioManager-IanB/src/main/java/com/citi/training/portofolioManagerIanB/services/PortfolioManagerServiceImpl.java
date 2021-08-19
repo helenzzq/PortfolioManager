@@ -8,11 +8,12 @@ import com.citi.training.portofolioManagerIanB.repo.PortfolioManagerRepository;
 import com.citi.training.portofolioManagerIanB.repo.UserRepository;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
-
+@Service
 public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     @Autowired
     private PortfolioManagerRepository portfolioManagerRepository;

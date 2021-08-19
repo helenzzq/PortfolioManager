@@ -1,6 +1,7 @@
 package com.citi.training.portofolioManagerIanB.services;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 

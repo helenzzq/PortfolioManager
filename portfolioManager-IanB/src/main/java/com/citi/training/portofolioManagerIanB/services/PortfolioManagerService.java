@@ -4,6 +4,7 @@ import com.citi.training.portofolioManagerIanB.entities.AccountActivity;
 import com.citi.training.portofolioManagerIanB.entities.Investments;
 import com.citi.training.portofolioManagerIanB.entities.User;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Date;
