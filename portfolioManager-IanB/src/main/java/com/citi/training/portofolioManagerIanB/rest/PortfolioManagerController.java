@@ -1,14 +1,12 @@
 package com.citi.training.portofolioManagerIanB.rest;
 
 import com.citi.training.portofolioManagerIanB.entities.Investments;
+import com.citi.training.portofolioManagerIanB.services.InvestmentsUpdaterServices;
 import com.citi.training.portofolioManagerIanB.services.PortfolioManagerService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.Dictionary;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/portfoliomanager")
@@ -17,6 +15,9 @@ public class PortfolioManagerController {
 	
 	@Autowired
 	private PortfolioManagerService portfolioManagerService;
+
+	@Autowired
+	private InvestmentsUpdaterServices investmentsUpdaterServices;
 	
 
 	/****************/
@@ -44,13 +45,13 @@ public class PortfolioManagerController {
 	}
 
 	@GetMapping("/gainers")
-	public List<Investments> getGainers() {
-		return portfolioManagerService.calculateTopFiveGainers();
+	public HashMap<Integer, String> getGainers() {
+		return investmentsUpdaterServices.getDailyGainers();
 	}
 
 	@GetMapping("/losers")
-	public List<Investments> getLosers() {
-		return portfolioManagerService.calculateTopFiveLosers();
+	public HashMap<Integer, String> getLosers() {
+		return investmentsUpdaterServices.getDailyLosers();
 	}
 
 	@GetMapping("/indices")
