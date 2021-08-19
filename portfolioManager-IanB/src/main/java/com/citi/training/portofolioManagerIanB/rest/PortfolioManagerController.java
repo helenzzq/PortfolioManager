@@ -4,8 +4,10 @@ import com.citi.training.portofolioManagerIanB.entities.Investments;
 import com.citi.training.portofolioManagerIanB.services.InvestmentsUpdaterServices;
 import com.citi.training.portofolioManagerIanB.services.PortfolioManagerService;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -71,18 +73,30 @@ public class PortfolioManagerController {
 
 	@PostMapping("/withdraw/{cash}")
 	public void withdraw(@PathVariable("cash") double cash) {
-		portfolioManagerService.withdraw(cash, 1);
+		Double response = portfolioManagerService.withdraw(cash, 1);
+		if(response == null) {
+			throw new ResponseStatusException(
+					HttpStatus.BAD_REQUEST, "Sorry, there is no enough money in your cash account.");
+		}
 	}
 
 
 	@PostMapping("/buy/{ticker}/{quantity}")
 	public void buyInvestment(@PathVariable("ticker") String ticker, @PathVariable("ticker") Double quantity) throws UnirestException {
-		portfolioManagerService.buyInvestment(ticker, quantity);
+		Double response = portfolioManagerService.buyInvestment(ticker, quantity);
+		if(response == null) {
+			throw new ResponseStatusException(
+					HttpStatus.BAD_REQUEST, "Sorry, there is no enough money in your cash account.");
+		}
 	}
 
 	@PostMapping("/sell/{ticker}/{quantity}")
 	public void sellInvestment(@PathVariable("ticker") String ticker, @PathVariable("ticker") Double quantity) throws UnirestException {
-		portfolioManagerService.sellInvestment(ticker, quantity);
+		Double response = portfolioManagerService.sellInvestment(ticker, quantity);
+		if(response == null) {
+			throw new ResponseStatusException(
+					HttpStatus.BAD_REQUEST, "Sorry, selling failed.");
+		}
 	}
 
 

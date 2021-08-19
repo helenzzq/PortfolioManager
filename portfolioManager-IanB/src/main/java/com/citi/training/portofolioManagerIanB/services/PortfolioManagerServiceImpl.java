@@ -129,6 +129,7 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         Date today = new Date();
         AccountActivity accountActivity = accountActivityDao.getById(today);
 
+        // If no such investment bought before.
         if(investment == null) return null;
 
         currentQuantity = investment.getQuantity();
