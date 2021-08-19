@@ -10,7 +10,6 @@ FROM openjdk:11
 RUN wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java_8.0.24-1debian9_all.deb -O /tmp/mysql-connector.deb
 RUN dpkg -i /tmp/mysql-connector.deb
 COPY --from=compile /usr/src/mymaven/target/portfolioManager-IanB-0.0.1-SNAPSHOT.jar app.jar
-#COPY --from=compile /usr/src/mymaven/target/*.jar app.jar
 COPY portfolioManager-IanB/src/main/resources/application-docker.properties application.properties
 EXPOSE 8080
 ENV JAVA_OPTS=""
