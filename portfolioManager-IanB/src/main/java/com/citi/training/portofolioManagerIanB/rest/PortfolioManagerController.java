@@ -81,7 +81,7 @@ public class PortfolioManagerController {
 	}
 
 	@PostMapping("/sell/{ticker}/{quantity}")
-	public void sellInvestment(@PathVariable("ticker") String ticker, @PathVariable("ticker") Double quantity) {
+	public void sellInvestment(@PathVariable("ticker") String ticker, @PathVariable("ticker") Double quantity) throws UnirestException {
 		portfolioManagerService.sellInvestment(ticker, quantity);
 	}
 

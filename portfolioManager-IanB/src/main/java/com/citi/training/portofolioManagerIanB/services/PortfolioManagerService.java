@@ -12,13 +12,13 @@ import java.util.List;
 
 public interface PortfolioManagerService {
 
-    void deposit(Double cash, Integer userId);
+    Double deposit(Double cash, Integer userId);
 
     Double getNetWorth(Date date);
 
     void deleteAccountActivity(Date date);
 
-    void withdraw(Double cash, Integer userId);
+    Double withdraw(Double cash, Integer userId);
 
     void updateNetWorth(Integer id, Date date);
 
@@ -32,13 +32,7 @@ public interface PortfolioManagerService {
     * returns null if failed */
     Double buyInvestment(String ticker, Double quantity) throws UnirestException;
 
-    Double sellInvestment(String ticker, Double quantity);
-
-//    void deleteInvestment(String ticker);
-
-    List<Investments> calculateTopFiveGainers();
-
-    List<Investments> calculateTopFiveLosers();
+    Double sellInvestment(String ticker, Double quantity) throws UnirestException;
 
     Dictionary<String, Double> getIndices();
 }

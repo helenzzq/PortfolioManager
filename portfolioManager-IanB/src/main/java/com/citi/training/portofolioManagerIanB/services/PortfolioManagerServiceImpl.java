@@ -39,19 +39,21 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     }
 
     @Override
-    public void deposit(Double cash, Integer userId) {
+    public Double deposit(Double cash, Integer userId) {
         User user = userRepository.getById(userId);
         AccountActivity accountActivity = user.getTodayAccountActivity();
         accountActivity.deposit(cash);
-
+        return accountActivity.getCashValue();
     }
 
     @Override
-    public void withdraw(Double cash, Integer userId) {
+    public Double withdraw(Double cash, Integer userId) {
         User user = userRepository.getById(userId);
         AccountActivity accountActivity = user.getTodayAccountActivity();
+        // If there's no enough cash in account, withdraw fails.
+        if(cash > accountActivity.getCashValue()) return null;
         accountActivity.withdraw(cash);
-
+        return accountActivity.getCashValue();
     }
 
     //It should be called everytime when updatingMarketPrice and at the time
@@ -121,38 +123,34 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     }
 
     @Override
-    public Double sellInvestment(String ticker, Double quantity) {
+    public Double sellInvestment(String ticker, Double quantity) throws UnirestException {
         Double currentQuantity = 0.0;
         Investments investment = portfolioManagerRepository.getById(ticker);
+        Date today = new Date();
+        AccountActivity accountActivity = accountActivityDao.getById(today);
 
         if(investment == null) return null;
 
         currentQuantity = investment.getQuantity();
+
+        Double price = investmentsUpdaterServices.getStockPrice(ticker);
+
+        // If there is no that many investment to sell, return null.
         if(currentQuantity < quantity) return null;
+
+        // If selling all of the given investment, delete it from the table.
         if(currentQuantity == quantity) {
             portfolioManagerRepository.deleteById(ticker);
             return 0.0;
         }
 
+        // Sell
         Double resultQuantity = currentQuantity - quantity;
         investment.setQuantity(resultQuantity);
+        accountActivity.deposit(quantity * price);
         return resultQuantity;
     }
 
-//    @Override
-//    public void deleteInvestment(String ticker) {
-//        portfolioManagerRepository.deleteById(ticker);
-//    }
-
-    @Override
-    public List<Investments> calculateTopFiveGainers() {
-        return null;
-    }
-
-    @Override
-    public List<Investments> calculateTopFiveLosers() {
-        return null;
-    }
 
     @Override
     public Dictionary<String, Double> getIndices() {
