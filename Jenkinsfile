@@ -1,5 +1,5 @@
 // This is a test deployment, I'm not sure if this code works yet
-def projectName = 'IanBPortfolioManager'
+def projectName = 'ian-b-portfolio-manager'
 def version = "0.0.${currentBuild.number}"
 def dockerImageTag = "${projectName}:${version}"
 
