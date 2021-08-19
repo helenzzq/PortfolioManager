@@ -36,7 +36,7 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     }
 
     @Override
-    public void deposit(Date date, Double cash, Integer userId) {
+    public void deposit(Double cash, Integer userId) {
         User user = userRepository.getById(userId);
         AccountActivity accountActivity = user.getTodayAccountActivity();
         accountActivity.deposit(cash);
@@ -44,7 +44,7 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     }
 
     @Override
-    public void withdraw(Date date, Double cash, Integer userId) {
+    public void withdraw(Double cash, Integer userId) {
         User user = userRepository.getById(userId);
         AccountActivity accountActivity = user.getTodayAccountActivity();
         accountActivity.withdraw(cash);
@@ -62,7 +62,6 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
             sum += securities.getProfitNLoss();
         }
         accountActivity.setNetWorth(sum);
-
     }
 
 
@@ -74,8 +73,8 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     }
 
     @Override
-    public void deleteAccountActivity(AccountActivity accountAct) {
-        accountActivityDao.delete(accountAct);
+    public void deleteAccountActivity(Date date) {
+        accountActivityDao.deleteById(date);
     }
 
     @Override
@@ -100,8 +99,6 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         Investments investment = portfolioManagerRepository.getById(ticker);
         currentQuantity = investment.getQuantity();
         investment.setQuantity(currentQuantity + quantity);
-
-
     }
 
     @Override
@@ -109,11 +106,11 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
     }
 
-    @Override
-    public void deleteInvestment(String ticker) {
-        portfolioManagerRepository.deleteById(ticker);
-    }
-    
+//    @Override
+//    public void deleteInvestment(String ticker) {
+//        portfolioManagerRepository.deleteById(ticker);
+//    }
+
     @Override
     public List<Investments> calculateTopFiveGainers() {
         return null;

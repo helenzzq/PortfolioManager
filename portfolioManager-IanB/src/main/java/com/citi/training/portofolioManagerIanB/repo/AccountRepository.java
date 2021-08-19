@@ -9,7 +9,4 @@ import java.util.Date;
 
 public interface AccountRepository extends JpaRepository<AccountActivity, Date> {
     public Iterable<AccountActivity> findAccountRecordByDate(Date date);
-
-
-
 }

@@ -11,14 +11,13 @@ import java.util.List;
 
 public interface PortfolioManagerService {
 
-    void deposit(Date date, Double cash, Integer userId);
-
+    void deposit(Double cash, Integer userId);
 
     Double getNetWorth(Date date);
 
-    void deleteAccountActivity(AccountActivity accountAct);
+    void deleteAccountActivity(Date date);
 
-    void withdraw(Date date, Double cash, Integer userId);
+    void withdraw(Double cash, Integer userId);
 
     void updateNetWorth(Integer id, Date date);
 
@@ -32,7 +31,7 @@ public interface PortfolioManagerService {
 
     void sellInvestment(String ticker, Double quantity);
 
-    void deleteInvestment(String ticker);
+//    void deleteInvestment(String ticker);
 
     List<Investments> calculateTopFiveGainers();
 

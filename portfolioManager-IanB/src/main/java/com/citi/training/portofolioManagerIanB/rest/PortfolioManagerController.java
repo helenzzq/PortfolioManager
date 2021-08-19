@@ -18,7 +18,11 @@ public class PortfolioManagerController {
 	@Autowired
 	private PortfolioManagerService portfolioManagerService;
 	
-	
+
+	/****************/
+	/**GET Requests**/
+	/****************/
+
 	@GetMapping("/investments")
 	public Collection<Investments> getAllInvestments() {
 		return portfolioManagerService.getAllInvestments();
@@ -53,6 +57,45 @@ public class PortfolioManagerController {
 	public Dictionary<String, Double> getIndices() {
 		return portfolioManagerService.getIndices();
 	}
+
+	/*****************/
+	/**POST Requests**/
+	/*****************/
+
+	@PostMapping("/deposit/{cash}")
+	public void deposit(@PathVariable("cash") double cash) {
+		portfolioManagerService.deposit(cash, 1);
+	}
+
+	@PostMapping("/withdraw/{cash}")
+	public void withdraw(@PathVariable("cash") double cash) {
+		portfolioManagerService.withdraw(cash, 1);
+	}
+
+
+	@PostMapping("/buy/{ticker}/{quantity}")
+	public void buyInvestment(@PathVariable("ticker") String ticker, @PathVariable("ticker") Double quantity) {
+		portfolioManagerService.buyInvestment(ticker, quantity);
+	}
+
+	@PostMapping("/sell/{ticker}/{quantity}")
+	public void sellInvestment(@PathVariable("ticker") String ticker, @PathVariable("ticker") Double quantity) {
+		portfolioManagerService.sellInvestment(ticker, quantity);
+	}
+
+
+	@PostMapping("/update-networth/{date}")
+	public void deposit(@PathVariable("date") long date) {
+		portfolioManagerService.updateNetWorth(1, new Date(date));
+	}
+
+	@PostMapping("/delete-account-activity/{date}")
+	public void deleteAccountActivity(@PathVariable("date") long date) {
+		portfolioManagerService.deleteAccountActivity(new Date(date));
+	}
+
+
+
 
 
 
