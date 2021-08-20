@@ -1,4 +1,4 @@
-package com.citi.training.portofolioManagerIanB;
+package com.citi.training.portofolioManager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

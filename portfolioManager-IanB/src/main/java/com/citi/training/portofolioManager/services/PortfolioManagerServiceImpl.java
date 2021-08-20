@@ -1,17 +1,16 @@
-package com.citi.training.portofolioManagerIanB.services;
+package com.citi.training.portofolioManager.services;
 
-import com.citi.training.portofolioManagerIanB.entities.AccountActivity;
-import com.citi.training.portofolioManagerIanB.entities.Investments;
-import com.citi.training.portofolioManagerIanB.entities.User;
-import com.citi.training.portofolioManagerIanB.repo.AccountRepository;
-import com.citi.training.portofolioManagerIanB.repo.PortfolioManagerRepository;
-import com.citi.training.portofolioManagerIanB.repo.UserRepository;
+import com.citi.training.portofolioManager.entities.AccountActivity;
+import com.citi.training.portofolioManager.entities.Investments;
+import com.citi.training.portofolioManager.entities.User;
+import com.citi.training.portofolioManager.repo.AccountRepository;
+import com.citi.training.portofolioManager.repo.PortfolioManagerRepository;
+import com.citi.training.portofolioManager.repo.UserRepository;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 @Service
 public class PortfolioManagerServiceImpl implements PortfolioManagerService {

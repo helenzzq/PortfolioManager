@@ -1,4 +1,4 @@
-package com.citi.training.portofolioManagerIanB.services.marketData;
+package com.citi.training.portofolioManager.services.marketData;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
@@ -54,7 +54,7 @@ public class MarkerMovers extends MarketDownloader {
         return losers;
     }
 
-    public static void main(String[] args) throws UnirestException {
+    public static void main(String[] args) {
 
 
         String host = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-movers";

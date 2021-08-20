@@ -1,8 +1,8 @@
-package com.citi.training.portofolioManagerIanB.rest;
+package com.citi.training.portofolioManager.rest;
 
-import com.citi.training.portofolioManagerIanB.entities.Investments;
-import com.citi.training.portofolioManagerIanB.services.InvestmentsUpdaterServices;
-import com.citi.training.portofolioManagerIanB.services.PortfolioManagerService;
+import com.citi.training.portofolioManager.entities.Investments;
+import com.citi.training.portofolioManager.services.InvestmentsUpdaterServices;
+import com.citi.training.portofolioManager.services.PortfolioManagerService;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

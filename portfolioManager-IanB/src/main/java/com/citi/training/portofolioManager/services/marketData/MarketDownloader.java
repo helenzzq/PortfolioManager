@@ -1,4 +1,4 @@
-package com.citi.training.portofolioManagerIanB.services.marketData;
+package com.citi.training.portofolioManager.services.marketData;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
@@ -8,7 +8,6 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public abstract class MarketDownloader {

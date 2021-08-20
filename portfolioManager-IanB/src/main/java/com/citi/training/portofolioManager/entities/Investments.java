@@ -1,6 +1,5 @@
-package com.citi.training.portofolioManagerIanB.entities;
+package com.citi.training.portofolioManager.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 @Entity

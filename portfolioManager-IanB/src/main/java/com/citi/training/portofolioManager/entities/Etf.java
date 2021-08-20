@@ -1,4 +1,4 @@
-package com.citi.training.portofolioManagerIanB.entities;
+package com.citi.training.portofolioManager.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +8,8 @@ import java.io.Serializable;
 
 // add an annotations specifying the table that this will map to
 @Entity
-@Table(name="future")
-public class Future extends Investments implements Serializable {
+@Table(name="etf")
+public class Etf extends Investments implements Serializable {
     @Id
     @Column(name="ticker") String ticker;
     @Column(name="currency")  String currency;
@@ -21,7 +21,7 @@ public class Future extends Investments implements Serializable {
     @Column(name="percentRetained")  Double percentRetained;
     @Column(name="percentPort")  Double percentInPort;
     @Column(name="portfolioId")  Integer portfolioId;
-    public Future(String ticker, Double quantity, Double buyInPrice, Double marketPrice){
+    public Etf(String ticker, Double quantity, Double buyInPrice, Double marketPrice){
         super(ticker,quantity,buyInPrice,marketPrice);
     }
 

@@ -1,6 +1,6 @@
-package com.citi.training.portofolioManagerIanB.repo;
+package com.citi.training.portofolioManager.repo;
 
-import com.citi.training.portofolioManagerIanB.entities.Investments;
+import com.citi.training.portofolioManager.entities.Investments;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PortfolioManagerRepository extends JpaRepository<Investments, String> {

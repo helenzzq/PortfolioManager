@@ -1,4 +1,4 @@
-package com.citi.training.portofolioManagerIanB.services.marketData;
+package com.citi.training.portofolioManager.services.marketData;
 
 
 import java.io.IOException;

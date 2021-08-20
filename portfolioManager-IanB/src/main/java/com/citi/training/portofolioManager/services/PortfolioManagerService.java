@@ -1,15 +1,11 @@
-package com.citi.training.portofolioManagerIanB.services;
+package com.citi.training.portofolioManager.services;
 
-import com.citi.training.portofolioManagerIanB.entities.AccountActivity;
-import com.citi.training.portofolioManagerIanB.entities.Investments;
-import com.citi.training.portofolioManagerIanB.entities.User;
+import com.citi.training.portofolioManager.entities.Investments;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.Dictionary;
-import java.util.List;
 
 public interface PortfolioManagerService {
 
