@@ -4,3 +4,4 @@ CREATE TABLE `conygre`.`user` (
   `portfolio_id` INT NULL,
   `account_activity_id` INT NULL,
   PRIMARY KEY (`id`));
+INSERT INTO `conygre`.`user` (`id`, `name`, `portfolio_id`, `account_activity_id`) VALUES ('1', 'Ian', '1', '1');
