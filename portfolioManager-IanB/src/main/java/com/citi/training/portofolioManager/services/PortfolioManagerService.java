@@ -9,19 +9,14 @@ import java.util.*;
 
 public interface PortfolioManagerService {
 
-    Double deposit(Double cash, Integer userId);
 
     Double getNetWorth(Date date);
 
     void deleteAccountActivity(Date date);
 
-    Double withdraw(Double cash, Integer userId);
-
     void updateNetWorth(Integer id, Date date);
 
     Double getCashAccountByDate(Date date);
-
-
 
     Double getInvestmentValue(String ticker);
 
@@ -33,7 +28,6 @@ public interface PortfolioManagerService {
 
     Dictionary<String, Double> getIndices();
 
-    Collection<User> getUsers();
     Collection<AccountActivity> getAccountActivity();
 
     HashMap<String, List<Investment>> getAllInvestment();

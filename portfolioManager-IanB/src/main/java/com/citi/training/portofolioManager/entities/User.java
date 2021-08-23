@@ -94,8 +94,7 @@ public class User implements Serializable {
     public List<AccountActivity> getAccountActivity() {
         return accountActivity;
     }
-    //Setter and getter for methods
-    //Id is fixed and cannot be reset.
+
 
     public void setName(String name) {
         this.name = name;

@@ -43,24 +43,6 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         return accountActivityDao.findAll();
     }
 
-    @Override
-    public Double deposit(Double cash, Integer userId) {
-        User user = userRepository.getById(userId);
-        AccountActivity accountActivity = user.getTodayAccountActivity();
-        accountActivity.deposit(cash);
-        return accountActivity.getCashValue();
-    }
-
-    @Override
-    public Double withdraw(Double cash, Integer userId) {
-        User user = userRepository.getById(userId);
-        AccountActivity accountActivity = user.getTodayAccountActivity();
-        // If there's no enough cash in account, withdraw fails.
-        if(cash > accountActivity.getCashValue()) return null;
-        accountActivity.withdraw(cash);
-        return accountActivity.getCashValue();
-    }
-
     //It should be called everytime when updatingMarketPrice and at the time
 
     @Override
