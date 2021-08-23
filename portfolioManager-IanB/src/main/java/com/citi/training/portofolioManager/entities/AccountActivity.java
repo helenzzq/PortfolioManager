@@ -13,6 +13,8 @@ import java.util.Date;
 @Table(name = "account_activity")
 public class AccountActivity implements Serializable {
     @Id
+    @Column(name = "accountActivityId")
+    private Integer accountActivityId;
     @Column(name = "date")
     private Date date;
     @Column(name = "netWorth")
@@ -24,6 +26,7 @@ public class AccountActivity implements Serializable {
     @Column(name = "totalEquity")
     private Double totalEquity;
 
+
     public AccountActivity(Date date, Double netWorth, Double cashValue, Double investmentValue, Double totalEquity) {
         this.date = date;
         this.netWorth = netWorth;
@@ -31,6 +34,10 @@ public class AccountActivity implements Serializable {
         this.investmentValue = investmentValue;
         this.totalEquity = totalEquity;
     }
+
+    public AccountActivity() {
+    }
+
 
 
     public Date getDate() {
