@@ -27,28 +27,43 @@ public class User implements Serializable {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, targetEntity = Stock.class)
     private List<Investment> stocks = new ArrayList<>();
 
-//    @JoinColumn(name = "portfolioId", referencedColumnName = "id")
-//    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    private List<Investment> bonds = new ArrayList<>();
-//
-//    @JoinColumn(name = "portfolioId", referencedColumnName = "id")
-//    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    private List<Investment> etf = new ArrayList<>();
-//
-//    @JoinColumn(name = "portfolioId", referencedColumnName = "id")
-//    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    private List<Investment> future = new ArrayList<>();
-//
+    @JoinColumn(name = "portfolioId", referencedColumnName = "id")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, targetEntity = Bond.class)
+    private List<Investment> bonds = new ArrayList<>();
+
+    @JoinColumn(name = "portfolioId", referencedColumnName = "id")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, targetEntity = Etf.class)
+    private List<Investment> etf = new ArrayList<>();
+
+    @JoinColumn(name = "portfolioId", referencedColumnName = "id")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, targetEntity = Future.class)
+    private List<Investment> future = new ArrayList<>();
+    @Transient
+    private  HashMap<String, List<Investment>> investment = new HashMap<>();
 
     public HashMap<String, List<Investment>> getInvestment() {
-        HashMap<String, List<Investment>> Investment = new HashMap<>();
-        Investment.put("Stock", stocks);
-//        Investment.put("Bond",  bonds);
-//        Investment.put("ETF",  etf);
-//        Investment.put("Future",future);
+        investment.put("Stock", stocks);
+        investment.put("Bond",  bonds);
+        investment.put("ETF",  etf);
+        investment.put("Future",future);
 
+        return investment;
+    }
 
-        return Investment;
+    public List<Investment> getStocks() {
+        return stocks;
+    }
+
+    public List<Investment> getBonds() {
+        return bonds;
+    }
+
+    public List<Investment> getEtf() {
+        return etf;
+    }
+
+    public List<Investment> getFuture() {
+        return future;
     }
 
     //Constructor
@@ -57,6 +72,8 @@ public class User implements Serializable {
     }
 
     public User() {
+
+
     }
 
     public AccountActivity getTodayAccountActivity() {

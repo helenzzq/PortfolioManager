@@ -9,7 +9,7 @@ import java.io.Serializable;
 // add an annotations specifying the table that this will map to
 @Entity
 @Table(name="etf")
-public class Etf implements Serializable {
+public class Etf implements Serializable,Investment {
     @Id
     @Column(name="ticker") private String ticker;
     @Column(name="currency")  private String currency;

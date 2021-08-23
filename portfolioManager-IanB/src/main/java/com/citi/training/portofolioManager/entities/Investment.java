@@ -1,9 +1,12 @@
 package com.citi.training.portofolioManager.entities;
 
+import org.hibernate.annotations.TypeDef;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
+
 public interface Investment {
     @Id
     public String getTicker();

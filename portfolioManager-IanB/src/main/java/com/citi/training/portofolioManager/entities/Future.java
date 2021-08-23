@@ -9,7 +9,7 @@ import java.io.Serializable;
 // add an annotations specifying the table that this will map to
 @Entity
 @Table(name="future")
-public class Future implements Serializable {
+public class Future implements Serializable,Investment {
     @Id
     @Column(name="ticker") private String ticker;
     @Column(name="currency")  private String currency;
