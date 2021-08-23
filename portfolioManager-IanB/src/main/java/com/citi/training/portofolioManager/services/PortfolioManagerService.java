@@ -1,11 +1,11 @@
 package com.citi.training.portofolioManager.services;
 
-import com.citi.training.portofolioManager.entities.Investments;
+import com.citi.training.portofolioManager.entities.AccountActivity;
+import com.citi.training.portofolioManager.entities.Investment;
+import com.citi.training.portofolioManager.entities.User;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.Dictionary;
+import java.util.*;
 
 public interface PortfolioManagerService {
 
@@ -21,7 +21,7 @@ public interface PortfolioManagerService {
 
     Double getCashAccountByDate(Date date);
 
-    Collection<Investments> getAllInvestments();
+
 
     Double getInvestmentValue(String ticker);
 
@@ -32,6 +32,11 @@ public interface PortfolioManagerService {
     Double sellInvestment(String ticker, Double quantity) throws UnirestException;
 
     Dictionary<String, Double> getIndices();
+
+    Collection<User> getUsers();
+    Collection<AccountActivity> getAccountActivity();
+
+    HashMap<String, List<Investment>> getAllInvestment();
 }
 
 

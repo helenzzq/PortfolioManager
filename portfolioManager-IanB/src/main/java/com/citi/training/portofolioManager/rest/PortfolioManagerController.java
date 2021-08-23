@@ -1,6 +1,8 @@
 package com.citi.training.portofolioManager.rest;
 
-import com.citi.training.portofolioManager.entities.Investments;
+import com.citi.training.portofolioManager.entities.AccountActivity;
+import com.citi.training.portofolioManager.entities.Investment;
+import com.citi.training.portofolioManager.entities.User;
 import com.citi.training.portofolioManager.services.InvestmentsUpdaterServices;
 import com.citi.training.portofolioManager.services.PortfolioManagerService;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -27,9 +29,18 @@ public class PortfolioManagerController {
 	/**GET Requests**/
 	/****************/
 
+	@GetMapping("/user")
+	public Collection<User> getAllUser() {
+		return portfolioManagerService.getUsers();
+	}
+	@GetMapping("/account")
+	public Collection<AccountActivity> getAllActivity() {
+		return portfolioManagerService.getAccountActivity();
+	}
+
 	@GetMapping("/investments")
-	public Collection<Investments> getAllInvestments() {
-		return portfolioManagerService.getAllInvestments();
+	public HashMap<String, List<Investment>> getAllInvestments() {
+		return portfolioManagerService.getAllInvestment();
 	}
 
 	@GetMapping("/networth/{date}")

@@ -3,6 +3,7 @@ package com.citi.training.portofolioManager.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -23,17 +24,39 @@ public class User implements Serializable {
 
 
     @JoinColumn(name = "portfolioId", referencedColumnName = "id")
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<Investments> investments = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},targetEntity = Stock.class)
+    private List<Investment> stocks = new ArrayList<>();
 
-    public List<Investments> getInvestments() {
-        return investments;
+//    @JoinColumn(name = "portfolioId", referencedColumnName = "id")
+//    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+//    private List<Investment> bonds = new ArrayList<>();
+//
+//    @JoinColumn(name = "portfolioId", referencedColumnName = "id")
+//    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+//    private List<Investment> etf = new ArrayList<>();
+//
+//    @JoinColumn(name = "portfolioId", referencedColumnName = "id")
+//    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+//    private List<Investment> future = new ArrayList<>();
+//
+
+    public HashMap<String, List<Investment>> getInvestment() {
+        HashMap<String, List<Investment>> Investment = new HashMap<>();
+        Investment.put("Stock",  stocks);
+//        Investment.put("Bond",  bonds);
+//        Investment.put("ETF",  etf);
+//        Investment.put("Future",future);
+
+
+        return Investment;
     }
 
     //Constructor
     public User(String name) {
         this.name = name;
+    }
 
+    public User() {
     }
 
     public AccountActivity getTodayAccountActivity() {
