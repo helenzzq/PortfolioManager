@@ -10,5 +10,5 @@ CREATE TABLE `conygre`.`stock` (
                                          `profit_and_loss` DECIMAL NOT NULL,
                                          `percent_retained` DECIMAL NOT NULL,
                                          `percent_port` DECIMAL NOT NULL,
-                                         PRIMARY KEY (`ticker`));
+                                         PRIMARY KEY (`portfolio_id`));
 INSERT INTO `conygre`.`stock` (`ticker`, `portfolio_id`, `currency`, `quantity`, `cost_per_share`, `post_cost`, `market_price`, `market_value`, `profit_and_loss`, `percent_retained`, `percent_port`) VALUES ('BILI', '1', 'USD', '100', '10', '10', '10', '1000', '0', '0', '0.3333');

@@ -10,4 +10,4 @@ CREATE TABLE `conygre`.`etf` (
                                          `profit_and_loss` DECIMAL NOT NULL,
                                          `percent_retained` DECIMAL NOT NULL,
                                          `percent_port` DECIMAL NOT NULL,
-                                         PRIMARY KEY (`ticker`));
+                                         PRIMARY KEY (`portfolio_id`));

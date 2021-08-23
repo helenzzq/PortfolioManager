@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
 
-public interface AccountRepository extends JpaRepository<AccountActivity, Date> {
+public interface AccountRepository extends JpaRepository<AccountActivity, Integer> {
     public Iterable<AccountActivity> findAccountRecordByDate(Date date);
 }

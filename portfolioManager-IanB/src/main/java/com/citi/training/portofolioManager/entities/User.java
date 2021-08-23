@@ -24,7 +24,7 @@ public class User implements Serializable {
 
 
     @JoinColumn(name = "portfolioId", referencedColumnName = "id")
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},targetEntity = Stock.class)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, targetEntity = Stock.class)
     private List<Investment> stocks = new ArrayList<>();
 
 //    @JoinColumn(name = "portfolioId", referencedColumnName = "id")
@@ -42,7 +42,7 @@ public class User implements Serializable {
 
     public HashMap<String, List<Investment>> getInvestment() {
         HashMap<String, List<Investment>> Investment = new HashMap<>();
-        Investment.put("Stock",  stocks);
+        Investment.put("Stock", stocks);
 //        Investment.put("Bond",  bonds);
 //        Investment.put("ETF",  etf);
 //        Investment.put("Future",future);
@@ -60,7 +60,10 @@ public class User implements Serializable {
     }
 
     public AccountActivity getTodayAccountActivity() {
-        return accountActivity.get(accountActivity.size() - 1);
+        if (accountActivity.size() != 0) {
+            return accountActivity.get(accountActivity.size() - 1);
+        }
+        return null;
     }
 
     public void setAccountActivity(List<AccountActivity> accountActivity) {

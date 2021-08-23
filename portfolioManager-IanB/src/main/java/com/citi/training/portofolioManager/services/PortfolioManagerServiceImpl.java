@@ -29,13 +29,13 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     }
 
 
-    public AccountActivity getAccountActivityByDate(Date date) {
-        Optional<AccountActivity> accountOptional = accountActivityDao.findById(date);
-        if (accountOptional.isPresent()) {
-            return accountOptional.get();
-        }
-        return null;
-    }
+//    public AccountActivity getAccountActivityByDate(Date date) {
+////        Optional<AccountActivity> accountOptional = accountActivityDao.findById(date);
+//        if (accountOptional.isPresent()) {
+//            return accountOptional.get();
+//        }
+//        return null;
+//    }
     public Collection<User> getUsers(){
         return userRepository.findAll();
     }
@@ -65,32 +65,42 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
     @Override
     public void updateNetWorth(Integer id, Date date) {
-        AccountActivity accountActivity = accountActivityDao.getById(date);
+//        AccountActivity accountActivity = accountActivityDao.getById(date);
         HashMap<String, List<Investment>> Investment = userRepository.getById(id).getInvestment();
         Double sum = 0.0;
 //        for (Investment securities : Investment.values()) {
 //            sum += securities.getProfitNLoss();
 //        }
-        accountActivity.setNetWorth(sum);
+//        accountActivity.setNetWorth(sum);
+    }
+
+    @Override
+    public Double getCashAccountByDate(Date date) {
+        return null;
     }
 
 
     @Override
     public Double getNetWorth(Date date) {
-        AccountActivity accountActivity = accountActivityDao.getById(date);
+        AccountActivity accountActivity = accountActivityDao.getById(1);
         return accountActivity.getNetWorth();
 
     }
 
     @Override
     public void deleteAccountActivity(Date date) {
-        accountActivityDao.deleteById(date);
+
     }
 
-    @Override
-    public Double getCashAccountByDate(Date date) {
-        return accountActivityDao.getById(date).getCashValue();
-    }
+//    @Override
+//    public void deleteAccountActivity(Date date) {
+//        accountActivityDao.deleteById(date);
+//    }
+//
+//    @Override
+//    public Double getCashAccountByDate(Date date) {
+//        return accountActivityDao.getById(date).getCashValue();
+//    }
 
     @Override
     public Double getInvestmentValue(String ticker) {
