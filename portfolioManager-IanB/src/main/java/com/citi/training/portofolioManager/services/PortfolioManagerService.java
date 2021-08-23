@@ -12,7 +12,6 @@ public interface PortfolioManagerService {
 
     Double getNetWorth(Date date);
 
-    void deleteAccountActivity(Date date);
 
     void updateNetWorth(Integer id, Date date);
 
@@ -28,7 +27,6 @@ public interface PortfolioManagerService {
 
     Dictionary<String, Double> getIndices();
 
-    Collection<AccountActivity> getAccountActivity();
 
     HashMap<String, List<Investment>> getAllInvestment();
 }

@@ -36,12 +36,6 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 //        }
 //        return null;
 //    }
-    public Collection<User> getUsers(){
-        return userRepository.findAll();
-    }
-    public Collection<AccountActivity> getAccountActivity(){
-        return accountActivityDao.findAll();
-    }
 
     //It should be called everytime when updatingMarketPrice and at the time
 
@@ -64,15 +58,11 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
     @Override
     public Double getNetWorth(Date date) {
-        AccountActivity accountActivity = accountActivityDao.getById(1);
+        AccountActivity accountActivity = accountActivityDao.getById(date);
         return accountActivity.getNetWorth();
 
     }
 
-    @Override
-    public void deleteAccountActivity(Date date) {
-
-    }
 
 //    @Override
 //    public void deleteAccountActivity(Date date) {

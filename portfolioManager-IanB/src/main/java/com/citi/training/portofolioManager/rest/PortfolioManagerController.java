@@ -28,9 +28,9 @@ public class PortfolioManagerController {
 
     @Autowired
     private UserManagerService userManagerService;
-    /****************/
-    /**GET Requests**/
-    /****************/
+    /**
+     * GET Requests
+     **/
 
     @GetMapping("/user")
     public Collection<User> getAllUser() {
@@ -39,7 +39,7 @@ public class PortfolioManagerController {
 
     @GetMapping("/account")
     public Collection<AccountActivity> getAllActivity() {
-        return portfolioManagerService.getAccountActivity();
+        return userManagerService.getAccountActivity();
     }
 
     @GetMapping("/investments")
@@ -122,7 +122,7 @@ public class PortfolioManagerController {
 
     @PostMapping("/delete-account-activity/{date}")
     public void deleteAccountActivity(@PathVariable("date") long date) {
-        portfolioManagerService.deleteAccountActivity(new Date(date));
+        userManagerService.deleteAccountActivity(new Date(date));
     }
 
 }

@@ -2,14 +2,20 @@ package com.citi.training.portofolioManager.services;
 
 import com.citi.training.portofolioManager.entities.AccountActivity;
 import com.citi.training.portofolioManager.entities.User;
+import com.citi.training.portofolioManager.repo.AccountRepository;
 import com.citi.training.portofolioManager.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Date;
 
+@Service
 public class UserManagerServiceImpl implements UserManagerService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AccountRepository accountActivityRepo;
     @Override
     public Collection<User> getUsers(){
         return userRepository.findAll();
@@ -31,6 +37,17 @@ public class UserManagerServiceImpl implements UserManagerService {
         if(cash > accountActivity.getCashValue()) return null;
         accountActivity.withdraw(cash);
         return accountActivity.getCashValue();
+    }
+
+    @Override
+    public Collection<AccountActivity> getAccountActivity(){
+        return accountActivityRepo.findAll();
+    }
+
+
+    @Override
+    public void deleteAccountActivity(Date date) {
+        accountActivityRepo.deleteById(date);
     }
 
 }
