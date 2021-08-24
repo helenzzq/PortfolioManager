@@ -10,6 +10,7 @@ public class StockDownloader extends MarketDownloader {
     private Double price;
 
     public StockDownloader(String symbol) {
+
         super("https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary", symbol);
         this.symbol = "symbol=" + symbol + "&region=US";
         this.price = 0.0;
@@ -18,7 +19,7 @@ public class StockDownloader extends MarketDownloader {
 
     public static void main(String[] args) throws Exception {
 
-        String host = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary";
+
         StockDownloader s = new StockDownloader( "AMRN");
         s.downloadFromYahoo();
         System.out.println(s.getPrice());

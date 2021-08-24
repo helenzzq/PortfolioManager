@@ -10,5 +10,14 @@ public interface MarketUpdaterServices {
     public HashMap<Integer, String> getDailyLosers();
     public Double getStockPrice(String symbol) throws UnirestException;
 
+
+    HashMap<String, Double> getIndicesInfo(String symbol);
+
+    Double getIndicesOpenPrice(String symbol);
+
+    Double getIndicesCurrPrice(String symbol);
+
+    Double getIndicesChangeInPercent(String symbol);
+
     Double getInvestmentPrice(String type, String symbol) ;
 }

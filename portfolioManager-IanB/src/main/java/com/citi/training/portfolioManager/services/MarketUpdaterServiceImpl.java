@@ -1,6 +1,7 @@
 package com.citi.training.portfolioManager.services;
 
 import com.citi.training.portfolioManager.services.marketData.EtfDownloader;
+import com.citi.training.portfolioManager.services.marketData.IndicesDownloader;
 import com.citi.training.portfolioManager.services.marketData.MarketMovers;
 import com.citi.training.portfolioManager.services.marketData.StockDownloader;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -12,9 +13,8 @@ import java.util.HashMap;
 @Service
 public class MarketUpdaterServiceImpl implements MarketUpdaterServices {
 
-    private MarketMovers marketMovers = new MarketMovers();
-    private StockDownloader stockDownloader;
-
+    private final MarketMovers marketMovers = new MarketMovers();
+    private  IndicesDownloader indicesDownloader ;
 
     public HashMap<Integer, String> getDailyGainers() {
 
@@ -25,9 +25,7 @@ public class MarketUpdaterServiceImpl implements MarketUpdaterServices {
 
     public HashMap<Integer, String> getDailyLosers() {
 
-
         marketMovers.retrieveData();
-
         return marketMovers.getLosers();
     }
 
@@ -42,6 +40,38 @@ public class MarketUpdaterServiceImpl implements MarketUpdaterServices {
         EtfDownloader etfDownloader = new EtfDownloader(symbol);
         etfDownloader.retrieveData();
         return etfDownloader.getPrice();
+    }
+    private void setUpIndiceDownloader(String symbol){
+        if (indicesDownloader == null){
+            indicesDownloader = new IndicesDownloader(symbol);
+        }
+        else {
+            indicesDownloader.retrieveData();
+        }
+    }
+    @Override
+    public HashMap<String, Double> getIndicesInfo(String symbol){
+       indicesDownloader = new IndicesDownloader(symbol);
+        return indicesDownloader.getIndicesInfo();
+    }
+    @Override
+    public Double getIndicesOpenPrice(String symbol){
+        setUpIndiceDownloader(symbol);
+        return indicesDownloader.getOpenPrice();
+
+    }
+
+    @Override
+    public Double getIndicesCurrPrice(String symbol) {
+        setUpIndiceDownloader(symbol);
+        return indicesDownloader.getCurrPrice();
+    }
+
+    @Override
+    public Double getIndicesChangeInPercent(String symbol) {
+        setUpIndiceDownloader(symbol);
+        return indicesDownloader.getCurrPrice();
+
     }
 
     @Override

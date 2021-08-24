@@ -25,8 +25,6 @@ public interface PortfolioManagerService {
 
     HashMap<String, List<Investment>> getAllInvestment(Integer userId);
 
-    Dictionary<String, Double> getIndices();
-
 
 }
 

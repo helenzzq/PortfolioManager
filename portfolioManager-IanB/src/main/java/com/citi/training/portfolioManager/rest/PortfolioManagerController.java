@@ -67,9 +67,9 @@ public class PortfolioManagerController {
         return marketUpdaterServices.getDailyLosers();
     }
 
-    @GetMapping("/indices")
-    public Dictionary<String, Double> getIndices() {
-        return portfolioManagerService.getIndices();
+    @GetMapping("/indices/{symbol}")
+    public HashMap<String, Double> getIndices(@PathVariable("symbol") String symbol) {
+        return marketUpdaterServices.getIndicesInfo(symbol);
     }
 
     /*****************/

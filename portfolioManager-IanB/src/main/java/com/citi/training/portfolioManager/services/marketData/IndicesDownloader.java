@@ -3,26 +3,39 @@ package com.citi.training.portfolioManager.services.marketData;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class IndicesDownloader extends MarketDownloader {
 
     private Double changeInPercent;
     private double currPrice;
     private double openPrice;
+    public HashMap<String,Double > indicesInfo = new HashMap<>();
 
     public IndicesDownloader(String symbol) {
         super(symbol);
-
+        retrieveData();
     }
 
     @Override
-    public void retrieveData() throws IOException {
+    public void retrieveData() {
 
-        currPrice = super.downloadTimeSeriesFromTwelveData("1min");
-        openPrice = super.downloadTimeSeriesFromTwelveData("1day");
+        try {
+            currPrice = super.downloadTimeSeriesFromTwelveData("1min");
+            openPrice = super.downloadTimeSeriesFromTwelveData("1day");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         changeInPercent = (currPrice - openPrice) / openPrice;
 
+        indicesInfo.put("currPrice",currPrice);
+        indicesInfo.put("openPrice",openPrice);
+        indicesInfo.put("changeInPercent",changeInPercent);
+    }
 
+    public HashMap<String, Double> getIndicesInfo() {
+        return indicesInfo;
     }
 
     public Double getChangeInPercent() {
@@ -37,7 +50,7 @@ public class IndicesDownloader extends MarketDownloader {
         return openPrice;
     }
 
-    public static void main(String[] args) throws IOException, UnirestException {
+    public static void main(String[] args) throws IOException {
 
         IndicesDownloader indicesDownloader = new IndicesDownloader("SPX");
         indicesDownloader.retrieveData();

@@ -176,8 +176,4 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         return userRepository.getById(1).getInvestment();
     }
 
-    @Override
-    public Dictionary<String, Double> getIndices() {
-        return null;
-    }
 }
