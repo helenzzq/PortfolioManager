@@ -1,4 +1,4 @@
-package com.citi.training.portofolioManager.services.marketData;
+package com.citi.training.portfolioManager.services.marketData;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
@@ -10,25 +10,24 @@ import java.util.HashMap;
 /*
  * A class that use YahooFinance to download a Daily Market Movers
  * */
-public class MarkerMovers extends MarketDownloader {
-    private HashMap<Integer, String> gainers;
-    private HashMap<Integer, String> losers;
+public class MarketMovers extends MarketDownloader {
+    private HashMap<Integer, String> gainers = new HashMap<>();
+    private HashMap<Integer, String> losers = new HashMap<>();
 
-    public MarkerMovers(String host, String symbol) {
-        super(host, symbol);
-        gainers = new HashMap<>();
-        losers = new HashMap<>();
+    public MarketMovers() {
+        super("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-movers", "region=US&lang=en-US&count=5&start=0");
+
+    }
+
+
+    @Override
+    public void retrieveData() {
+
         try {
-            retrieveData();
+            super.downloadFromYahoo();
         } catch (UnirestException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    void retrieveData() throws UnirestException {
-
-        super.downloadFromYahoo();
 
         JsonArray k = JsonParser.parseString(data)
                 .getAsJsonObject().get("finance").getAsJsonObject()
@@ -56,13 +55,10 @@ public class MarkerMovers extends MarketDownloader {
 
     public static void main(String[] args) {
 
-
-        String host = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-movers";
-
-        MarkerMovers s = new MarkerMovers(host, "region=US&lang=en-US&count=5&start=0");
+        MarketMovers s = new MarketMovers();
+        s.retrieveData();
         System.out.println(s.getGainers());
         System.out.println(s.getLosers());
-
     }
 
 
