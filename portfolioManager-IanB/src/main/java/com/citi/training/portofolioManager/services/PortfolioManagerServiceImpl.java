@@ -2,8 +2,7 @@ package com.citi.training.portofolioManager.services;
 
 import com.citi.training.portofolioManager.entities.AccountActivity;
 import com.citi.training.portofolioManager.entities.Investment;
-import com.citi.training.portofolioManager.repo.AccountRepository;
-import com.citi.training.portofolioManager.repo.UserRepository;
+import com.citi.training.portofolioManager.repo.*;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,19 +16,28 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     @Autowired
     private UserRepository userRepository;
 
-
     @Autowired
     private AccountRepository accountActivityDao;
     @Autowired
     private MarketUpdaterServices InvestmentUpdaterServices;
 
-    public List<AccountActivity> getAccountHistory() {
+    @Autowired
+    private StockRepository stockRepository;
+    @Autowired
+    private EtfRepository etfRepository;
+    @Autowired
+    private BondRepository bondRepository;
+    @Autowired
+    private FutureRepository futureRepository;
 
-        return accountActivityDao.findAll();
+    private HashMap<String, InvestmentRepository> investmentsRepos = new HashMap<>();
 
+    public PortfolioManagerServiceImpl(){
+        investmentsRepos.put("STOCK", stockRepository);
+        investmentsRepos.put("BOND", bondRepository);
+        investmentsRepos.put("ETF", etfRepository);
+        investmentsRepos.put("FUTURE", futureRepository);
     }
-
-
 //    public AccountActivity getAccountActivityByDate(Date date) {
 ////        Optional<AccountActivity> accountOptional = accountActivityDao.findById(date);
 //        if (accountOptional.isPresent()) {
@@ -56,6 +64,22 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         return null;
     }
 
+    @Override
+    public Double getInvestmentValue(String type, Integer userId, String ticker) {
+        Investment investment = investmentsRepos.get(type).getById(ticker);
+        return investment.getMarketValue();
+    }
+
+    @Override
+    public Double buyInvestment(String type, String ticker, Double quantity) throws UnirestException {
+        return null;
+    }
+
+    @Override
+    public Double sellInvestment(String type, String ticker, Double quantity) throws UnirestException {
+        return null;
+    }
+
 
     @Override
     public Double getNetWorth(Date date) {
@@ -64,24 +88,15 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
     }
 
-    @Override
-    public Double buyInvestment(String ticker, Double quantity) throws UnirestException {
-        return null;
-    }
-
-    @Override
-    public Double sellInvestment(String ticker, Double quantity) throws UnirestException {
-        return null;
-    }
 
 
 
-    @Override
-    public Double getInvestmentValue(Integer userId,String ticker) {
-        HashMap<String, List<Investment>> investments = getAllInvestment(userId);
-        investments.values();
-
-    }
+//    @Override
+//    public Double getInvestmentValue(Integer userId,String ticker) {
+//        HashMap<String, List<Investment>> investments = getAllInvestment(userId);
+//        investments.values();
+//
+//    }
 
 //
 //    @Override

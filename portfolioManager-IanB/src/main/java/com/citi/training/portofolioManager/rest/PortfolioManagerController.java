@@ -3,6 +3,7 @@ package com.citi.training.portofolioManager.rest;
 import com.citi.training.portofolioManager.entities.Investment;
 import com.citi.training.portofolioManager.services.MarketUpdaterServices;
 import com.citi.training.portofolioManager.services.PortfolioManagerService;
+import com.citi.training.portofolioManager.services.PortfolioManagerServiceImpl;
 import com.citi.training.portofolioManager.services.UserManagerService;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.http.HttpStatus;
@@ -18,13 +19,14 @@ import java.util.*;
 public class PortfolioManagerController {
 
     @Autowired
-    private PortfolioManagerService portfolioManagerService;
+    private PortfolioManagerService portfolioManagerService = new PortfolioManagerServiceImpl();
 
     @Autowired
     private MarketUpdaterServices marketUpdaterServices;
 
     @Autowired
     private UserManagerService userManagerService;
+
     /**
      * GET Requests
      **/
@@ -46,8 +48,8 @@ public class PortfolioManagerController {
 //    }
 
     @GetMapping("/investment/{ticker}")
-    public Double getInvestmentValue(@PathVariable("id")Integer userId,@PathVariable("ticker") String ticker) {
-        return portfolioManagerService.getInvestmentValue(userId,ticker);
+    public Double getInvestmentValue(@PathVariable("type") String type, @PathVariable("id") Integer userId, @PathVariable("ticker") String ticker) {
+        return portfolioManagerService.getInvestmentValue(type, userId, ticker);
     }
 
     @GetMapping("/gainers")
@@ -85,8 +87,8 @@ public class PortfolioManagerController {
 
 
     @PostMapping("/buy/{ticker}/{quantity}")
-    public void buyInvestment(@PathVariable("ticker") String ticker, @PathVariable("ticker") Double quantity) throws UnirestException {
-        Double response = portfolioManagerService.buyInvestment(ticker, quantity);
+    public void buyInvestment(@PathVariable("type") String type, @PathVariable("ticker") String ticker, @PathVariable("quantity") Double quantity) throws UnirestException {
+        Double response = portfolioManagerService.buyInvestment(type, ticker, quantity);
         if (response == null) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Sorry, there is no enough money in your cash account.");
@@ -94,8 +96,8 @@ public class PortfolioManagerController {
     }
 
     @PostMapping("/sell/{ticker}/{quantity}")
-    public void sellInvestment(@PathVariable("ticker") String ticker, @PathVariable("ticker") Double quantity) throws UnirestException {
-        Double response = portfolioManagerService.sellInvestment(ticker, quantity);
+    public void sellInvestment(@PathVariable("type") String type, @PathVariable("ticker") String ticker, @PathVariable("quantity") Double quantity) throws UnirestException {
+        Double response = portfolioManagerService.sellInvestment(type, ticker, quantity);
         if (response == null) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Sorry, selling failed.");
