@@ -1,8 +1,6 @@
 package com.citi.training.portfolioManager.services;
 
-import com.citi.training.portfolioManager.entities.AccountActivity;
-import com.citi.training.portfolioManager.entities.Investment;
-import com.citi.training.portfolioManager.entities.Stock;
+import com.citi.training.portfolioManager.entities.*;
 import com.citi.training.portfolioManager.repo.*;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,8 +130,25 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
     }
 
+    @Override
+    public Collection<Stock> getStocks(){
+        return stockRepository.findAll();
+    }
+    @Override
+    public Collection<Bond> getBonds(){
+        return bondRepository.findAll();
+    }
 
-//    @Override
+    @Override
+    public Collection<Etf> getEtf() {
+        return etfRepository.findAll();
+    }
+
+    @Override
+    public Collection<Future> getFuture() {
+        return futureRepository.findAll();
+    }
+    //    @Override
 //    public Double getInvestmentValue(Integer userId,String ticker) {
 //        HashMap<String, List<Investment>> investments = getAllInvestment(userId);
 //        investments.values();

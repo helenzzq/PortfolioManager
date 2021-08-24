@@ -1,6 +1,6 @@
 package com.citi.training.portfolioManager.rest;
 
-import com.citi.training.portfolioManager.entities.Investment;
+import com.citi.training.portfolioManager.entities.*;
 import com.citi.training.portfolioManager.services.MarketUpdaterServices;
 import com.citi.training.portfolioManager.services.PortfolioManagerService;
 import com.citi.training.portfolioManager.services.PortfolioManagerServiceImpl;
@@ -19,7 +19,7 @@ import java.util.*;
 public class PortfolioManagerController {
 
     @Autowired
-    private PortfolioManagerService portfolioManagerService = new PortfolioManagerServiceImpl();
+    private PortfolioManagerService portfolioManagerService ;
 
     @Autowired
     private MarketUpdaterServices marketUpdaterServices;
@@ -51,12 +51,23 @@ public class PortfolioManagerController {
     public Double getInvestmentValue(@PathVariable("type") String type, @PathVariable("ticker") String ticker) {
         return portfolioManagerService.getInvestmentValue(type, ticker);
     }
-//
-//    @GetMapping("/stock")
-//    public Collection<Stock> getAllStocks(){
-//        return portfolioManagerService.getStock();
-//    }
 
+    @GetMapping("/stocks")
+    public Collection<Stock> getAllStocks(){
+        return portfolioManagerService.getStocks();
+    }
+    @GetMapping("/etfs")
+    public Collection<Etf> getAllEtfs(){
+        return portfolioManagerService.getEtf();
+    }
+    @GetMapping("/future")
+    public Collection<Future> getAllFuture(){
+        return portfolioManagerService.getFuture();
+    }
+    @GetMapping("/bonds")
+    public Collection<Bond> getAllBonds(){
+        return portfolioManagerService.getBonds();
+    }
     @GetMapping("/gainers")
     public HashMap<Integer, String> getGainers() {
         return marketUpdaterServices.getDailyGainers();

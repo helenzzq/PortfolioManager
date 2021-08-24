@@ -1,6 +1,6 @@
 package com.citi.training.portfolioManager.services;
 
-import com.citi.training.portfolioManager.entities.Investment;
+import com.citi.training.portfolioManager.entities.*;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import java.util.*;
@@ -23,6 +23,11 @@ public interface PortfolioManagerService {
 
     Double sellInvestment(String type,String ticker, Double quantity) throws UnirestException;
 
+    Collection<Stock> getStocks();
+
+    Collection<Bond> getBonds();
+    Collection<Etf> getEtf();
+    Collection<Future> getFuture();
     HashMap<String, List<Investment>> getAllInvestment(Integer userId);
 
 
