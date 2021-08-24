@@ -17,7 +17,7 @@ public interface PortfolioManagerService {
 
     Double getCashAccountByDate(Date date);
 
-    Double getInvestmentValue(String ticker);
+    Double getInvestmentValue(Integer userId,String ticker);
 
     /* buy and sell investment return its current quantity after buying/selling
     * returns null if failed */
@@ -25,10 +25,11 @@ public interface PortfolioManagerService {
 
     Double sellInvestment(String ticker, Double quantity) throws UnirestException;
 
+    HashMap<String, List<Investment>> getAllInvestment(Integer userId);
+
     Dictionary<String, Double> getIndices();
 
 
-    HashMap<String, List<Investment>> getAllInvestment();
 }
 
 

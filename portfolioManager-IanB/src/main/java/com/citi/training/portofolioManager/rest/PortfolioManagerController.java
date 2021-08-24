@@ -1,12 +1,9 @@
 package com.citi.training.portofolioManager.rest;
 
-import com.citi.training.portofolioManager.entities.AccountActivity;
 import com.citi.training.portofolioManager.entities.Investment;
-import com.citi.training.portofolioManager.entities.User;
-import com.citi.training.portofolioManager.services.InvestmentsUpdaterServices;
+import com.citi.training.portofolioManager.services.MarketUpdaterServices;
 import com.citi.training.portofolioManager.services.PortfolioManagerService;
 import com.citi.training.portofolioManager.services.UserManagerService;
-import com.citi.training.portofolioManager.services.UserManagerServiceImpl;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +21,7 @@ public class PortfolioManagerController {
     private PortfolioManagerService portfolioManagerService;
 
     @Autowired
-    private InvestmentsUpdaterServices investmentsUpdaterServices;
+    private MarketUpdaterServices marketUpdaterServices;
 
     @Autowired
     private UserManagerService userManagerService;
@@ -32,44 +29,35 @@ public class PortfolioManagerController {
      * GET Requests
      **/
 
-    @GetMapping("/user")
-    public Collection<User> getAllUser() {
-        return userManagerService.getUsers();
-    }
-
-    @GetMapping("/account")
-    public Collection<AccountActivity> getAllActivity() {
-        return userManagerService.getAccountActivity();
-    }
 
     @GetMapping("/investments")
-    public HashMap<String, List<Investment>> getAllInvestments() {
-        return portfolioManagerService.getAllInvestment();
+    public HashMap<String, List<Investment>> getAllInvestments(Integer userId) {
+        return portfolioManagerService.getAllInvestment(userId);
     }
-
-    @GetMapping("/networth/{date}")
-    public Double getNetWorth(@PathVariable("date") long date) {
-        return portfolioManagerService.getNetWorth(new Date(date));
-    }
-
-    @GetMapping("/cash/{date}")
-    public Double getCashAccountByDate(@PathVariable("date") long date) {
-        return portfolioManagerService.getCashAccountByDate(new Date(date));
-    }
+//
+//    @GetMapping("/networth/{date}")
+//    public Double getNetWorth(@PathVariable("date") long date) {
+//        return portfolioManagerService.getNetWorth(new Date(date));
+//    }
+//
+//    @GetMapping("/cash/{date}")
+//    public Double getCashAccountByDate(@PathVariable("date") long date) {
+//        return portfolioManagerService.getCashAccountByDate(new Date(date));
+//    }
 
     @GetMapping("/investment/{ticker}")
-    public Double getInvestmentValue(@PathVariable("ticker") String ticker) {
-        return portfolioManagerService.getInvestmentValue(ticker);
+    public Double getInvestmentValue(@PathVariable("id")Integer userId,@PathVariable("ticker") String ticker) {
+        return portfolioManagerService.getInvestmentValue(userId,ticker);
     }
 
     @GetMapping("/gainers")
     public HashMap<Integer, String> getGainers() {
-        return investmentsUpdaterServices.getDailyGainers();
+        return marketUpdaterServices.getDailyGainers();
     }
 
     @GetMapping("/losers")
     public HashMap<Integer, String> getLosers() {
-        return investmentsUpdaterServices.getDailyLosers();
+        return marketUpdaterServices.getDailyLosers();
     }
 
     @GetMapping("/indices")
@@ -112,17 +100,6 @@ public class PortfolioManagerController {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Sorry, selling failed.");
         }
-    }
-
-
-    @PostMapping("/update-networth/{date}")
-    public void deposit(@PathVariable("date") long date) {
-        portfolioManagerService.updateNetWorth(1, new Date(date));
-    }
-
-    @PostMapping("/delete-account-activity/{date}")
-    public void deleteAccountActivity(@PathVariable("date") long date) {
-        userManagerService.deleteAccountActivity(new Date(date));
     }
 
 }

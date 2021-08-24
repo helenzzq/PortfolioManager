@@ -2,13 +2,12 @@ package com.citi.training.portofolioManager.services;
 
 import com.citi.training.portofolioManager.services.marketData.MarkerMovers;
 import com.citi.training.portofolioManager.services.marketData.StockDownloader;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
 @Service
-public class InvestmentUpdaterServiceImpl implements InvestmentsUpdaterServices {
+public class MarketUpdaterServiceImpl implements MarketUpdaterServices {
 
     private MarkerMovers marketMovers;
     private StockDownloader stockDownloader;

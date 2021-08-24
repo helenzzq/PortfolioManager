@@ -2,7 +2,6 @@ package com.citi.training.portofolioManager.services;
 
 import com.citi.training.portofolioManager.entities.AccountActivity;
 import com.citi.training.portofolioManager.entities.Investment;
-import com.citi.training.portofolioManager.entities.User;
 import com.citi.training.portofolioManager.repo.AccountRepository;
 import com.citi.training.portofolioManager.repo.UserRepository;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -17,10 +16,12 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 //    private PortfolioManagerRepository portfolioManagerRepository;
     @Autowired
     private UserRepository userRepository;
+
+
     @Autowired
     private AccountRepository accountActivityDao;
     @Autowired
-    private InvestmentsUpdaterServices InvestmentUpdaterServices;
+    private MarketUpdaterServices InvestmentUpdaterServices;
 
     public List<AccountActivity> getAccountHistory() {
 
@@ -63,22 +64,6 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
     }
 
-
-//    @Override
-//    public void deleteAccountActivity(Date date) {
-//        accountActivityDao.deleteById(date);
-//    }
-//
-//    @Override
-//    public Double getCashAccountByDate(Date date) {
-//        return accountActivityDao.getById(date).getCashValue();
-//    }
-
-    @Override
-    public Double getInvestmentValue(String ticker) {
-        return null;
-    }
-
     @Override
     public Double buyInvestment(String ticker, Double quantity) throws UnirestException {
         return null;
@@ -89,17 +74,15 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         return null;
     }
 
-//    @Transactional(propagation = Propagation.REQUIRED)
-//    @Override
-//    public HashMap<String, Investment> getAllInvestment() {
-//        return userRepository.getById(1).getInvestment();
-//    }
-//
-//    @Override
-//    public Double getInvestmentValue(String ticker) {
-//        return portfolioManagerRepository.findById(ticker).get().getMarketValue();
-//    }
-//
+
+
+    @Override
+    public Double getInvestmentValue(Integer userId,String ticker) {
+        HashMap<String, List<Investment>> investments = getAllInvestment(userId);
+        investments.values();
+
+    }
+
 //
 //    @Override
 //    public Double buyInvestment(String ticker, Double quantity) throws UnirestException {
@@ -156,8 +139,8 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 //    }
 
     @Override
-    public HashMap<String, List<Investment>> getAllInvestment() {
-       return  userRepository.findById(1).get().getInvestment();
+    public HashMap<String, List<Investment>> getAllInvestment(Integer userId) {
+       return  userRepository.findById(userId).get().getInvestment();
     }
 
     @Override
