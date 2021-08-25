@@ -22,6 +22,7 @@ public class StockDownloader extends MarketDownloader {
 
         StockDownloader s = new StockDownloader( "AMRN");
         s.downloadFromYahoo();
+        s.retrieveData();
         System.out.println(s.getPrice());
 
     }
