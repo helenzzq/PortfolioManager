@@ -33,7 +33,6 @@ public class PortfolioManagerController {
      * GET Requests
      **/
 
-
     @GetMapping("/investments/{id}")
     public HashMap<String, List<Investment>> getAllInvestments(@PathVariable("id") Integer userId) {
         return portfolioManagerService.getAllInvestment(userId);
@@ -43,16 +42,6 @@ public class PortfolioManagerController {
     public Double getTodayNetWorth() {
         return portfolioManagerService.getTodayNetWorth();
     }
-    @GetMapping("/networth/lastMonth")
-    public Collection<AccountActivity> getNetWorthByMonth() {
-        return portfolioManagerService.getAccountActivityByRange("Last Month");
-    }
-//
-//    @GetMapping("/cash/{date}")
-//    public Double getCashAccountByDate(@PathVariable("date") long date) {
-//        return portfolioManagerService.getCashAccountByDate(new Date(date));
-//    }
-
     @GetMapping("/investment/{type}/{ticker}")
     public Double getInvestmentValue(@PathVariable("type") String type, @PathVariable("ticker") String ticker) {
         return portfolioManagerService.getInvestmentValue(type, ticker);

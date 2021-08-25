@@ -8,8 +8,6 @@ import java.util.*;
 public interface PortfolioManagerService {
 
 
-    Double getNetWorth(Date date);
-
 
     Collection<AccountActivity> getAccountActivityByRange(String range);
 
