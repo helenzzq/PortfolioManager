@@ -6,6 +6,8 @@ import javax.persistence.Id;
 @Entity
 
 public interface Investment {
+    void updateInvestment(Double quantity, Double price, Double marketPrice);
+
     @Id
     public String getTicker();
     public void setTicker(String ticker);

@@ -34,15 +34,22 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
     private HashMap<String, JpaRepository> investmentsRepos = new HashMap<>();
 
-    private void updateInvestmentRepo(){
+    private void updateInvestmentRepo() {
         investmentsRepos.put("Stock", stockRepository);
         investmentsRepos.put("Bond", bondRepository);
         investmentsRepos.put("Etf", etfRepository);
         investmentsRepos.put("Future", futureRepository);
     }
-    private Investment getInvestmentFromRepo(String type,String ticker){
+
+    private Investment getInvestmentFromRepo(String type, String ticker) {
         updateInvestmentRepo();
-        return (Investment)  investmentsRepos.get(type).getById(ticker);
+        Investment investment;
+        try {
+            investment = (Investment) investmentsRepos.get(type).getById(ticker);
+        } catch (Exception e) {
+            investment = null;
+        }
+        return investment;
     }
 
     //It should be called everytime when updatingMarketPrice and at the time
@@ -67,17 +74,17 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     public Double getInvestmentValue(String type, String ticker) {
 
 
-        return getInvestmentFromRepo(type,ticker).getMarketValue();
+        return getInvestmentFromRepo(type, ticker).getMarketValue();
     }
 
-    private Investment initInvestmentByName(String name,String ticker,Double quantity,Double price) throws ClassNotFoundException, NoSuchMethodException {
-        String className= "com.citi.training.portfolioManager.entities."+ name;
-        Investment investment =null;
+    private Investment initInvestmentByName(String name, String ticker, Double quantity, Double price) throws ClassNotFoundException, NoSuchMethodException {
+        String className = "com.citi.training.portfolioManager.entities." + name;
+        Investment investment = null;
         Class<?> clazz = Class.forName(className);
         Constructor<?> constructor = clazz.getConstructor(String.class, Double.class, Double.class, Double.class);
         try {
-            investment = (Investment)constructor.newInstance(ticker,quantity,price,price);
-        } catch (InstantiationException | IllegalAccessException |InvocationTargetException e) {
+            investment = (Investment) constructor.newInstance(ticker, quantity, price, price);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return investment;
@@ -88,18 +95,18 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     public Double buyInvestment(String type, String ticker, Double quantity) {
         Double currentQuantity = 0.0;
         //Check if current investment exist
-        Investment investment = getInvestmentFromRepo(type,ticker);
+        Investment investment = getInvestmentFromRepo(type, ticker);
         //Step 1: Identify investment type
         //Case 1: Buy Stock
-        Double price = marketUpdaterServices.getInvestmentPrice(type,ticker);
-        String className= "com.citi.training.portfolioManager.entities."+ type;
+        Double price = marketUpdaterServices.getInvestmentPrice(type, ticker);
+        String className = "com.citi.training.portfolioManager.entities." + type;
         Investment investment1 = null;
         try {
-            investment1 = initInvestmentByName(type,ticker,quantity,price);
+            investment1 = initInvestmentByName(type, ticker, quantity, price);
             //Store it into the corresponding repo
             investmentsRepos.get(type).save(Class.forName(className).cast(investment1));
 
-        } catch (ClassNotFoundException |  NoSuchMethodException e) {
+        } catch (ClassNotFoundException | NoSuchMethodException e) {
             e.printStackTrace();
         }
 
@@ -107,7 +114,7 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         AccountActivity accountActivity = accountActivityRepo.getById(today);
 
         // If no enough cash value:
-        if(quantity * price > accountActivity.getCashValue()) return null;
+        if (quantity * price > accountActivity.getCashValue()) return null;
 
         // buy it successfully
         currentQuantity = investment.getQuantity();
@@ -118,8 +125,35 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     }
 
     @Override
-    public Double sellInvestment(String type, String ticker, Double quantity) throws UnirestException {
-        return null;
+    public Integer sellInvestment(String type, String ticker, Double quantity) throws UnirestException {
+        Double currentQuantity = 0.0;
+        // check if this investment ticker exist
+        Investment investment = getInvestmentFromRepo(type, ticker);
+        if (investment == null) {
+            return 404;
+        } else {
+            currentQuantity = investment.getQuantity();
+            if (currentQuantity < quantity) return 406;
+        }
+
+        AccountActivity accountActivity = accountActivityRepo.getById(new Date());
+
+
+        Double price = marketUpdaterServices.getStockPrice(ticker);
+        // If there is no that many investment to sell, return null.
+        JpaRepository targetRepo = investmentsRepos.get(type);
+
+        // If selling all of the given investment, delete it from the table.
+        if (currentQuantity.equals(quantity)) {
+            targetRepo.deleteById(ticker);
+        } else {
+            // Sell at marketPrice
+            Double resultQuantity = currentQuantity - quantity;
+            targetRepo.save(investment);
+            accountActivity.deposit(quantity * price);
+        }
+
+        return 200;
     }
 
 
@@ -131,11 +165,12 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     }
 
     @Override
-    public Collection<Stock> getStocks(){
+    public Collection<Stock> getStocks() {
         return stockRepository.findAll();
     }
+
     @Override
-    public Collection<Bond> getBonds(){
+    public Collection<Bond> getBonds() {
         return bondRepository.findAll();
     }
 
@@ -148,43 +183,7 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     public Collection<Future> getFuture() {
         return futureRepository.findAll();
     }
-    //    @Override
-//    public Double getInvestmentValue(Integer userId,String ticker) {
-//        HashMap<String, List<Investment>> investments = getAllInvestment(userId);
-//        investments.values();
-//
-//    }
 
-
-//    @Override
-//    public Double sellInvestment(String ticker, Double quantity) throws UnirestException {
-//        Double currentQuantity = 0.0;
-//        Investment investment = portfolioManagerRepository.getById(ticker);
-//        Date today = new Date();
-//        AccountActivity accountActivity = accountActivityDao.getById(today);
-//
-//        // If no such investment bought before.
-//        if(investment == null) return null;
-//
-//        currentQuantity = investment.getQuantity();
-//
-//        Double price = InvestmentUpdaterServices.getStockPrice(ticker);
-//
-//        // If there is no that many investment to sell, return null.
-//        if(currentQuantity < quantity) return null;
-//
-//        // If selling all of the given investment, delete it from the table.
-//        if(currentQuantity == quantity) {
-//            portfolioManagerRepository.deleteById(ticker);
-//            return 0.0;
-//        }
-//
-//        // Sell
-//        Double resultQuantity = currentQuantity - quantity;
-//        investment.setQuantity(resultQuantity);
-//        accountActivity.deposit(quantity * price);
-//        return resultQuantity;
-//    }
 
     @Override
     public HashMap<String, List<Investment>> getAllInvestment(Integer userId) {

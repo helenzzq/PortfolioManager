@@ -113,10 +113,14 @@ public class PortfolioManagerController {
 
     @PostMapping("/sell/{ticker}/{quantity}")
     public void sellInvestment(@PathVariable("type") String type, @PathVariable("ticker") String ticker, @PathVariable("quantity") Double quantity) throws UnirestException {
-        Double response = portfolioManagerService.sellInvestment(type, ticker, quantity);
-        if (response == null) {
+        Integer response = portfolioManagerService.sellInvestment(type, ticker, quantity);
+        if (response == 404) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Sorry, selling failed.");
+                    HttpStatus.NOT_FOUND, "Sorry, you don't have this investment.");
+        }
+        else if (response == 406){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_ACCEPTABLE, "Sorry, you don't have enough quantity to sell.");
         }
     }
 

@@ -31,7 +31,16 @@ public class Etf implements Serializable,Investment {
         this.percentRetained = 0.0;
         this.percentInPort = 0.0;
     }
+    @Override
+    public void updateInvestment(Double quantity, Double price, Double marketPrice){
 
+        this.quantity = quantity;
+        this.costPerShare = price;
+        this.marketPrice = marketPrice;
+        this.profitNLoss = marketPrice-price;
+        this.percentRetained= marketPrice/costPerShare;
+
+    }
     public Etf() {
 
     }

@@ -33,6 +33,16 @@ public class Stock implements Serializable,Investment  {
     public Stock() {
 
     }
+    @Override
+    public void updateInvestment(Double quantity, Double price, Double marketPrice){
+
+        this.quantity = quantity;
+        this.costPerShare = price;
+        this.marketPrice = marketPrice;
+        this.profitNLoss = marketPrice-price;
+        this.percentRetained= marketPrice/costPerShare;
+
+    }
 
     public String getTicker() {
         return ticker;
