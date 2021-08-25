@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatabaseService } from 'src/app/database/database.service'
 
 @Component({
   selector: 'app-indices',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndicesComponent implements OnInit {
 
-  constructor() { }
+  indexStr = "portfoliomanager/indices"
+  indicesData = [{}, {}, {}, {}]
+
+  constructor(private databaseService:DatabaseService) { }
 
   ngOnInit(): void {
+    this.getIndices();
+  }
+
+  getIndices() {
+    this.databaseService.getApiData(this.indexStr).subscribe(
+      (data:any) => {
+        this.indicesData = [data[0], data[1], data[2], data[3]]
+      },
+      (err) => console.log(err)
+    )
+
   }
 
 }
