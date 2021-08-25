@@ -75,6 +75,12 @@ public class MarketUpdaterServiceImpl implements MarketUpdaterServices {
     }
 
     @Override
+    public HashMap<String,String> getFamousIndicesInfo(){
+        indicesDownloader = new IndicesDownloader();
+        return indicesDownloader.getFamousIndices();
+    }
+
+    @Override
     public Double getInvestmentPrice(String type, String symbol) {
         try {
             if (type.equals("Stock")) {

@@ -2,14 +2,19 @@ package com.citi.training.portfolioManager.services;
 
 import com.citi.training.portfolioManager.entities.*;
 import com.citi.training.portfolioManager.repo.*;
+import com.google.gson.JsonParser;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-
+import org.threeten.extra.YearQuarter;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 @Service
@@ -53,21 +58,80 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     }
 
     @Override
-    public Collection<AccountActivity> getAccountActivityByRange(String range){
-        return accountActivityRepo.getAccountActivitiesByYearAndMonth(8,2021);
+    public Collection<AccountActivity> getAccountActivityByRange(String range) {
+        LocalDate today = LocalDate.now();
+        Collection<AccountActivity> accountActivities = null;
+        int month = today.getMonthValue();
+        switch (range) {
+            case "lastWeek":
+                LocalDate date = today.with(DayOfWeek.MONDAY).minusDays(7);
+                Date lastMonday = java.sql.Date.valueOf(date);
+                Date lastFriday = java.sql.Date.valueOf(date.plusDays(4));
+                accountActivities = accountActivityRepo.getAccountActivitiesByInterval(lastMonday, lastFriday);
+                break;
+            case "lastMonth":
+                accountActivities = accountActivityRepo.getAccountActivitiesByYearAndMonth(month - 1, 2021);
+                break;
+            case "lastQuarter":
+                YearQuarter lastQuarter = YearQuarter.now(ZoneId.systemDefault()).minusQuarters(1);
+                Date firstDay = java.sql.Date.valueOf(lastQuarter.atDay(1));
+                Date lastDayOfLastQuarter = java.sql.Date.valueOf(lastQuarter.atEndOfQuarter());
+                accountActivities = accountActivityRepo.getAccountActivitiesByInterval(firstDay, lastDayOfLastQuarter);
+                break;
+        }
+        return accountActivities;
+
+    }
+    private HashMap<String,List<Double>> getAccountInfoByRange(String range){
+        HashMap<String, List<Double>> accountInfo = new HashMap<>();
+        Collection<AccountActivity> accountActivities = getAccountActivityByRange(range);
+        List<Double> netWorthLst = new ArrayList<>();
+        List<Double> cashLst = new ArrayList<>();
+        List<Double> equityLst = new ArrayList<>();
+        List<Double> totalEquityLst = new ArrayList<>();
+        for (AccountActivity ac : accountActivities){
+            netWorthLst.add(ac.getNetWorth());
+            cashLst.add(ac.getCashValue());
+            equityLst.add(ac.getInvestmentValue());
+            totalEquityLst.add(ac.getTotalEquity());
+        }
+        accountInfo.put("netWorth",netWorthLst);
+        accountInfo.put("investmentValue",equityLst);
+        accountInfo.put("cashValue",cashLst);
+        accountInfo.put("totalEquity",totalEquityLst);
+        return accountInfo;
+    }
+    @Override
+    public List<Double> getNetWorthByRange(String range) {
+        return getAccountInfoByRange(range).get("netWorth");
     }
 
-    //It should be called everytime when updatingMarketPrice and at the time
     @Override
-    public Double getTodayNetWorth(){
+    public List<Double> getCashValueByRange(String range) {
+        return getAccountInfoByRange(range).get("cashValue");
+    }
+
+    @Override
+    public List<Double> getInvestmentValueByRange(String range) {
+        return getAccountInfoByRange(range).get("investmentValue");
+    }
+
+    @Override
+    public List<Double> getTotalEquityByRange(String range) {
+        return getAccountInfoByRange(range).get("totalEquity");
+    }
+
+
+    @Override
+    public Double getTodayNetWorth() {
         Double netWorth = 0.0;
-        List<String> typeLst = Arrays.asList("Stock", "Etf","Bond","Future");
-        for (int i =0; i<4;i++){
+        List<String> typeLst = Arrays.asList("Stock", "Etf", "Bond", "Future");
+        for (int i = 0; i < 4; i++) {
             String types = typeLst.get(i);
             updateInvestmentRepo();
             Collection<Investment> investments = investmentsRepos.get(types).findAll();
-            for (Investment investment : investments){
-                netWorth +=investment.getProfitNLoss();
+            for (Investment investment : investments) {
+                netWorth += investment.getProfitNLoss();
             }
         }
         return netWorth;
@@ -168,13 +232,6 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         return 200;
     }
 
-
-    @Override
-    public Double getNetWorth(Date date) {
-        AccountActivity accountActivity = accountActivityRepo.getById(date);
-        return accountActivity.getNetWorth();
-
-    }
 
 
     @Override

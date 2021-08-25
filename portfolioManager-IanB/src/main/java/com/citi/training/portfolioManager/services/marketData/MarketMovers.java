@@ -21,13 +21,12 @@ public class MarketMovers extends MarketDownloader {
 
 
     @Override
-    public void retrieveData() {
+    public void retrieveData(){
 
         try {
             super.downloadFromYahoo();
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
+
+
 
         JsonArray k = JsonParser.parseString(data)
                 .getAsJsonObject().get("finance").getAsJsonObject()
@@ -38,11 +37,18 @@ public class MarketMovers extends MarketDownloader {
         for (int i = 0; i < 2; i++) {
             JsonArray movers = k.get(i).getAsJsonObject().get("quotes").getAsJsonArray();
             for (int j = 0; j < 5; j++) {
-                String symbol = movers.get(j).getAsJsonObject().get("symbol").toString();
-                marketMovers.get(i).put(j, symbol);
+                String symbol = movers.get(j).getAsJsonObject().get("symbol").getAsString();
+                StockDownloader stockDownloader = new StockDownloader(symbol);
+                stockDownloader.downloadFromYahoo();
+                 String name= JsonParser.parseString(stockDownloader.data)
+                        .getAsJsonObject().get("quoteType").getAsJsonObject()
+                        .get("longName").getAsString();
+                marketMovers.get(i).put(j, name);
             }
         }
-
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
     }
 
     public HashMap<Integer, String> getGainers() {
@@ -53,7 +59,7 @@ public class MarketMovers extends MarketDownloader {
         return losers;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnirestException {
 
         MarketMovers s = new MarketMovers();
         s.retrieveData();

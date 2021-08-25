@@ -5,7 +5,6 @@ import com.citi.training.portfolioManager.entities.User;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.Optional;
 
 public interface UserManagerService {
 
@@ -16,8 +15,6 @@ public interface UserManagerService {
     Double withdraw(Double cash, Integer userId);
 
     Collection<AccountActivity> getAccountActivity();
-
-    Optional<AccountActivity> getAccountActivityByDate();
 
     void deleteAccountActivity(Date date);
 

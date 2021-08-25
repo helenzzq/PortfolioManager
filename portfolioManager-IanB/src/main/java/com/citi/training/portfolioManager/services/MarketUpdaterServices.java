@@ -19,5 +19,7 @@ public interface MarketUpdaterServices {
 
     Double getIndicesChangeInPercent(String symbol);
 
+    HashMap<String,String> getFamousIndicesInfo();
+
     Double getInvestmentPrice(String type, String symbol) ;
 }

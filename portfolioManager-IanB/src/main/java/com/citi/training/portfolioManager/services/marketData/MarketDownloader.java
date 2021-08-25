@@ -21,6 +21,10 @@ public abstract class MarketDownloader {
         this.symbol = symbol;
     }
 
+    MarketDownloader(){
+        this.data ="";
+        this.symbol = "";
+    }
     MarketDownloader(String symbol) {
         this.symbol = symbol;
         this.data = "";
@@ -33,6 +37,7 @@ public abstract class MarketDownloader {
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
             data = reader.readLine();
+
             JsonArray arr = JsonParser.parseString(data)
                     .getAsJsonObject().get("values").getAsJsonArray();
             return arr.get(0).getAsJsonObject().get("open").getAsDouble();

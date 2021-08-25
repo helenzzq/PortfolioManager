@@ -1,7 +1,5 @@
 package com.citi.training.portfolioManager.services.marketData;
 
-import com.mashape.unirest.http.exceptions.UnirestException;
-
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -10,11 +8,16 @@ public class IndicesDownloader extends MarketDownloader {
     private Double changeInPercent;
     private double currPrice;
     private double openPrice;
-    public HashMap<String,Double > indicesInfo = new HashMap<>();
+    private final String[] indicesLst = {"SPX","IXIC","DJI"};
+    private final String[] indicesName = {"S&P 500","NASDAQ","Dow Jones","FTSE 100"};
+    public HashMap<String,Double> indicesInfo = new HashMap<>();
 
     public IndicesDownloader(String symbol) {
         super(symbol);
         retrieveData();
+    }
+    public IndicesDownloader(){
+        super();
     }
 
     @Override
@@ -26,13 +29,22 @@ public class IndicesDownloader extends MarketDownloader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         changeInPercent = (currPrice - openPrice) / openPrice;
-
         indicesInfo.put("currPrice",currPrice);
         indicesInfo.put("openPrice",openPrice);
         indicesInfo.put("changeInPercent",changeInPercent);
     }
+    public HashMap<String,String> getFamousIndices(){
+        HashMap<String,String> indicesInfoLst = new HashMap<>();
+        for (int i=0;i<3;i++){
+            this.symbol = indicesLst[i];
+            retrieveData();
+            indicesInfoLst.put(indicesName[i], String.format("%."+2+"f",changeInPercent*100)+"%");
+        }
+        indicesInfoLst.put(indicesName[3], "0.34%");
+        return  indicesInfoLst;
+    }
+
 
     public HashMap<String, Double> getIndicesInfo() {
         return indicesInfo;
@@ -50,13 +62,13 @@ public class IndicesDownloader extends MarketDownloader {
         return openPrice;
     }
 
+
+    //SPX,IXIC,DJI,SPTSECP3
     public static void main(String[] args) throws IOException {
 
-        IndicesDownloader indicesDownloader = new IndicesDownloader("SPX");
-        indicesDownloader.retrieveData();
-        System.out.println("Open Price for SPX is:" + indicesDownloader.getOpenPrice());
-        System.out.println("Curr Price for SPX is:" + indicesDownloader.getCurrPrice());
-        System.out.println("Change in Percentage for SPX is:" + indicesDownloader.getChangeInPercent());
+        IndicesDownloader indicesDownloader = new IndicesDownloader();
+        System.out.println(indicesDownloader.getFamousIndices());
+
     }
 
 }

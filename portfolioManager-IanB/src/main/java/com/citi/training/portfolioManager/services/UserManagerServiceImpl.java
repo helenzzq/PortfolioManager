@@ -49,7 +49,6 @@ public class UserManagerServiceImpl implements UserManagerService {
         return accountActivityRepo.findById(new Date());
     }
 
-
     @Override
     public void deleteAccountActivity(Date date) {
         accountActivityRepo.deleteById(date);
