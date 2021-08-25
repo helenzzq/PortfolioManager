@@ -17,9 +17,9 @@ import { PortfolioComponent } from './dashboard/portfolio/portfolio.component';
 // Angular Material modules
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
-import { MatSliderModule } from '@angular/material/slider';
 import { MatIconModule } from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
+import {MatSelectModule} from '@angular/material/select';
 
 // External libraries
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -40,11 +40,11 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatSliderModule,
     MatIconModule,
     HttpClientModule,
     MatTableModule,
     NgxChartsModule,
+    MatSelectModule
   ],
   providers: [DatabaseService],
   bootstrap: [AppComponent]

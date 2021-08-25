@@ -1,3 +1,43 @@
-<p>activity works!</p>
+<div class="container-fluid">
 
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <h2>Changes in your net worth, cash and investments over time</h2>
+      </div>
+      <div class="row">
+        <div class="col-6">
 
+          <mat-form-field appearance="outline">
+            <mat-label>Choose timeframe</mat-label>
+            <mat-select>
+              <mat-option value="lastWeek">Last Week</mat-option>
+              <mat-option value="lastQuarter">Last Quarter</mat-option>
+              <mat-option value="yearToDate">Year to Date</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Choose value type</mat-label>
+            <mat-select>
+              <mat-option value="netWorth">Net Worth</mat-option>
+              <mat-option value="cash">Cash</mat-option>
+              <mat-option value="marketValue">Market Value</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-12">
+        <h2>Graph goes here</h2>
+    </div>
+
+  </div>
+</div>

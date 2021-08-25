@@ -44,7 +44,7 @@
   </div>
 
   <div class="row">
-    <div class="col-6">
+    <div class="col-12 col-xl-6">
         <ngx-charts-pie-chart
         [view]="view"
         [scheme]="colorScheme"
@@ -58,7 +58,7 @@
         (deactivate)="onDeactivate($event)">
       </ngx-charts-pie-chart>
     </div>
-    <div class="col-6" style="margin: auto;">
+    <div class="col-12 col-xl-6" style="margin: auto;">
       <table mat-table [dataSource]="investmentTypeDataSource" class="mat-elevation-z10">
 
         <!-- Investment Type Column -->
@@ -70,7 +70,7 @@
 
         <!-- Percentage Column -->
         <ng-container matColumnDef="percentage">
-          <th mat-header-cell *matHeaderCellDef> Percentage </th>
+          <th mat-header-cell *matHeaderCellDef> % </th>
           <td mat-cell *matCellDef="let row"> {{row.percentage}} </td>
           <td mat-footer-cell *matFooterCellDef> {{calculatePercentageTotal()}} </td>
         </ng-container>
