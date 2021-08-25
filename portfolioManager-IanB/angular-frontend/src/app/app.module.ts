@@ -20,6 +20,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
+import {MatTabsModule} from '@angular/material/tabs';
 
 // External libraries
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -44,7 +45,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     HttpClientModule,
     MatTableModule,
     NgxChartsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTabsModule
   ],
   providers: [DatabaseService],
   bootstrap: [AppComponent]
