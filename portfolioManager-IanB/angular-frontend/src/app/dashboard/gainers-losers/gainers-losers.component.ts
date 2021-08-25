@@ -17,7 +17,10 @@ export class GainersLosersComponent implements OnInit {
   constructor(private databaseService:DatabaseService) { }
 
   ngOnInit(): void {
-    
+    this.getGainers();
+    console.log(this.gainerData);
+    this.getLosers();
+    console.log(this.loserData);
   }
 
   getGainers() {
