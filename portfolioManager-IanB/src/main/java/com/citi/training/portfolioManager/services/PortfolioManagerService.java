@@ -11,6 +11,10 @@ public interface PortfolioManagerService {
 
     Collection<AccountActivity> getAccountActivityByRange(String range);
 
+    List<Double> getNetWorthByRange(String range);
+    List<Double> getCashValueByRange(String range);
+    List<Double> getInvestmentValueByRange(String range);
+    List<Double> getTotalEquityByRange(String range);
     //It should be called everytime when updatingMarketPrice and at the time
     Double getTodayNetWorth();
 

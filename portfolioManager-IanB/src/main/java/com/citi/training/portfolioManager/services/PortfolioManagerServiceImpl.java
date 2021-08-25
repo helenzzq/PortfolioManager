@@ -2,6 +2,7 @@ package com.citi.training.portfolioManager.services;
 
 import com.citi.training.portfolioManager.entities.*;
 import com.citi.training.portfolioManager.repo.*;
+import com.google.gson.JsonParser;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -81,8 +82,46 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         return accountActivities;
 
     }
+    private HashMap<String,List<Double>> getAccountInfoByRange(String range){
+        HashMap<String, List<Double>> accountInfo = new HashMap<>();
+        Collection<AccountActivity> accountActivities = getAccountActivityByRange(range);
+        List<Double> netWorthLst = new ArrayList<>();
+        List<Double> cashLst = new ArrayList<>();
+        List<Double> equityLst = new ArrayList<>();
+        List<Double> totalEquityLst = new ArrayList<>();
+        for (AccountActivity ac : accountActivities){
+            netWorthLst.add(ac.getNetWorth());
+            cashLst.add(ac.getCashValue());
+            equityLst.add(ac.getInvestmentValue());
+            totalEquityLst.add(ac.getTotalEquity());
+        }
+        accountInfo.put("netWorth",netWorthLst);
+        accountInfo.put("investmentValue",equityLst);
+        accountInfo.put("cashValue",cashLst);
+        accountInfo.put("totalEquity",totalEquityLst);
+        return accountInfo;
+    }
+    @Override
+    public List<Double> getNetWorthByRange(String range) {
+        return getAccountInfoByRange(range).get("netWorth");
+    }
 
-    //It should be called everytime when updatingMarketPrice and at the time
+    @Override
+    public List<Double> getCashValueByRange(String range) {
+        return getAccountInfoByRange(range).get("cashValue");
+    }
+
+    @Override
+    public List<Double> getInvestmentValueByRange(String range) {
+        return getAccountInfoByRange(range).get("investmentValue");
+    }
+
+    @Override
+    public List<Double> getTotalEquityByRange(String range) {
+        return getAccountInfoByRange(range).get("totalEquity");
+    }
+
+
     @Override
     public Double getTodayNetWorth() {
         Double netWorth = 0.0;

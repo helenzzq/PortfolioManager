@@ -6,6 +6,7 @@ import com.citi.training.portfolioManager.services.PortfolioManagerService;
 import com.citi.training.portfolioManager.services.PortfolioManagerServiceImpl;
 import com.citi.training.portfolioManager.services.UserManagerService;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,41 @@ public class PortfolioManagerController {
     public Double getTodayNetWorth() {
         return portfolioManagerService.getTodayNetWorth();
     }
+
+    /**
+    * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Return A list of all net Worth within the range
+    * */
+    @GetMapping("/networth/{range}")
+    public List<Double> getNetWorthByRange(@PathVariable("range") String range) {
+        return portfolioManagerService.getNetWorthByRange(range);
+    }
+    /**
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Return  A list of all cash Value balance within the time range
+     * */
+    @GetMapping("/cash/{range}")
+    public List<Double> getCashValueByRange(@PathVariable("range") String range) {
+        return portfolioManagerService.getCashValueByRange(range);
+    }
+    /**
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Return A list of all market Value balance within the time range
+     * */
+    @GetMapping("/marketValue/{range}")
+    public List<Double> getMarketValueByRange(@PathVariable("range") String range) {
+        return portfolioManagerService.getInvestmentValueByRange(range);
+    }
+    /**
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Return A list of all total Equity balance within the time range
+     * */
+    @GetMapping("/totalEquity/{range}")
+    public List<Double> getTotalEquityByRange(@PathVariable("range") String range) {
+        return portfolioManagerService.getTotalEquityByRange(range);
+    }
+
+
     @GetMapping("/investment/{type}/{ticker}")
     public Double getInvestmentValue(@PathVariable("type") String type, @PathVariable("ticker") String ticker) {
         return portfolioManagerService.getInvestmentValue(type, ticker);
@@ -96,26 +132,26 @@ public class PortfolioManagerController {
         }
     }
 
-    @PostMapping("/buy/{ticker}/{quantity}")
-    public void buyInvestment(@PathVariable("type") String type, @PathVariable("ticker") String ticker, @PathVariable("quantity") Double quantity) throws UnirestException {
-        Double response = portfolioManagerService.buyInvestment(type, ticker, quantity);
-        if (response == null) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Sorry, there is no enough money in your cash account.");
-        }
-    }
-
-    @PostMapping("/sell/{ticker}/{quantity}")
-    public void sellInvestment(@PathVariable("type") String type, @PathVariable("ticker") String ticker, @PathVariable("quantity") Double quantity) throws UnirestException {
-        Integer response = portfolioManagerService.sellInvestment(type, ticker, quantity);
-        if (response == 404) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Sorry, you don't have this investment.");
-        }
-        else if (response == 406){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_ACCEPTABLE, "Sorry, you don't have enough quantity to sell.");
-        }
-    }
+//    @PostMapping("/buy/{ticker}/{quantity}")
+//    public void buyInvestment(@PathVariable("type") String type, @PathVariable("ticker") String ticker, @PathVariable("quantity") Double quantity) throws UnirestException {
+//        Double response = portfolioManagerService.buyInvestment(type, ticker, quantity);
+//        if (response == null) {
+//            throw new ResponseStatusException(
+//                    HttpStatus.BAD_REQUEST, "Sorry, there is no enough money in your cash account.");
+//        }
+//    }
+//
+//    @PostMapping("/sell/{ticker}/{quantity}")
+//    public void sellInvestment(@PathVariable("type") String type, @PathVariable("ticker") String ticker, @PathVariable("quantity") Double quantity) throws UnirestException {
+//        Integer response = portfolioManagerService.sellInvestment(type, ticker, quantity);
+//        if (response == 404) {
+//            throw new ResponseStatusException(
+//                    HttpStatus.NOT_FOUND, "Sorry, you don't have this investment.");
+//        }
+//        else if (response == 406){
+//            throw new ResponseStatusException(
+//                    HttpStatus.NOT_ACCEPTABLE, "Sorry, you don't have enough quantity to sell.");
+//        }
+//    }
 
 }
