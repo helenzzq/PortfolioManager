@@ -54,15 +54,22 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
     //It should be called everytime when updatingMarketPrice and at the time
 
+    public Double getTodayNetWorth(){
+        Double netWorth = 0.0;
+        List<String> typeLst = Arrays.asList("Stock", "Etf","Bond","Future");
+        for (int i =0; i<4;i++){
+            String types = typeLst.get(i);
+            Collection<Investment> investments = investmentsRepos.get(types).findAll();
+            for (Investment investment : investments){
+                netWorth +=investment.getProfitNLoss();
+            }
+        }
+        return netWorth;
+
+    }
+
     @Override
     public void updateNetWorth(Integer id, Date date) {
-//        AccountActivity accountActivity = accountActivityDao.getById(date);
-        HashMap<String, List<Investment>> Investment = userRepository.getById(id).getInvestment();
-        Double sum = 0.0;
-//        for (Investment securities : Investment.values()) {
-//            sum += securities.getProfitNLoss();
-//        }
-//        accountActivity.setNetWorth(sum);
     }
 
     @Override
@@ -72,7 +79,6 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
     @Override
     public Double getInvestmentValue(String type, String ticker) {
-
 
         return getInvestmentFromRepo(type, ticker).getMarketValue();
     }

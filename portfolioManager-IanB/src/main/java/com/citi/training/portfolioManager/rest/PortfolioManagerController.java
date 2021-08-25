@@ -101,7 +101,6 @@ public class PortfolioManagerController {
         }
     }
 
-
     @PostMapping("/buy/{ticker}/{quantity}")
     public void buyInvestment(@PathVariable("type") String type, @PathVariable("ticker") String ticker, @PathVariable("quantity") Double quantity) throws UnirestException {
         Double response = portfolioManagerService.buyInvestment(type, ticker, quantity);
