@@ -11,6 +11,11 @@ public interface PortfolioManagerService {
     Double getNetWorth(Date date);
 
 
+    Collection<AccountActivity> getAccountActivityByRange(String range);
+
+    //It should be called everytime when updatingMarketPrice and at the time
+    Double getTodayNetWorth();
+
     void updateNetWorth(Integer id, Date date);
 
     Double getCashAccountByDate(Date date);

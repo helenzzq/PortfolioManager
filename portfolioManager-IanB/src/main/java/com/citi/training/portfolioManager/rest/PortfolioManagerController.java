@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -36,11 +38,15 @@ public class PortfolioManagerController {
     public HashMap<String, List<Investment>> getAllInvestments(@PathVariable("id") Integer userId) {
         return portfolioManagerService.getAllInvestment(userId);
     }
-//
-//    @GetMapping("/networth/{date}")
-//    public Double getNetWorth(@PathVariable("date") long date) {
-//        return portfolioManagerService.getNetWorth(new Date(date));
-//    }
+
+    @GetMapping("/networth/today")
+    public Double getTodayNetWorth() {
+        return portfolioManagerService.getTodayNetWorth();
+    }
+    @GetMapping("/networth/lastMonth")
+    public Collection<AccountActivity> getNetWorthByMonth() {
+        return portfolioManagerService.getAccountActivityByRange("Last Month");
+    }
 //
 //    @GetMapping("/cash/{date}")
 //    public Double getCashAccountByDate(@PathVariable("date") long date) {

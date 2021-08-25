@@ -11,12 +11,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin // allows requests from all domains
 public class UserAccountManagerController {
-    @Autowired
-    private PortfolioManagerService portfolioManagerService;
 
 
     @Autowired
@@ -34,6 +34,10 @@ public class UserAccountManagerController {
     @GetMapping("/account")
     public Collection<AccountActivity> getAllActivity() {
         return userManagerService.getAccountActivity();
+    }
+    @GetMapping("/ac")
+    public Optional<AccountActivity> getSingleActivity() {
+        return userManagerService.getAccountActivityByDate();
     }
 
 //
