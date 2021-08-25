@@ -52,13 +52,19 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         return investment;
     }
 
-    //It should be called everytime when updatingMarketPrice and at the time
+    @Override
+    public Collection<AccountActivity> getAccountActivityByRange(String range){
+        return accountActivityRepo.getAccountActivitiesByYearAndMonth(8,2021);
+    }
 
+    //It should be called everytime when updatingMarketPrice and at the time
+    @Override
     public Double getTodayNetWorth(){
         Double netWorth = 0.0;
         List<String> typeLst = Arrays.asList("Stock", "Etf","Bond","Future");
         for (int i =0; i<4;i++){
             String types = typeLst.get(i);
+            updateInvestmentRepo();
             Collection<Investment> investments = investmentsRepos.get(types).findAll();
             for (Investment investment : investments){
                 netWorth +=investment.getProfitNLoss();
@@ -169,6 +175,7 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         return accountActivity.getNetWorth();
 
     }
+
 
     @Override
     public Collection<Stock> getStocks() {

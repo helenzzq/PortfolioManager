@@ -13,10 +13,10 @@ import java.util.Date;
 @Table(name = "account_activity")
 public class AccountActivity implements Serializable {
     @Id
-    @Column(name = "accountActivityId")
-    private Integer accountActivityId;
     @Column(name = "date")
     private Date date;
+    @Column(name = "accountActivityId")
+    private Integer accountActivityId;
     @Column(name = "netWorth")
     private Double netWorth;
     @Column(name = "cashValue")

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class UserManagerServiceImpl implements UserManagerService {
@@ -42,6 +43,10 @@ public class UserManagerServiceImpl implements UserManagerService {
     @Override
     public Collection<AccountActivity> getAccountActivity(){
         return accountActivityRepo.findAll();
+    }
+    @Override
+    public Optional<AccountActivity> getAccountActivityByDate(){
+        return accountActivityRepo.findById(new Date());
     }
 
 
