@@ -40,7 +40,7 @@ public class Stock implements Serializable,Investment  {
         this.costPerShare = price;
         this.marketPrice = marketPrice;
         this.profitNLoss = marketPrice-price;
-        this.percentRetained= marketPrice/costPerShare;
+        this.percentRetained= profitNLoss/(quantity*costPerShare);
 
     }
 
