@@ -1,6 +1,7 @@
 // Core Angular modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 // Components within the application
 import { AppRoutingModule } from './app-routing.module';
@@ -35,7 +36,8 @@ import { MatIconModule } from '@angular/material/icon';
     BrowserAnimationsModule,
     MatButtonModule,
     MatSliderModule,
-    MatIconModule
+    MatIconModule,
+    HttpClientModule
   ],
   providers: [DatabaseService],
   bootstrap: [AppComponent]
