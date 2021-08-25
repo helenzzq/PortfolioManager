@@ -1,0 +1,17 @@
+#container {
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid black;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding: 10px 20px;
+}
+
+h3 {
+    text-align: center;
+}
+
+.investment {
+    display: flex;
+    justify-content: space-between;
+}
