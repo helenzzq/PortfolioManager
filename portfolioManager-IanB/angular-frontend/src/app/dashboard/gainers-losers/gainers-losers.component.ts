@@ -9,30 +9,33 @@ import { DatabaseService } from 'src/app/database/database.service'
 })
 export class GainersLosersComponent implements OnInit {
 
-  gainerData = {}
-  loserData = {}
-  gainerStr = "gainers"
-  loserStr = "losers"
+  gainerStr = "portfoliomanager/gainers"
+  loserStr = "portfoliomanager/losers"
+  gainerNames = ["loading...", "loading...", "loading...", "loading...", "loading..."]
+  loserNames = ["loading...", "loading...", "loading...", "loading...", "loading..."]
+
 
   constructor(private databaseService:DatabaseService) { }
 
   ngOnInit(): void {
     this.getGainers();
-    console.log(this.gainerData);
     this.getLosers();
-    console.log(this.loserData);
   }
 
   getGainers() {
     this.databaseService.getApiData(this.gainerStr).subscribe(
-      (data:any) => {this.gainerData = data},
+      (data:any) => {
+        this.gainerNames = [data[0], data[1], data[2], data[3], data[4]]
+      },
       (err) => console.log(err)
     )
   }
 
   getLosers() {
     this.databaseService.getApiData(this.loserStr).subscribe(
-      (data:any) => {this.loserData = data},
+      (data:any) => {
+        this.loserNames = [data[0], data[1], data[2], data[3], data[4]]
+      },
       (err) => console.log(err)
     )
   }
