@@ -8,11 +8,13 @@ export interface currencyTableRow {
   marketValue: number;
   totalEquity: number;
 }
-const CURRENCY_TABLE_DATA: currencyTableRow[] = [
-  { currency: 'CAD only', cash: 5555, marketValue: 5555, totalEquity: 5555 },
-  { currency: 'USD only', cash: 7777, marketValue: 7777, totalEquity: 7777 },
-  { currency: 'Combined in CAD', cash: 9999, marketValue: 9999, totalEquity: 9999 }
-];
+
+// investmentType table
+export interface investmentTypeTableRow {
+  investmentType: string;
+  percentage: number;
+  marketValue: number;
+}
 
 @Component({
   selector: 'app-balances',
@@ -27,8 +29,24 @@ export class BalancesComponent implements OnInit {
   networthToday?: number;
 
   // currency table
-  displayedColumns: string[] = ['currency', 'cash', 'marketValue', 'totalEquity'];
-  dataSource = CURRENCY_TABLE_DATA;
+  CURRENCY_TABLE_DATA: currencyTableRow[] = [
+    { currency: 'CAD only', cash: 5555, marketValue: 5555, totalEquity: 5555 },
+    { currency: 'USD only', cash: 7777, marketValue: 7777, totalEquity: 7777 },
+    { currency: 'Combined in CAD', cash: 9999, marketValue: 9999, totalEquity: 9999 }
+  ];
+  displayedCurrencyColumns: string[] = ['currency', 'cash', 'marketValue', 'totalEquity'];
+  currencyDataSource = this.CURRENCY_TABLE_DATA;
+
+  // investmentType table
+  INVESTMENT_TYPE_TABLE_DATA: investmentTypeTableRow[] = [
+    { investmentType: 'Cash', percentage: 2, marketValue: 22 },
+    { investmentType: 'Stocks', percentage: 3, marketValue: 33 },
+    { investmentType: 'Bonds', percentage: 4, marketValue: 44 },
+    { investmentType: 'Futures', percentage: 5, marketValue: 55 },
+    { investmentType: 'ETFs', percentage: 6, marketValue: 66 },
+  ];
+  displayedInvestmentTypeColumns: string[] = ['investmentType', 'percentage', 'marketValue'];
+  investmentTypeDataSource = this.INVESTMENT_TYPE_TABLE_DATA;
 
   today = new Date()
 
@@ -48,6 +66,13 @@ export class BalancesComponent implements OnInit {
       });
   }
 
+  calculatePercentageTotal() {
+    return this.INVESTMENT_TYPE_TABLE_DATA.map(t => t.percentage).reduce((acc, value) => acc + value, 0);
+  }
+
+  calculateMarketValueTotal() {
+    return this.INVESTMENT_TYPE_TABLE_DATA.map(t => t.marketValue).reduce((acc, value) => acc + value, 0);
+  }
 
 
 }
