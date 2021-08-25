@@ -113,6 +113,11 @@ public class PortfolioManagerController {
     public HashMap<String, Double> getIndices(@PathVariable("symbol") String symbol) {
         return marketUpdaterServices.getIndicesInfo(symbol);
     }
+    @GetMapping("/indices/famous-indices")
+    public HashMap<String, String> getFamousIndices() {
+        return marketUpdaterServices.getFamousIndicesInfo();
+    }
+
 
     /*****************/
     /**POST Requests**/
