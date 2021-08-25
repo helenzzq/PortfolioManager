@@ -18,11 +18,6 @@ public interface PortfolioManagerService {
     //It should be called everytime when updatingMarketPrice and at the time
     Double getTodayNetWorth();
 
-    Collection<AccountActivity> getAccountActivityByRange(String range);
-
-    //It should be called everytime when updatingMarketPrice and at the time
-    Double getTodayNetWorth();
-
     void updateNetWorth(Integer id, Date date);
 
     Double getCashAccountByDate(Date date);
@@ -30,7 +25,7 @@ public interface PortfolioManagerService {
     Double getInvestmentValue(String type,String ticker);
 
     /* buy and sell investment return its current quantity after buying/selling
-    * returns null if failed */
+     * returns null if failed */
     Double buyInvestment(String type, String ticker, Double quantity) throws UnirestException;
 
     Integer sellInvestment(String type,String ticker, Double quantity) throws UnirestException;
@@ -44,7 +39,3 @@ public interface PortfolioManagerService {
 
 
 }
-
-
-
-
