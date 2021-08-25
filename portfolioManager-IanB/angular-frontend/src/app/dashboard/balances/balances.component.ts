@@ -16,6 +16,15 @@ export interface investmentTypeTableRow {
   marketValue: number;
 }
 
+// Pie chart
+export var single =  [
+  { name: 'Cash', value: 20},
+  { name: 'Stocks', value: 15 },
+  { name: 'Bonds', value: 25 },
+  { name: 'Futures', value: 20 },
+  { name: 'ETFs', value: 20 },
+];
+
 @Component({
   selector: 'app-balances',
   templateUrl: './balances.component.html',
@@ -23,6 +32,7 @@ export interface investmentTypeTableRow {
 })
 
 export class BalancesComponent implements OnInit {
+  today = new Date();
 
   // data from database
   data: Object = {};
@@ -39,18 +49,28 @@ export class BalancesComponent implements OnInit {
 
   // investmentType table
   INVESTMENT_TYPE_TABLE_DATA: investmentTypeTableRow[] = [
-    { investmentType: 'Cash', percentage: 2, marketValue: 22 },
-    { investmentType: 'Stocks', percentage: 3, marketValue: 33 },
-    { investmentType: 'Bonds', percentage: 4, marketValue: 44 },
-    { investmentType: 'Futures', percentage: 5, marketValue: 55 },
-    { investmentType: 'ETFs', percentage: 6, marketValue: 66 },
+    { investmentType: 'Cash', percentage: 20, marketValue: 22 },
+    { investmentType: 'Stocks', percentage: 15, marketValue: 33 },
+    { investmentType: 'Bonds', percentage: 25, marketValue: 44 },
+    { investmentType: 'Futures', percentage: 20, marketValue: 55 },
+    { investmentType: 'ETFs', percentage: 20, marketValue: 66 },
   ];
   displayedInvestmentTypeColumns: string[] = ['investmentType', 'percentage', 'marketValue'];
   investmentTypeDataSource = this.INVESTMENT_TYPE_TABLE_DATA;
 
-  today = new Date()
+  // Pie Chart
+  single: any;
+  view: any = [450,450];
+  gradient: boolean = false;
+  showLegend: boolean = false;
+  showLabels: boolean = true;
+  isDoughnut: boolean = false;
+  // legendPosition: string = 'below';
+  colorScheme: string = 'vivid';
 
-  constructor(private databaseService: DatabaseService) { }
+  constructor(private databaseService: DatabaseService) {
+    Object.assign(this, { single });
+   }
 
   ngOnInit(): void {
     this.databaseService.getApiData('user')
@@ -64,8 +84,11 @@ export class BalancesComponent implements OnInit {
         this.networthToday = incomingData
         console.log(this.networthToday);
       });
+
+
   }
 
+  //  --------------------- investmentType Table ---------------------
   calculatePercentageTotal() {
     return this.INVESTMENT_TYPE_TABLE_DATA.map(t => t.percentage).reduce((acc, value) => acc + value, 0);
   }
@@ -73,6 +96,23 @@ export class BalancesComponent implements OnInit {
   calculateMarketValueTotal() {
     return this.INVESTMENT_TYPE_TABLE_DATA.map(t => t.marketValue).reduce((acc, value) => acc + value, 0);
   }
+  //  --------------------- /investmentType Table ---------------------
+
+
+
+  //  --------------------- Pie Chart ---------------------
+  onSelect(data: any): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+
+  onActivate(data: any): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+
+  onDeactivate(data: any): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+  }
+  //  --------------------- /Pie Chart ---------------------
 
 
 }

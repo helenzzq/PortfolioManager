@@ -21,6 +21,10 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatIconModule } from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
 
+// External libraries
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +43,8 @@ import {MatTableModule} from '@angular/material/table';
     MatSliderModule,
     MatIconModule,
     HttpClientModule,
-    MatTableModule
+    MatTableModule,
+    NgxChartsModule,
   ],
   providers: [DatabaseService],
   bootstrap: [AppComponent]
