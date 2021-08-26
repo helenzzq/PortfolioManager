@@ -10,6 +10,12 @@
           <td mat-cell *matCellDef="let row"> {{row.ticker}} </td>
         </ng-container>
 
+        <!-- Ticker Column -->
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let row"> {{row.type}} </td>
+          </ng-container>
+
         <!-- Market Price Column -->
         <ng-container matColumnDef="marketPrice">
           <th mat-header-cell *matHeaderCellDef> Market Price </th>
@@ -24,7 +30,7 @@
 
         <!-- Title -->
         <ng-container matColumnDef="grouped">
-            <th mat-header-cell *matHeaderCellDef colspan="3" class="centered" id="table-title"> Portfolio </th>
+            <th mat-header-cell *matHeaderCellDef colspan="4" class="centered" id="table-title"> Portfolio </th>
         </ng-container>
 
 
