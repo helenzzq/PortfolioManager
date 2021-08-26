@@ -172,7 +172,7 @@ export class ActivityComponent implements OnInit {
   showXAxisLabel: boolean = true;
   xAxisLabel: string = '';
   yAxisLabel: string = 'USD';
-  timeline: boolean = true;
+  timeline: boolean = false;
   colorScheme = 'vivid';
 
   constructor() {

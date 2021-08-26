@@ -6,7 +6,7 @@
         <h2>Changes in your net worth, cash and investments over time</h2>
       </div>
       <div class="row">
-        <div class="col-6">
+        <div class="col-12 col-md-6 col-lg-4">
 
           <mat-form-field appearance="outline">
             <mat-label>Choose timeframe</mat-label>
@@ -34,9 +34,10 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" style="margin-bottom: 40px;">
 
-    <div class="col-12" #containerRef>
+    <mat-card class="mat-elevation-z10">
+      <div class="col-12" #containerRef>
         <ngx-charts-line-chart
         [view]="[containerRef.offsetWidth, 450]"
         [scheme]="colorScheme"
@@ -52,8 +53,9 @@
         (select)="onSelect($event)"
         (activate)="onActivate($event)"
         (deactivate)="onDeactivate($event)">
-      </ngx-charts-line-chart>
-    </div>
+        </ngx-charts-line-chart>        
+      </div>
+    </mat-card>
 
   </div>
 </div>

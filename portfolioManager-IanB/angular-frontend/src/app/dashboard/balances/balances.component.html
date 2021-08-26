@@ -44,20 +44,22 @@
   </div>
 
   <div class="row">
+    
     <div class="col-12 col-xl-6" #containerRef>
-        <ngx-charts-pie-chart
-        [view]="[containerRef.offsetWidth, 450]"
-        [scheme]="colorScheme"
-        [results]="single"
-        [gradient]="gradient"
-        [legend]="showLegend"
-        [labels]="showLabels"
-        [doughnut]="isDoughnut"
-        (select)="onSelect($event)"
-        (activate)="onActivate($event)"
-        (deactivate)="onDeactivate($event)">
-      </ngx-charts-pie-chart>
+      <ngx-charts-pie-chart
+      [view]="[containerRef.offsetWidth, 450]"
+      [scheme]="colorScheme"
+      [results]="single"
+      [gradient]="gradient"
+      [legend]="showLegend"
+      [labels]="showLabels"
+      [doughnut]="isDoughnut"
+      (select)="onSelect($event)"
+      (activate)="onActivate($event)"
+      (deactivate)="onDeactivate($event)">
+    </ngx-charts-pie-chart>      
     </div>
+
     <div class="col-12 col-xl-6" style="margin: auto;">
       <table mat-table [dataSource]="investmentTypeDataSource" class="mat-elevation-z10">
 
@@ -70,7 +72,7 @@
 
         <!-- Percentage Column -->
         <ng-container matColumnDef="percentage">
-          <th mat-header-cell *matHeaderCellDef> % </th>
+          <th mat-header-cell *matHeaderCellDef> % &nbsp; &nbsp; &nbsp; &nbsp;</th>
           <td mat-cell *matCellDef="let row"> {{row.percentage}} </td>
           <td mat-footer-cell *matFooterCellDef> {{calculatePercentageTotal()}} </td>
         </ng-container>
