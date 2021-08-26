@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -55,11 +56,11 @@ public class UserAccountManagerController {
     }
 
     /**
-     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter,yearToDate]
      * @Return A list of all net Worth within the range
      * */
     @GetMapping("/account/net-worth/range={range}")
-    public List<Double> getNetWorthByRange(@PathVariable("range") String range) {
+    public List<HashMap<String, Object>> getNetWorthByRange(@PathVariable("range") String range) {
         return userAccountManagerService.getNetWorthByRange(range);
     }
     /**
@@ -67,7 +68,7 @@ public class UserAccountManagerController {
      * @Return  A list of all cash Value balance within the time range
      * */
     @GetMapping("/account/cash/range={range}")
-    public List<Double> getCashValueByRange(@PathVariable("range") String range) {
+    public List<HashMap<String, Object>> getCashValueByRange(@PathVariable("range") String range) {
         return userAccountManagerService.getCashValueByRange(range);
     }
     /**
@@ -75,7 +76,7 @@ public class UserAccountManagerController {
      * @Return A list of all market Value balance within the time range
      * */
     @GetMapping("/account/market-value/range={range}")
-    public List<Double> getMarketValueByRange(@PathVariable("range") String range) {
+    public List<HashMap<String, Object>> getMarketValueByRange(@PathVariable("range") String range) {
         return userAccountManagerService.getInvestmentValueByRange(range);
     }
     /**
@@ -83,10 +84,13 @@ public class UserAccountManagerController {
      * @Return A list of all total Equity balance within the time range
      * */
     @GetMapping("/account/total-equity/range={range}")
-    public List<Double> getTotalEquityByRange(@PathVariable("range") String range) {
+    public List<HashMap<String, Object>> getTotalEquityByRange(@PathVariable("range") String range) {
         return userAccountManagerService.getTotalEquityByRange(range);
     }
-
+    @GetMapping("/account/cash/test")
+    public List<HashMap<String,Object>> test() throws ParseException {
+        return userAccountManagerService.getYearToDateCash();
+    }
 
     /*
      * Path Variable date is in dd-mm-yyyy format

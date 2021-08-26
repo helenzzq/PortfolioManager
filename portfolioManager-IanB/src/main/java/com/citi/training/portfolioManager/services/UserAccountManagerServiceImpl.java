@@ -4,10 +4,12 @@ import com.citi.training.portfolioManager.entities.AccountActivity;
 import com.citi.training.portfolioManager.entities.User;
 import com.citi.training.portfolioManager.repo.AccountRepository;
 import com.citi.training.portfolioManager.repo.UserRepository;
+import com.citi.training.portfolioManager.strategy.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.threeten.extra.YearQuarter;
 
+import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -20,8 +22,9 @@ public class UserAccountManagerServiceImpl implements UserAccountManagerService 
     private UserRepository userRepository;
     @Autowired
     private AccountRepository accountActivityRepo;
+
     @Override
-    public Collection<User> getUsers(){
+    public Collection<User> getUsers() {
         return userRepository.findAll();
     }
 
@@ -38,20 +41,46 @@ public class UserAccountManagerServiceImpl implements UserAccountManagerService 
         User user = userRepository.getById(userId);
         AccountActivity accountActivity = user.getTodayAccountActivity();
         // If there's no enough cash in account, withdraw fails.
-        if(cash > accountActivity.getCashValue()) return null;
+        if (cash > accountActivity.getCashValue()) return null;
         accountActivity.withdraw(cash);
         return accountActivity.getCashValue();
     }
 
     @Override
-    public Collection<AccountActivity> getAccountActivity(){
+    public Collection<AccountActivity> getAccountActivity() {
         return accountActivityRepo.findAll();
+    }
+
+
+    @Override
+    public List<HashMap<String,Object>> getYearToDateCash() throws ParseException {
+        List<HashMap<String,Object>> cashInfo = new ArrayList<>();
+        Collection<List> cashCollection = accountActivityRepo.getCashValueByMonth(2021);
+        for (List cash:cashCollection){
+            HashMap<String, Object> info = new HashMap<>();
+            info.put("name", DateTimeFormatter.formatMonth(cash.get(0).toString()));
+            info.put("value", cash.get(1));
+            cashInfo.add(info);
+        }
+        return cashInfo;
+
+    }
+
+    @Override
+    public List<Double> getYearToDateNetWorth() {
+        return null;
+    }
+
+    @Override
+    public List<Double> getYearToDateTotalEquity() {
+        return null;
     }
 
     @Override
     public void deleteAccountActivity(Date date) {
         accountActivityRepo.deleteById(date);
     }
+
 
     @Override
     public Collection<AccountActivity> getAccountActivityByRange(String range) {
@@ -78,43 +107,56 @@ public class UserAccountManagerServiceImpl implements UserAccountManagerService 
         return accountActivities;
 
     }
-    private HashMap<String, List<Double>> getAccountInfoByRange(String range){
-        HashMap<String, List<Double>> accountInfo = new HashMap<>();
+
+
+    private List<HashMap<String, Object>> getAccountInfoByRange(
+            String type,String range) {
         Collection<AccountActivity> accountActivities = getAccountActivityByRange(range);
-        List<Double> netWorthLst = new ArrayList<>();
-        List<Double> cashLst = new ArrayList<>();
-        List<Double> equityLst = new ArrayList<>();
-        List<Double> totalEquityLst = new ArrayList<>();
-        for (AccountActivity ac : accountActivities){
-            netWorthLst.add(ac.getNetWorth());
-            cashLst.add(ac.getCashValue());
-            equityLst.add(ac.getInvestmentValue());
-            totalEquityLst.add(ac.getTotalEquity());
+        System.out.println(accountActivities);
+        List<HashMap<String,Object>> accountInfo = new ArrayList<>();
+        for (AccountActivity ac : accountActivities) {
+            HashMap<String, Object> info = new HashMap<>();
+            LocalDate localDate = LocalDate.ofInstant(ac.getDate().toInstant(), ZoneId.systemDefault());
+            info.put("name", localDate);
+            switch (type) {
+                case "cashValue":
+                    info.put("value", ac.getCashValue());
+                    break;
+                case "totalEquity":
+                    info.put("value", ac.getTotalEquity());
+                    break;
+                case "investmentValue":
+                    info.put("value", ac.getInvestmentValue());
+                    break;
+                case "netWorth":
+                    info.put("value", ac.getNetWorth());
+                    break;
+            }
+            accountInfo.add(info);
+
         }
-        accountInfo.put("netWorth",netWorthLst);
-        accountInfo.put("investmentValue",equityLst);
-        accountInfo.put("cashValue",cashLst);
-        accountInfo.put("totalEquity",totalEquityLst);
+
         return accountInfo;
     }
+
     @Override
-    public List<Double> getNetWorthByRange(String range) {
-        return getAccountInfoByRange(range).get("netWorth");
+    public List<HashMap<String, Object>> getNetWorthByRange(String range) {
+        return getAccountInfoByRange("netWorth", range);
     }
 
     @Override
-    public List<Double> getCashValueByRange(String range) {
-        return getAccountInfoByRange(range).get("cashValue");
+    public List<HashMap<String, Object>> getCashValueByRange(String range) {
+        return getAccountInfoByRange("cashValue",range);
     }
 
     @Override
-    public List<Double> getInvestmentValueByRange(String range) {
-        return getAccountInfoByRange(range).get("investmentValue");
+    public List<HashMap<String, Object>> getInvestmentValueByRange(String range) {
+        return getAccountInfoByRange("investmentValue",range);
     }
 
     @Override
-    public List<Double> getTotalEquityByRange(String range) {
-        return getAccountInfoByRange(range).get("totalEquity");
+    public List<HashMap<String, Object>> getTotalEquityByRange(String range) {
+        return getAccountInfoByRange("totalEquity",range);
     }
 
 }
