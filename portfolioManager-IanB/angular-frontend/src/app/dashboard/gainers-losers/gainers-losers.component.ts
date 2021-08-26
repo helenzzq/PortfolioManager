@@ -9,8 +9,8 @@ import { DatabaseService } from 'src/app/database/database.service'
 })
 export class GainersLosersComponent implements OnInit {
 
-  gainerStr = "portfoliomanager/gainers"
-  loserStr = "portfoliomanager/losers"
+  gainerStr = "portfolio-manager/gainers"
+  loserStr = "portfolio-manager/losers"
   gainerNames = ["loading...", "loading...", "loading...", "loading...", "loading..."]
   loserNames = ["loading...", "loading...", "loading...", "loading...", "loading..."]
 

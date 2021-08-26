@@ -79,7 +79,7 @@ export class BalancesComponent implements OnInit {
         console.log(this.data);
       });
 
-    this.databaseService.getApiData('portfoliomanager/networth/today')
+    this.databaseService.getApiData('portfolio-manager/net-worth/today')
       .subscribe((incomingData: any) => {
         this.networthToday = incomingData
         console.log(this.networthToday);

@@ -8,7 +8,7 @@ import { DatabaseService } from 'src/app/database/database.service'
 })
 export class IndicesComponent implements OnInit {
 
-  indexStr = "portfoliomanager/indices"
+  indexStr = "portfolio-manager/indices"
   indicesData = [{}, {}, {}, {}]
 
   constructor(private databaseService:DatabaseService) { }
