@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 
 @RestController
@@ -50,8 +51,42 @@ public class UserAccountManagerController {
      * */
     @GetMapping("/account/range={range}")
     public Collection<AccountActivity> getAccountActivityByRange(@PathVariable("range") String range) {
-        return portfolioManagerService.getAccountActivityByRange(range);
+        return userManagerService.getAccountActivityByRange(range);
     }
+
+    /**
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Return A list of all net Worth within the range
+     * */
+    @GetMapping("/account/net-worth/range={range}")
+    public List<Double> getNetWorthByRange(@PathVariable("range") String range) {
+        return userManagerService.getNetWorthByRange(range);
+    }
+    /**
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Return  A list of all cash Value balance within the time range
+     * */
+    @GetMapping("/account/cash/range={range}")
+    public List<Double> getCashValueByRange(@PathVariable("range") String range) {
+        return userManagerService.getCashValueByRange(range);
+    }
+    /**
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Return A list of all market Value balance within the time range
+     * */
+    @GetMapping("/account/market-value/range={range}")
+    public List<Double> getMarketValueByRange(@PathVariable("range") String range) {
+        return userManagerService.getInvestmentValueByRange(range);
+    }
+    /**
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Return A list of all total Equity balance within the time range
+     * */
+    @GetMapping("/account/total-equity/range={range}")
+    public List<Double> getTotalEquityByRange(@PathVariable("range") String range) {
+        return userManagerService.getTotalEquityByRange(range);
+    }
+
 
     /*
      * Path Variable date is in dd-mm-yyyy format
