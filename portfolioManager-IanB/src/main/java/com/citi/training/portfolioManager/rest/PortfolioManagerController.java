@@ -105,10 +105,6 @@ public class PortfolioManagerController {
         return marketUpdaterServices.getDailyLosers();
     }
 
-    @GetMapping("/indices/indices={symbol}")
-    public HashMap<String, Double> getSingleIndices(@PathVariable("symbol") String symbol) {
-        return marketUpdaterServices.getIndicesInfo(symbol);
-    }
     @GetMapping("/indices/famous-indices")
     public HashMap<String, String> getFamousIndices() {
         return marketUpdaterServices.getFamousIndicesInfo();
