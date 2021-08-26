@@ -39,7 +39,7 @@ public class UserAccountManagerController {
         return userManagerService.getAccountActivity();
     }
 
-    //
+
 //    @PostMapping("/update-networth/{date}")
 //    public void deposit(@PathVariable("date") long date) {
 //        portfolioManagerService.updateNetWorth(1, new Date(date));
