@@ -129,7 +129,7 @@ export var yearToDateGraphData = [
       }
     ]
   },
-  
+
   {
     "name": "Total Equity",
     "series": [
@@ -157,17 +157,23 @@ export var yearToDateGraphData = [
 })
 export class ActivityComponent implements OnInit {
   // selectedTimeFrame = 'lastWeek';
-  
+
   // data from database
   lastWeekData: any;
   lastMonthData: any;
   lastQuarterData: any;
   yearToDateData: any;
+
   // data mapped to work with graph
-  lastWeekGraphData: any = [{name: 'Net Worth',series: []},
-  {name: 'Cash',series: []},
-  {name: 'Market Value',series: []},
-  {name: 'Total Equity',series: []}];
+  lastWeekGraphData: any = [{ name: 'Net Worth', series: [] },
+  { name: 'Cash', series: [] },
+  { name: 'Market Value', series: [] },
+  { name: 'Total Equity', series: [] }];
+  lastMonthGraphData: any = [{ name: 'Net Worth', series: [] },
+  { name: 'Cash', series: [] },
+  { name: 'Market Value', series: [] },
+  { name: 'Total Equity', series: [] }];
+
 
   multi: any;
   // view: any = [900, 500];
@@ -191,44 +197,75 @@ export class ActivityComponent implements OnInit {
 
   ngOnInit(): void {
     this.databaseService.getApiData('user/account/net-worth/range=lastWeek')
-    .subscribe((incomingData: any) => {
-      // this.lastWeekData = incomingData
-      // console.log(this.lastWeekData);
-      this.lastWeekData = this.mapLastWeekData(incomingData, 'Net Worth');
-    });
+      .subscribe((incomingData: any) => {
+        // this.lastWeekData = incomingData
+        // console.log(this.lastWeekData);
+        this.lastWeekData = this.mapLastWeekData(incomingData, 'Net Worth');
+      });
 
     this.databaseService.getApiData('user/account/cash/range=lastWeek')
-    .subscribe((incomingData: any) => {
-      // this.lastWeekData = incomingData
-      // console.log(this.lastWeekData);
-      this.lastWeekData = this.mapLastWeekData(incomingData, 'Cash');
-    });
+      .subscribe((incomingData: any) => {
+        // this.lastWeekData = incomingData
+        // console.log(this.lastWeekData);
+        this.lastWeekData = this.mapLastWeekData(incomingData, 'Cash');
+      });
 
     this.databaseService.getApiData('user/account/market-value/range=lastWeek')
-    .subscribe((incomingData: any) => {
-      // this.lastWeekData = incomingData
-      // console.log(this.lastWeekData);
-      this.lastWeekData = this.mapLastWeekData(incomingData, 'Market Value');
-    });
+      .subscribe((incomingData: any) => {
+        // this.lastWeekData = incomingData
+        // console.log(this.lastWeekData);
+        this.lastWeekData = this.mapLastWeekData(incomingData, 'Market Value');
+      });
 
     this.databaseService.getApiData('user/account/total-equity/range=lastWeek')
-    .subscribe((incomingData: any) => {
-      // this.lastWeekData = incomingData
-      // console.log(this.lastWeekData);
-      this.lastWeekData = this.mapLastWeekData(incomingData, 'Total Equity');
-    });
+      .subscribe((incomingData: any) => {
+        // this.lastWeekData = incomingData
+        // console.log(this.lastWeekData);
+        this.lastWeekData = this.mapLastWeekData(incomingData, 'Total Equity');
+      });
 
-  //   this.databaseService.getApiData('user')
-  //   .subscribe((incomingData: any) => {
-  //     this.data = incomingData
-  //     console.log(this.data);
-  //   });
 
-  // this.databaseService.getApiData('portfolio-manager/net-worth/today')
-  //   .subscribe((incomingData: any) => {
-  //     this.networthToday = incomingData
-  //     console.log(this.networthToday);
-  //   });
+      // _____________Last Month__________________
+
+      this.databaseService.getApiData('user/account/net-worth/range=lastMonth')
+      .subscribe((incomingData: any) => {
+        // this.lastWeekData = incomingData
+        // console.log(this.lastWeekData);
+        this.lastWeekData = this.mapLastMonthData(incomingData, 'Net Worth');
+      });
+
+    this.databaseService.getApiData('user/account/cash/range=lastMonth')
+      .subscribe((incomingData: any) => {
+        // this.lastWeekData = incomingData
+        // console.log(this.lastWeekData);
+        this.lastWeekData = this.mapLastMonthData(incomingData, 'Cash');
+      });
+
+    this.databaseService.getApiData('user/account/market-value/range=lastMonth')
+      .subscribe((incomingData: any) => {
+        // this.lastWeekData = incomingData
+        // console.log(this.lastWeekData);
+        this.lastWeekData = this.mapLastMonthData(incomingData, 'Market Value');
+      });
+
+    this.databaseService.getApiData('user/account/total-equity/range=lastMonth')
+      .subscribe((incomingData: any) => {
+        // this.lastWeekData = incomingData
+        // console.log(this.lastWeekData);
+        this.lastWeekData = this.mapLastMonthData(incomingData, 'Total Equity');
+      });
+
+    //   this.databaseService.getApiData('user')
+    //   .subscribe((incomingData: any) => {
+    //     this.data = incomingData
+    //     console.log(this.data);
+    //   });
+
+    // this.databaseService.getApiData('portfolio-manager/net-worth/today')
+    //   .subscribe((incomingData: any) => {
+    //     this.networthToday = incomingData
+    //     console.log(this.networthToday);
+    //   });
   }
 
   onSelect(data: any): void {
@@ -243,17 +280,66 @@ export class ActivityComponent implements OnInit {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
-  array: any[] = [];
+  // array: any[] = [];
 
   mapLastWeekData(incomingData: any, type: string) {
-    this.lastWeekGraphData;
-    console.log(incomingData);
+    // this.lastWeekGraphData;
+    // console.log(incomingData);
 
     // if () {}
 
+    switch (type) {
+      case 'Net Worth':
+        this.lastWeekGraphData[0].series.push(...incomingData);
+        break;
+      case 'Cash':
+        this.lastWeekGraphData[1].series.push(...incomingData);
+        break;
+      case 'Market Value':
+        this.lastWeekGraphData[2].series.push(...incomingData);
+        break;
+      case 'Total Equity':
+        this.lastWeekGraphData[3].series.push(...incomingData);
+        // console.log(JSON.stringify(incomingData));
+        // console.log(JSON.stringify(this.lastWeekGraphData));
+        // console.log('YTD: ' );
+        // console.log(JSON.stringify(yearToDateGraphData));
+        break;
+      default:
+        break;
+    }
+  }
+
+    mapLastMonthData(incomingData: any, type: string) {
+      // this.lastWeekGraphData;
+      // console.log(incomingData);
+  
+      // if () {}
+  
+      switch (type) {
+        case 'Net Worth':
+          this.lastMonthGraphData[0].series.push(...incomingData);
+          break;
+        case 'Cash':
+          this.lastMonthGraphData[1].series.push(...incomingData);
+          break;
+        case 'Market Value':
+          this.lastMonthGraphData[2].series.push(...incomingData);
+          break;
+        case 'Total Equity':
+          this.lastMonthGraphData[3].series.push(...incomingData);
+          // console.log(JSON.stringify(incomingData));
+          // console.log(JSON.stringify(this.lastWeekGraphData));
+          // console.log('YTD: ' );
+          // console.log(JSON.stringify(yearToDateGraphData));
+          break;
+        default:
+          break;
+      }
+
     // this.lastWeekGraphData = incomingData.map((obj:any) => {return {name: type,series: this.array.push(obj)}});
     // this.lastWeekGraphData = incomingData.map((obj:any) => {return this.lastWeekGraphData[indexOfType] {name: type,series: this.array.push(obj)}});
-    console.log(this.lastWeekGraphData);
+
   }
 
   onSelectTimeFrame(selectedTimeFrame: any) {
@@ -261,9 +347,8 @@ export class ActivityComponent implements OnInit {
     // let val: string = '';
     switch (selectedTimeFrame) {
       case 'lastMonth':
-        // data for this doesn't exist yet
-        // this.multi = lastMonthGraphData;
-        // this.xAxisLabel = 'day';
+        this.multi = this.lastMonthGraphData;
+        this.xAxisLabel = 'day';
         break;
       case 'lastQuarter':
         // data for this doesn't exist yet
