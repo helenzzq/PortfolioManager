@@ -54,30 +54,6 @@ public class UserAccountManagerServiceImpl implements UserAccountManagerService 
 
 
     @Override
-    public List<HashMap<String, Object>> getYearToDateCash() throws ParseException {
-        List<HashMap<String, Object>> cashInfo = new ArrayList<>();
-        Collection<List> cashCollection = accountActivityRepo.getCashValueByMonth(7, 2021);
-        for (List cash : cashCollection) {
-            HashMap<String, Object> info = new HashMap<>();
-            info.put("name", DateTimeFormatter.formatMonth(cash.get(0).toString()));
-            info.put("value", cash.get(1));
-            cashInfo.add(info);
-        }
-        return cashInfo;
-
-    }
-
-    @Override
-    public List<Double> getYearToDateNetWorth() {
-        return null;
-    }
-
-    @Override
-    public List<Double> getYearToDateTotalEquity() {
-        return null;
-    }
-
-    @Override
     public void deleteAccountActivity(Date date) {
         accountActivityRepo.deleteById(date);
     }
