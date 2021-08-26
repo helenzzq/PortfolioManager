@@ -5,14 +5,13 @@ import org.threeten.extra.YearQuarter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.ZoneId;
 import java.util.Date;
 
 public class DateTimeFormatter {
-    public static String formatMonth(String month)  {
-        SimpleDateFormat monthParse = new SimpleDateFormat("MM-dd");
-        SimpleDateFormat monthDisplay = new SimpleDateFormat("MMMM-dd");
+    public static String formatLocalDate(String month)  {
+        SimpleDateFormat monthParse = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat monthDisplay = new SimpleDateFormat("MMMM dd");
         try {
             return monthDisplay.format(monthParse.parse(month));
         } catch (ParseException e) {
@@ -32,4 +31,7 @@ public class DateTimeFormatter {
         return lastQuarter.atDay(1).getMonthValue();
     }
 
+    public static void main(String[] args){
+       System.out.println(formatLocalDate(LocalDate.now().toString()));
+    }
 }

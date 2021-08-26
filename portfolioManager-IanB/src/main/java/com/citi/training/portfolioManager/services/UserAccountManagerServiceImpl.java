@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
@@ -104,7 +102,8 @@ public class UserAccountManagerServiceImpl implements UserAccountManagerService 
         List<HashMap<String, Object>> accountInfo = new ArrayList<>();
         for (AccountActivity ac : accountActivities) {
             HashMap<String, Object> info = new HashMap<>();
-            info.put("name", DateTimeFormatter.formatMonth(ac.getDate().toString()));
+            String dates = DateTimeFormatter.convertDateToLocalDate(ac.getDate()).toString();
+            info.put("name", DateTimeFormatter.formatLocalDate(dates));
             switch (type) {
                 case "cashValue":
                     info.put("value", ac.getCashValue());
