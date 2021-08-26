@@ -47,7 +47,7 @@ public class UserAccountManagerController {
 //        portfolioManagerService.updateNetWorth(1, new Date(date));
 //    }
     /**
-     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter,yearToDate]
      * @Return A list of all account Activity within the time range
      * */
     @GetMapping("/account/range={range}")
@@ -64,7 +64,7 @@ public class UserAccountManagerController {
         return userAccountManagerService.getNetWorthByRange(range);
     }
     /**
-     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter,yearToDate]
      * @Return  A list of all cash Value balance within the time range
      * */
     @GetMapping("/account/cash/range={range}")
@@ -72,7 +72,7 @@ public class UserAccountManagerController {
         return userAccountManagerService.getCashValueByRange(range);
     }
     /**
-     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter,yearToDate]
      * @Return A list of all market Value balance within the time range
      * */
     @GetMapping("/account/market-value/range={range}")
@@ -80,18 +80,18 @@ public class UserAccountManagerController {
         return userAccountManagerService.getInvestmentValueByRange(range);
     }
     /**
-     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter,yearToDate]
      * @Return A list of all total Equity balance within the time range
      * */
     @GetMapping("/account/total-equity/range={range}")
     public List<HashMap<String, Object>> getTotalEquityByRange(@PathVariable("range") String range) {
         return userAccountManagerService.getTotalEquityByRange(range);
     }
-    @GetMapping("/account/cash/test")
-    public List<HashMap<String,Object>> test() throws ParseException {
-        return userAccountManagerService.getYearToDateCash();
-    }
 
+    @GetMapping("/account/balance/userid={id}")
+    public List<HashMap<String, Object>> getTodayAccountBalance(@PathVariable("id") int id) {
+        return userAccountManagerService.getTodayAccountBalance(id);
+    }
     /*
      * Path Variable date is in dd-mm-yyyy format
      * */

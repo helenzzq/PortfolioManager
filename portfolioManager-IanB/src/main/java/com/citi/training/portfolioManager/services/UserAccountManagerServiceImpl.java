@@ -4,16 +4,19 @@ import com.citi.training.portfolioManager.entities.AccountActivity;
 import com.citi.training.portfolioManager.entities.User;
 import com.citi.training.portfolioManager.repo.AccountRepository;
 import com.citi.training.portfolioManager.repo.UserRepository;
+import com.citi.training.portfolioManager.services.marketData.ExchangeRateDownloader;
 import com.citi.training.portfolioManager.strategy.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.threeten.extra.YearQuarter;
 
+import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
+
+import static org.apache.http.client.utils.DateUtils.parseDate;
 
 @Service
 public class UserAccountManagerServiceImpl implements UserAccountManagerService {
@@ -53,30 +56,6 @@ public class UserAccountManagerServiceImpl implements UserAccountManagerService 
 
 
     @Override
-    public List<HashMap<String, Object>> getYearToDateCash() throws ParseException {
-        List<HashMap<String, Object>> cashInfo = new ArrayList<>();
-        Collection<List> cashCollection = accountActivityRepo.getCashValueByMonth(7,2021);
-        for (List cash : cashCollection) {
-            HashMap<String, Object> info = new HashMap<>();
-            info.put("name", DateTimeFormatter.formatMonth(cash.get(0).toString()));
-            info.put("value", cash.get(1));
-            cashInfo.add(info);
-        }
-        return cashInfo;
-
-    }
-
-    @Override
-    public List<Double> getYearToDateNetWorth() {
-        return null;
-    }
-
-    @Override
-    public List<Double> getYearToDateTotalEquity() {
-        return null;
-    }
-
-    @Override
     public void deleteAccountActivity(Date date) {
         accountActivityRepo.deleteById(date);
     }
@@ -97,46 +76,35 @@ public class UserAccountManagerServiceImpl implements UserAccountManagerService 
             case "lastMonth":
                 accountActivities = accountActivityRepo.getAccountActivitiesByYearAndMonth(month - 1, 2021);
                 break;
-            case "lastQuarter":
+            default:
                 int startMonth = DateTimeFormatter.getLastQuarterStartMonth();
-                accountActivities = accountActivityRepo.getAccountActivitiesByYearAndMonth(startMonth,2021);
+                accountActivities = new ArrayList<>();
+                int timeLength = 3;
+                if (range.equals("yearToDate")) {
+                    startMonth = 1;
+                    timeLength = LocalDate.now().getMonthValue();
+                }
+
+                for (int i = 0; i < timeLength; i++) {
+
+                    List<AccountActivity> temp = accountActivityRepo.getAccountActivitiesByYearAndMonth(startMonth + i, 2021);
+                    accountActivities.add(temp.get(temp.size() - 1));
+                }
                 break;
         }
+        System.out.println(accountActivities);
         return accountActivities;
 
     }
 
-    private List<HashMap<String, Object>> getAccountInfoByQuarter(String type, Collection<AccountActivity> account) {
-        List<HashMap<String, Object>> accountInfo = new ArrayList<>();
-        HashMap<String, Object> info = new HashMap<>();
-        List<AccountActivity> accounts = new ArrayList<>(account);
-        LocalDate localDate = DateTimeFormatter.convertDateToLocalDate(accounts.get(0).getDate());
-        info.put("name", DateTimeFormatter.formatMonth(String.valueOf(localDate.getMonthValue())));
-        System.out.println(type);
-        switch (type) {
-            case "cashValue":
-                info.put("value", accounts.get(accounts.size() - 1).getCashValue() - accounts.get(0).getCashValue());
-                break;
-            case "totalEquity":
-                info.put("value", accounts.get(accounts.size() - 1).getTotalEquity() - accounts.get(0).getTotalEquity());
-                break;
-            case "investmentValue":
-                info.put("value", accounts.get(accounts.size() - 1).getInvestmentValue() - accounts.get(0).getInvestmentValue());
-                break;
-            case "netWorth":
-                info.put("value", accounts.get(accounts.size() - 1).getNetWorth() - accounts.get(0).getNetWorth());
-                break;
-        }
-        accountInfo.add(info);
-        return accountInfo;
-    }
 
-    private List<HashMap<String, Object>> getAccountInfoByMonthOrWeek(String type, Collection<AccountActivity> account) {
+    private List<HashMap<String, Object>> getAccountInfoByRange(
+            String type, String range) {
+        Collection<AccountActivity> accountActivities = getAccountActivityByRange(range);
         List<HashMap<String, Object>> accountInfo = new ArrayList<>();
-        for (AccountActivity ac : account) {
+        for (AccountActivity ac : accountActivities) {
             HashMap<String, Object> info = new HashMap<>();
-            LocalDate localDate = DateTimeFormatter.convertDateToLocalDate(ac.getDate());
-            info.put("name", localDate);
+            info.put("name", DateTimeFormatter.formatMonth(ac.getDate().toString()));
             switch (type) {
                 case "cashValue":
                     info.put("value", ac.getCashValue());
@@ -155,21 +123,6 @@ public class UserAccountManagerServiceImpl implements UserAccountManagerService 
 
         }
         return accountInfo;
-    }
-
-    private List<HashMap<String, Object>> getAccountInfoByRange(
-            String type, String range) {
-        Collection<AccountActivity> accountActivities = getAccountActivityByRange(range);
-        if (range.equals("lastQuarter")) {
-
-                return getAccountInfoByQuarter(type, accountActivities);
-
-        } else if (range.equals("yearToDate")) {
-            return null;
-        }
-
-
-        return getAccountInfoByMonthOrWeek(type, accountActivities);
 
 
     }
@@ -193,5 +146,42 @@ public class UserAccountManagerServiceImpl implements UserAccountManagerService 
     public List<HashMap<String, Object>> getTotalEquityByRange(String range) {
         return getAccountInfoByRange("totalEquity", range);
     }
+
+
+    @Override
+    public List<HashMap<String, Object>> getTodayAccountBalance(Integer userId) {
+        User user = userRepository.getById(1);
+        ExchangeRateDownloader ex = new ExchangeRateDownloader("CAD/USD");
+        try {
+            ex.retrieveData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Double rate = ex.getExchangeRate();
+        AccountActivity ac = user.getTodayAccountActivity();
+        List<HashMap<String, Object>> balances = new ArrayList<>();
+        HashMap<String, Object> balanceEntry = new HashMap<>();
+        String[] strings = {"USD only", "Combined in CAD"};
+        balanceEntry.put("currency", "CAD only");
+        balanceEntry.put("cash", 0.0);
+        balanceEntry.put("marketValue", 0.0);
+        balanceEntry.put("totalEquity", 0.0);
+
+        balances.add(balanceEntry);
+        for (String st : strings) {
+            balanceEntry = new HashMap<>();
+           double cash = st.equals("USD only") ? ac.getCashValue() : (ac.getCashValue() * rate);
+            double marketValue = st.equals("USD only") ? ac.getInvestmentValue() : (ac.getInvestmentValue() * rate);
+            double totalEquity =  st.equals("USD only") ? ac.getTotalEquity() : (ac.getTotalEquity() * rate);
+            balanceEntry.put("currency", st);
+            balanceEntry.put("cash", (float)(cash));
+            balanceEntry.put("marketValue", (float)marketValue);
+            balanceEntry.put("totalEquity", (float)totalEquity);
+            balances.add(balanceEntry);
+        }
+
+        return balances;
+    }
+
 
 }

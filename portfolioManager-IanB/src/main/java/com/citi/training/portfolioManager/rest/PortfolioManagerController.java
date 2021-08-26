@@ -33,6 +33,12 @@ public class PortfolioManagerController {
         return portfolioManagerService.getAllInvestment(userId);
     }
 
+    @GetMapping("/exchange-rate/USD-CAD")
+    public Double getUSDToCADExchangeRate(){
+       return  marketUpdaterServices.getExchangeRateBySymbol("USD","CAD");
+
+    }
+
     @GetMapping("/net-worth/today")
     public Double getTodayNetWorth() {
         return portfolioManagerService.getTodayNetWorth();

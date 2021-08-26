@@ -20,11 +20,6 @@ public interface UserAccountManagerService {
     Collection<AccountActivity> getAccountActivity();
 
 
-    List<HashMap<String,Object>> getYearToDateCash() throws ParseException;
-
-    List<Double> getYearToDateNetWorth();
-    List<Double> getYearToDateTotalEquity();
-
     void deleteAccountActivity(Date date);
 
     Collection<AccountActivity> getAccountActivityByRange(String range);
@@ -36,4 +31,6 @@ public interface UserAccountManagerService {
     List<HashMap<String, Object>> getInvestmentValueByRange(String range);
 
     List<HashMap<String, Object>> getTotalEquityByRange(String range);
+
+    List<HashMap<String,Object>> getTodayAccountBalance(Integer userId);
 }

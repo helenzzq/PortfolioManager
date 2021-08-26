@@ -1,9 +1,6 @@
 package com.citi.training.portfolioManager.services;
 
-import com.citi.training.portfolioManager.services.marketData.EtfDownloader;
-import com.citi.training.portfolioManager.services.marketData.IndicesDownloader;
-import com.citi.training.portfolioManager.services.marketData.MarketMovers;
-import com.citi.training.portfolioManager.services.marketData.StockDownloader;
+import com.citi.training.portfolioManager.services.marketData.*;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.stereotype.Service;
 
@@ -94,5 +91,15 @@ public class MarketUpdaterServiceImpl implements MarketUpdaterServices {
             return 0.0;
         }
         return 0.0;
+    }
+    @Override
+    public Double getExchangeRateBySymbol(String currency, String toCurrency){
+        ExchangeRateDownloader ex = new ExchangeRateDownloader(currency+"/"+toCurrency);
+        try {
+            ex.retrieveData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ex.getExchangeRate();
     }
 }
