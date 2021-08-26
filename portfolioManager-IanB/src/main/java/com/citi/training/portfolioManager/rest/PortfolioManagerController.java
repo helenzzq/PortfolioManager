@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
-@RequestMapping("/portfoliomanager")
+@RequestMapping("/portfolio-manager")
 @CrossOrigin // allows requests from all domains
 public class PortfolioManagerController {
 
@@ -34,12 +34,12 @@ public class PortfolioManagerController {
      * GET Requests
      **/
 
-    @GetMapping("/investments/{id}")
+    @GetMapping("/investments/userId={id}")
     public HashMap<String, List<Investment>> getAllInvestments(@PathVariable("id") Integer userId) {
         return portfolioManagerService.getAllInvestment(userId);
     }
 
-    @GetMapping("/networth/today")
+    @GetMapping("/net-worth/today")
     public Double getTodayNetWorth() {
         return portfolioManagerService.getTodayNetWorth();
     }
@@ -48,7 +48,7 @@ public class PortfolioManagerController {
     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
      * @Return A list of all net Worth within the range
     * */
-    @GetMapping("/networth/{range}")
+    @GetMapping("/net-worth/range={range}")
     public List<Double> getNetWorthByRange(@PathVariable("range") String range) {
         return portfolioManagerService.getNetWorthByRange(range);
     }
@@ -56,7 +56,7 @@ public class PortfolioManagerController {
      * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
      * @Return  A list of all cash Value balance within the time range
      * */
-    @GetMapping("/cash/{range}")
+    @GetMapping("/cash/range={range}")
     public List<Double> getCashValueByRange(@PathVariable("range") String range) {
         return portfolioManagerService.getCashValueByRange(range);
     }
@@ -64,7 +64,7 @@ public class PortfolioManagerController {
      * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
      * @Return A list of all market Value balance within the time range
      * */
-    @GetMapping("/marketValue/{range}")
+    @GetMapping("/market-value/range={range}")
     public List<Double> getMarketValueByRange(@PathVariable("range") String range) {
         return portfolioManagerService.getInvestmentValueByRange(range);
     }
@@ -72,13 +72,13 @@ public class PortfolioManagerController {
      * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
      * @Return A list of all total Equity balance within the time range
      * */
-    @GetMapping("/totalEquity/{range}")
+    @GetMapping("/total-equity/range={range}")
     public List<Double> getTotalEquityByRange(@PathVariable("range") String range) {
         return portfolioManagerService.getTotalEquityByRange(range);
     }
 
 
-    @GetMapping("/investment/{type}/{ticker}")
+    @GetMapping("/investment/type={type}&ticker={ticker}")
     public Double getInvestmentValue(@PathVariable("type") String type, @PathVariable("ticker") String ticker) {
         return portfolioManagerService.getInvestmentValue(type, ticker);
     }
@@ -109,8 +109,8 @@ public class PortfolioManagerController {
         return marketUpdaterServices.getDailyLosers();
     }
 
-    @GetMapping("/indices/{symbol}")
-    public HashMap<String, Double> getIndices(@PathVariable("symbol") String symbol) {
+    @GetMapping("/indices/indices={symbol}")
+    public HashMap<String, Double> getSingleIndices(@PathVariable("symbol") String symbol) {
         return marketUpdaterServices.getIndicesInfo(symbol);
     }
     @GetMapping("/indices/famous-indices")

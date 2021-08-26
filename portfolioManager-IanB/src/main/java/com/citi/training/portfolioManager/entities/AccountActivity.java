@@ -38,8 +38,6 @@ public class AccountActivity implements Serializable {
     public AccountActivity() {
     }
 
-
-
     public Date getDate() {
         return date;
     }
