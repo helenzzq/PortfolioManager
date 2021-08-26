@@ -27,4 +27,6 @@ public interface MarketUpdaterServices {
     HashMap<String, String> getFamousIndicesInfo();
 
     Double getInvestmentPrice(String type, String symbol);
+
+    Double getExchangeRateBySymbol(String currency, String toCurrency);
 }

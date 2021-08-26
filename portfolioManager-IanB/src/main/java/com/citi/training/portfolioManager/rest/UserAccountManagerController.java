@@ -88,7 +88,10 @@ public class UserAccountManagerController {
         return userAccountManagerService.getTotalEquityByRange(range);
     }
 
-
+    @GetMapping("/account/balance/userid={id}")
+    public List<HashMap<String, Object>> getTodayAccountBalance(@PathVariable("id") int id) {
+        return userAccountManagerService.getTodayAccountBalance(id);
+    }
     /*
      * Path Variable date is in dd-mm-yyyy format
      * */

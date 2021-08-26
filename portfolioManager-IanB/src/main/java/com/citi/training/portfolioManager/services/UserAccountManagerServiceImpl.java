@@ -4,10 +4,12 @@ import com.citi.training.portfolioManager.entities.AccountActivity;
 import com.citi.training.portfolioManager.entities.User;
 import com.citi.training.portfolioManager.repo.AccountRepository;
 import com.citi.training.portfolioManager.repo.UserRepository;
+import com.citi.training.portfolioManager.services.marketData.ExchangeRateDownloader;
 import com.citi.training.portfolioManager.strategy.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -144,5 +146,42 @@ public class UserAccountManagerServiceImpl implements UserAccountManagerService 
     public List<HashMap<String, Object>> getTotalEquityByRange(String range) {
         return getAccountInfoByRange("totalEquity", range);
     }
+
+
+    @Override
+    public List<HashMap<String, Object>> getTodayAccountBalance(Integer userId) {
+        User user = userRepository.getById(1);
+        ExchangeRateDownloader ex = new ExchangeRateDownloader("CAD/USD");
+        try {
+            ex.retrieveData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Double rate = ex.getExchangeRate();
+        AccountActivity ac = user.getTodayAccountActivity();
+        List<HashMap<String, Object>> balances = new ArrayList<>();
+        HashMap<String, Object> balanceEntry = new HashMap<>();
+        String[] strings = {"USD only", "Combined in CAD"};
+        balanceEntry.put("currency", "CAD only");
+        balanceEntry.put("cash", 0.0);
+        balanceEntry.put("marketValue", 0.0);
+        balanceEntry.put("totalEquity", 0.0);
+
+        balances.add(balanceEntry);
+        for (String st : strings) {
+            balanceEntry = new HashMap<>();
+           double cash = st.equals("USD only") ? ac.getCashValue() : (ac.getCashValue() * rate);
+            double marketValue = st.equals("USD only") ? ac.getInvestmentValue() : (ac.getInvestmentValue() * rate);
+            double totalEquity =  st.equals("USD only") ? ac.getTotalEquity() : (ac.getTotalEquity() * rate);
+            balanceEntry.put("currency", st);
+            balanceEntry.put("cash", (float)(cash));
+            balanceEntry.put("marketValue", (float)marketValue);
+            balanceEntry.put("totalEquity", (float)totalEquity);
+            balances.add(balanceEntry);
+        }
+
+        return balances;
+    }
+
 
 }

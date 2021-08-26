@@ -31,4 +31,6 @@ public interface UserAccountManagerService {
     List<HashMap<String, Object>> getInvestmentValueByRange(String range);
 
     List<HashMap<String, Object>> getTotalEquityByRange(String range);
+
+    List<HashMap<String,Object>> getTodayAccountBalance(Integer userId);
 }
