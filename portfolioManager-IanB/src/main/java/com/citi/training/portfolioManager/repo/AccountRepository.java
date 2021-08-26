@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 public interface AccountRepository extends JpaRepository<AccountActivity, Date> {
 
@@ -17,11 +18,10 @@ public interface AccountRepository extends JpaRepository<AccountActivity, Date> 
     @Query("SELECT p FROM AccountActivity p where p.date <=:end AND p.date >=:start ")
     Collection<AccountActivity> getAccountActivitiesByInterval(@Param("start")  Date start, @Param("end") Date end);
 
+    @Query("SELECT function('Month',p.date), p.cashValue FROM AccountActivity p WHERE  function('Year',p.date) =:year  GROUP BY p.date,p.cashValue ")
+    Collection<List> getCashValueByMonth(@Param("year") int year);
+
+    @Query("SELECT function('Month',p.date), p.cashValue FROM AccountActivity p WHERE  where p.date <=:end AND p.date >=:start   GROUP BY p.date,p.cashValue ")
+    Collection<List> getCashValueByInterval(@Param("start")  Date start, @Param("end") Date end);
+
 }
-//
-//    @Query("SELECT p FROM AccountActivity p where function('Month',p.date)=:month and  function('Day',p.date) <: end AND function('Day',p.date) >: start ")
-//    Collection<AccountActivity> getAccountActivitiesByInterval(@Param("month")  Integer month, @Param("year") Integer year,
-//                                                               @Param("start")  Integer start, @Param("end") Integer end);
-//    @Query("SELECT p FROM AccountActivity p where function('Month',p.date)=:month and  function('Day',p.date) <: end AND function('Day',p.date) >: start ")
-//    Collection<AccountActivity> getAccountActivitiesByQuarter(@Param("month")  Integer month, @Param("year") Integer year,
-//                                                               @Param("start")  Integer start, @Param("end") Integer end);
