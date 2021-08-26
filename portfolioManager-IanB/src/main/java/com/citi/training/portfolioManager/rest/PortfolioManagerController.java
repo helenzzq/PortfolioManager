@@ -3,21 +3,16 @@ package com.citi.training.portfolioManager.rest;
 import com.citi.training.portfolioManager.entities.*;
 import com.citi.training.portfolioManager.services.MarketUpdaterServices;
 import com.citi.training.portfolioManager.services.PortfolioManagerService;
-import com.citi.training.portfolioManager.services.PortfolioManagerServiceImpl;
-import com.citi.training.portfolioManager.services.UserManagerService;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import org.springframework.data.repository.query.Param;
+import com.citi.training.portfolioManager.services.UserAccountManagerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
-@RequestMapping("/portfoliomanager")
+@RequestMapping("/portfolio-manager")
 @CrossOrigin // allows requests from all domains
 public class PortfolioManagerController {
 
@@ -26,59 +21,24 @@ public class PortfolioManagerController {
 
     @Autowired
     private MarketUpdaterServices marketUpdaterServices;
-
     @Autowired
-    private UserManagerService userManagerService;
+    private UserAccountManagerService userAccountManagerService;
 
     /**
      * GET Requests
      **/
 
-    @GetMapping("/investments/{id}")
+    @GetMapping("/investments/userId={id}")
     public HashMap<String, List<Investment>> getAllInvestments(@PathVariable("id") Integer userId) {
         return portfolioManagerService.getAllInvestment(userId);
     }
 
-    @GetMapping("/networth/today")
+    @GetMapping("/net-worth/today")
     public Double getTodayNetWorth() {
         return portfolioManagerService.getTodayNetWorth();
     }
 
-    /**
-    * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
-     * @Return A list of all net Worth within the range
-    * */
-    @GetMapping("/networth/{range}")
-    public List<Double> getNetWorthByRange(@PathVariable("range") String range) {
-        return portfolioManagerService.getNetWorthByRange(range);
-    }
-    /**
-     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
-     * @Return  A list of all cash Value balance within the time range
-     * */
-    @GetMapping("/cash/{range}")
-    public List<Double> getCashValueByRange(@PathVariable("range") String range) {
-        return portfolioManagerService.getCashValueByRange(range);
-    }
-    /**
-     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
-     * @Return A list of all market Value balance within the time range
-     * */
-    @GetMapping("/marketValue/{range}")
-    public List<Double> getMarketValueByRange(@PathVariable("range") String range) {
-        return portfolioManagerService.getInvestmentValueByRange(range);
-    }
-    /**
-     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
-     * @Return A list of all total Equity balance within the time range
-     * */
-    @GetMapping("/totalEquity/{range}")
-    public List<Double> getTotalEquityByRange(@PathVariable("range") String range) {
-        return portfolioManagerService.getTotalEquityByRange(range);
-    }
-
-
-    @GetMapping("/investment/{type}/{ticker}")
+    @GetMapping("/investment/type={type}&ticker={ticker}")
     public Double getInvestmentValue(@PathVariable("type") String type, @PathVariable("ticker") String ticker) {
         return portfolioManagerService.getInvestmentValue(type, ticker);
     }
@@ -109,10 +69,6 @@ public class PortfolioManagerController {
         return marketUpdaterServices.getDailyLosers();
     }
 
-    @GetMapping("/indices/{symbol}")
-    public HashMap<String, Double> getIndices(@PathVariable("symbol") String symbol) {
-        return marketUpdaterServices.getIndicesInfo(symbol);
-    }
     @GetMapping("/indices/famous-indices")
     public HashMap<String, String> getFamousIndices() {
         return marketUpdaterServices.getFamousIndicesInfo();
@@ -125,12 +81,12 @@ public class PortfolioManagerController {
 
     @PostMapping("/deposit/{cash}")
     public void deposit(@PathVariable("cash") double cash) {
-        userManagerService.deposit(cash, 1);
+        userAccountManagerService.deposit(cash, 1);
     }
 
     @PostMapping("/withdraw/{cash}")
     public void withdraw(@PathVariable("cash") double cash) {
-        Double response = userManagerService.withdraw(cash, 1);
+        Double response = userAccountManagerService.withdraw(cash, 1);
         if (response == null) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Sorry, there is no enough money in your cash account.");

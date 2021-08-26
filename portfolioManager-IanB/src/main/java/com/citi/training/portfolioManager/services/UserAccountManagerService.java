@@ -5,8 +5,9 @@ import com.citi.training.portfolioManager.entities.User;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
-public interface UserManagerService {
+public interface UserAccountManagerService {
 
     Collection<User> getUsers();
 
@@ -18,4 +19,13 @@ public interface UserManagerService {
 
     void deleteAccountActivity(Date date);
 
+    Collection<AccountActivity> getAccountActivityByRange(String range);
+
+    List<Double> getNetWorthByRange(String range);
+
+    List<Double> getCashValueByRange(String range);
+
+    List<Double> getInvestmentValueByRange(String range);
+
+    List<Double> getTotalEquityByRange(String range);
 }

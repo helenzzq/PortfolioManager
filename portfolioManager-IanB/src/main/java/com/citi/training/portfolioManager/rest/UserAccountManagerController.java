@@ -3,7 +3,7 @@ package com.citi.training.portfolioManager.rest;
 import com.citi.training.portfolioManager.entities.AccountActivity;
 import com.citi.training.portfolioManager.entities.User;
 import com.citi.training.portfolioManager.services.PortfolioManagerService;
-import com.citi.training.portfolioManager.services.UserManagerService;
+import com.citi.training.portfolioManager.services.UserAccountManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 
 @RestController
@@ -20,7 +21,7 @@ public class UserAccountManagerController {
 
 
     @Autowired
-    private UserManagerService userManagerService;
+    private UserAccountManagerService userAccountManagerService;
     @Autowired
     private PortfolioManagerService portfolioManagerService;
 
@@ -30,34 +31,62 @@ public class UserAccountManagerController {
 
     @GetMapping()
     public Collection<User> getAllUser() {
-        return userManagerService.getUsers();
+        return userAccountManagerService.getUsers();
     }
 
 
     @GetMapping("/account")
     public Collection<AccountActivity> getAllActivity() {
-        return userManagerService.getAccountActivity();
+        return userAccountManagerService.getAccountActivity();
     }
 
-    //
+
 //    @PostMapping("/update-networth/{date}")
 //    public void deposit(@PathVariable("date") long date) {
 //        portfolioManagerService.updateNetWorth(1, new Date(date));
 //    }
-    @GetMapping("/account/lastMonth")
-    public Collection<AccountActivity> getLastMonthAccountActivity() {
-        return portfolioManagerService.getAccountActivityByRange("lastMonth");
+    /**
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Return A list of all account Activity within the time range
+     * */
+    @GetMapping("/account/range={range}")
+    public Collection<AccountActivity> getAccountActivityByRange(@PathVariable("range") String range) {
+        return userAccountManagerService.getAccountActivityByRange(range);
     }
 
-    @GetMapping("/account/lastWeek")
-    public Collection<AccountActivity> getLastWeekAccountActivity() {
-        return portfolioManagerService.getAccountActivityByRange("lastWeek");
+    /**
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Return A list of all net Worth within the range
+     * */
+    @GetMapping("/account/net-worth/range={range}")
+    public List<Double> getNetWorthByRange(@PathVariable("range") String range) {
+        return userAccountManagerService.getNetWorthByRange(range);
+    }
+    /**
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Return  A list of all cash Value balance within the time range
+     * */
+    @GetMapping("/account/cash/range={range}")
+    public List<Double> getCashValueByRange(@PathVariable("range") String range) {
+        return userAccountManagerService.getCashValueByRange(range);
+    }
+    /**
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Return A list of all market Value balance within the time range
+     * */
+    @GetMapping("/account/market-value/range={range}")
+    public List<Double> getMarketValueByRange(@PathVariable("range") String range) {
+        return userAccountManagerService.getInvestmentValueByRange(range);
+    }
+    /**
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Return A list of all total Equity balance within the time range
+     * */
+    @GetMapping("/account/total-equity/range={range}")
+    public List<Double> getTotalEquityByRange(@PathVariable("range") String range) {
+        return userAccountManagerService.getTotalEquityByRange(range);
     }
 
-    @GetMapping("/account/lastQuarter")
-    public Collection<AccountActivity> getLastQuarterAccountActivity() {
-        return portfolioManagerService.getAccountActivityByRange("lastQuarter");
-    }
 
     /*
      * Path Variable date is in dd-mm-yyyy format
@@ -65,7 +94,7 @@ public class UserAccountManagerController {
     @PostMapping("/delete-account-activity/{date}")
     public void deleteAccountActivity(@PathVariable("date") String date) throws ParseException {
         Date dates = new SimpleDateFormat("dd-MM-yyyy").parse(date);
-        userManagerService.deleteAccountActivity(dates);
+        userAccountManagerService.deleteAccountActivity(dates);
     }
 
 }

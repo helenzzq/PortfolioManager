@@ -26,9 +26,6 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     @Autowired
     private AccountRepository accountActivityRepo;
     @Autowired
-    private MarketUpdaterServices marketUpdaterServices;
-
-    @Autowired
     private StockRepository stockRepository;
     @Autowired
     private EtfRepository etfRepository;
@@ -55,70 +52,6 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
             investment = null;
         }
         return investment;
-    }
-
-    @Override
-    public Collection<AccountActivity> getAccountActivityByRange(String range) {
-        LocalDate today = LocalDate.now();
-        Collection<AccountActivity> accountActivities = null;
-        int month = today.getMonthValue();
-        switch (range) {
-            case "lastWeek":
-                LocalDate date = today.with(DayOfWeek.MONDAY).minusDays(7);
-                Date lastMonday = java.sql.Date.valueOf(date);
-                Date lastFriday = java.sql.Date.valueOf(date.plusDays(4));
-                accountActivities = accountActivityRepo.getAccountActivitiesByInterval(lastMonday, lastFriday);
-                break;
-            case "lastMonth":
-                accountActivities = accountActivityRepo.getAccountActivitiesByYearAndMonth(month - 1, 2021);
-                break;
-            case "lastQuarter":
-                YearQuarter lastQuarter = YearQuarter.now(ZoneId.systemDefault()).minusQuarters(1);
-                Date firstDay = java.sql.Date.valueOf(lastQuarter.atDay(1));
-                Date lastDayOfLastQuarter = java.sql.Date.valueOf(lastQuarter.atEndOfQuarter());
-                accountActivities = accountActivityRepo.getAccountActivitiesByInterval(firstDay, lastDayOfLastQuarter);
-                break;
-        }
-        return accountActivities;
-
-    }
-    private HashMap<String,List<Double>> getAccountInfoByRange(String range){
-        HashMap<String, List<Double>> accountInfo = new HashMap<>();
-        Collection<AccountActivity> accountActivities = getAccountActivityByRange(range);
-        List<Double> netWorthLst = new ArrayList<>();
-        List<Double> cashLst = new ArrayList<>();
-        List<Double> equityLst = new ArrayList<>();
-        List<Double> totalEquityLst = new ArrayList<>();
-        for (AccountActivity ac : accountActivities){
-            netWorthLst.add(ac.getNetWorth());
-            cashLst.add(ac.getCashValue());
-            equityLst.add(ac.getInvestmentValue());
-            totalEquityLst.add(ac.getTotalEquity());
-        }
-        accountInfo.put("netWorth",netWorthLst);
-        accountInfo.put("investmentValue",equityLst);
-        accountInfo.put("cashValue",cashLst);
-        accountInfo.put("totalEquity",totalEquityLst);
-        return accountInfo;
-    }
-    @Override
-    public List<Double> getNetWorthByRange(String range) {
-        return getAccountInfoByRange(range).get("netWorth");
-    }
-
-    @Override
-    public List<Double> getCashValueByRange(String range) {
-        return getAccountInfoByRange(range).get("cashValue");
-    }
-
-    @Override
-    public List<Double> getInvestmentValueByRange(String range) {
-        return getAccountInfoByRange(range).get("investmentValue");
-    }
-
-    @Override
-    public List<Double> getTotalEquityByRange(String range) {
-        return getAccountInfoByRange(range).get("totalEquity");
     }
 
 
@@ -166,71 +99,71 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         return investment;
 
     }
+//
+//    @Override
+//    public Double buyInvestment(String type, String ticker, Double quantity) {
+//        Double currentQuantity = 0.0;
+//        //Check if current investment exist
+//        Investment investment = getInvestmentFromRepo(type, ticker);
+//        //Step 1: Identify investment type
+//        //Case 1: Buy Stock
+//        Double price = marketUpdaterServices.getInvestmentPrice(type, ticker);
+//        String className = "com.citi.training.portfolioManager.entities." + type;
+//        Investment investment1 = null;
+//        try {
+//            investment1 = initInvestmentByName(type, ticker, quantity, price);
+//            //Store it into the corresponding repo
+//            investmentsRepos.get(type).save(Class.forName(className).cast(investment1));
+//
+//        } catch (ClassNotFoundException | NoSuchMethodException e) {
+//            e.printStackTrace();
+//        }
+//
+//        Date today = new Date();
+//        AccountActivity accountActivity = accountActivityRepo.getById(today);
+//
+//        // If no enough cash value:
+//        if (quantity * price > accountActivity.getCashValue()) return null;
+//
+//        // buy it successfully
+//        currentQuantity = investment.getQuantity();
+//        Double resultQuantity = currentQuantity + quantity;
+//        accountActivity.withdraw(quantity * price);
+//        investment.setQuantity(resultQuantity);
+//        return resultQuantity;
+//    }
 
-    @Override
-    public Double buyInvestment(String type, String ticker, Double quantity) {
-        Double currentQuantity = 0.0;
-        //Check if current investment exist
-        Investment investment = getInvestmentFromRepo(type, ticker);
-        //Step 1: Identify investment type
-        //Case 1: Buy Stock
-        Double price = marketUpdaterServices.getInvestmentPrice(type, ticker);
-        String className = "com.citi.training.portfolioManager.entities." + type;
-        Investment investment1 = null;
-        try {
-            investment1 = initInvestmentByName(type, ticker, quantity, price);
-            //Store it into the corresponding repo
-            investmentsRepos.get(type).save(Class.forName(className).cast(investment1));
-
-        } catch (ClassNotFoundException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-
-        Date today = new Date();
-        AccountActivity accountActivity = accountActivityRepo.getById(today);
-
-        // If no enough cash value:
-        if (quantity * price > accountActivity.getCashValue()) return null;
-
-        // buy it successfully
-        currentQuantity = investment.getQuantity();
-        Double resultQuantity = currentQuantity + quantity;
-        accountActivity.withdraw(quantity * price);
-        investment.setQuantity(resultQuantity);
-        return resultQuantity;
-    }
-
-    @Override
-    public Integer sellInvestment(String type, String ticker, Double quantity) throws UnirestException {
-        Double currentQuantity = 0.0;
-        // check if this investment ticker exist
-        Investment investment = getInvestmentFromRepo(type, ticker);
-        if (investment == null) {
-            return 404;
-        } else {
-            currentQuantity = investment.getQuantity();
-            if (currentQuantity < quantity) return 406;
-        }
-
-        AccountActivity accountActivity = accountActivityRepo.getById(new Date());
-
-
-        Double price = marketUpdaterServices.getStockPrice(ticker);
-        // If there is no that many investment to sell, return null.
-        JpaRepository targetRepo = investmentsRepos.get(type);
-
-        // If selling all of the given investment, delete it from the table.
-        if (currentQuantity.equals(quantity)) {
-            targetRepo.deleteById(ticker);
-        } else {
-            // Sell at marketPrice
-            Double resultQuantity = currentQuantity - quantity;
-            targetRepo.save(investment);
-            accountActivity.deposit(quantity * price);
-        }
-
-        return 200;
-    }
+//    @Override
+//    public Integer sellInvestment(String type, String ticker, Double quantity) throws UnirestException {
+//        Double currentQuantity = 0.0;
+//        // check if this investment ticker exist
+//        Investment investment = getInvestmentFromRepo(type, ticker);
+//        if (investment == null) {
+//            return 404;
+//        } else {
+//            currentQuantity = investment.getQuantity();
+//            if (currentQuantity < quantity) return 406;
+//        }
+//
+//        AccountActivity accountActivity = accountActivityRepo.getById(new Date());
+//
+//
+//        Double price = marketUpdaterServices.getStockPrice(ticker);
+//        // If there is no that many investment to sell, return null.
+//        JpaRepository targetRepo = investmentsRepos.get(type);
+//
+//        // If selling all of the given investment, delete it from the table.
+//        if (currentQuantity.equals(quantity)) {
+//            targetRepo.deleteById(ticker);
+//        } else {
+//            // Sell at marketPrice
+//            Double resultQuantity = currentQuantity - quantity;
+//            targetRepo.save(investment);
+//            accountActivity.deposit(quantity * price);
+//        }
+//
+//        return 200;
+//    }
 
 
 
