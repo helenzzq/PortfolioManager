@@ -3,8 +3,10 @@ package com.citi.training.portfolioManager.services;
 import com.citi.training.portfolioManager.entities.AccountActivity;
 import com.citi.training.portfolioManager.entities.User;
 
+import java.text.ParseException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public interface UserAccountManagerService {
@@ -17,15 +19,21 @@ public interface UserAccountManagerService {
 
     Collection<AccountActivity> getAccountActivity();
 
+
+    List<HashMap<String,Object>> getYearToDateCash() throws ParseException;
+
+    List<Double> getYearToDateNetWorth();
+    List<Double> getYearToDateTotalEquity();
+
     void deleteAccountActivity(Date date);
 
     Collection<AccountActivity> getAccountActivityByRange(String range);
 
-    List<Double> getNetWorthByRange(String range);
+    List<HashMap<String, Object>> getNetWorthByRange(String range);
 
-    List<Double> getCashValueByRange(String range);
+    List<HashMap<String, Object>> getCashValueByRange(String range);
 
-    List<Double> getInvestmentValueByRange(String range);
+    List<HashMap<String, Object>> getInvestmentValueByRange(String range);
 
-    List<Double> getTotalEquityByRange(String range);
+    List<HashMap<String, Object>> getTotalEquityByRange(String range);
 }
