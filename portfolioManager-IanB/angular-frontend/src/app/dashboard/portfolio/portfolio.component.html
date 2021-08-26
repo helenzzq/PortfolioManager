@@ -1,1 +1,31 @@
-<p>portfolio works!</p>
+<!-- Ticker -->
+
+<div class="row">
+    <div class="col-12">
+      <table mat-table [dataSource]="portfolioDataSource" class="mat-elevation-z10">
+
+        <!-- Ticker Column -->
+        <ng-container matColumnDef="ticker">
+          <th mat-header-cell *matHeaderCellDef> Ticker </th>
+          <td mat-cell *matCellDef="let row"> {{row.ticker}} </td>
+        </ng-container>
+
+        <!-- Market Price Column -->
+        <ng-container matColumnDef="marketPrice">
+          <th mat-header-cell *matHeaderCellDef> Market Price </th>
+          <td mat-cell *matCellDef="let row"> {{row.marketPrice}} </td>
+        </ng-container>
+
+        <!-- Percent Retained Column -->
+        <ng-container matColumnDef="percentRetained">
+          <th mat-header-cell *matHeaderCellDef> Percent Retained </th>
+          <td mat-cell *matCellDef="let row"> {{row.percentRetained}} </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedPortfolioColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedPortfolioColumns;"></tr>
+
+      </table>
+    </div>
+  </div>
