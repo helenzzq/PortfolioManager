@@ -37,6 +37,7 @@ public class userManagerRestTests {
         Date dates = new SimpleDateFormat("dd-MM-yyyy").parse("16-07-2021");
         AccountActivity ac = new AccountActivity(dates,750.0,1000.0,9000.0,10750.0);
         assertThat(accounts.size(),equalTo(1));
+
         assertThat(outputAccount.getCashValue(),equalTo(ac.getCashValue()));
         assertThat(outputAccount.getInvestmentValue(),equalTo(ac.getInvestmentValue()));
         assertThat(outputAccount.getTotalEquity(),equalTo(ac.getTotalEquity()));
