@@ -60,7 +60,7 @@ export class BalancesComponent implements OnInit {
 
   // Pie Chart
   single: any;
-  view: any = [450,450];
+  // view: any = [];
   gradient: boolean = false;
   showLegend: boolean = false;
   showLabels: boolean = true;

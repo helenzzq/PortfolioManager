@@ -53,6 +53,24 @@ export var lastWeek = [
         "value": 132
       }
     ]
+  },
+
+  {
+    "name": "Total Equity",
+    "series": [
+      {
+        "name": "Mon",
+        "value": 45
+      },
+      {
+        "name": "Tues",
+        "value": 22
+      },
+      {
+        "name": "Wed",
+        "value": 83
+      }
+    ]
   }
 ];
 
@@ -109,6 +127,24 @@ export var yearToDate = [
         "value": 58000000
       }
     ]
+  },
+  
+  {
+    "name": "Total Equity",
+    "series": [
+      {
+        "name": "1990",
+        "value": 45000000
+      },
+      {
+        "name": "2010",
+        "value": 22000000
+      },
+      {
+        "name": "2011",
+        "value": 83000000
+      }
+    ]
   }
 ];
 
@@ -124,7 +160,7 @@ export class ActivityComponent implements OnInit {
   ngOnInit(): void {
   }
   multi: any;
-  view: any = [900, 500];
+  // view: any = [900, 500];
 
   // options
   legend: boolean = true;

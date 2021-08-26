@@ -44,9 +44,9 @@
   </div>
 
   <div class="row">
-    <div class="col-12 col-xl-6">
+    <div class="col-12 col-xl-6" #containerRef>
         <ngx-charts-pie-chart
-        [view]="view"
+        [view]="[containerRef.offsetWidth, 450]"
         [scheme]="colorScheme"
         [results]="single"
         [gradient]="gradient"
