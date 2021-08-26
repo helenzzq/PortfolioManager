@@ -1,4 +1,5 @@
 import { Component, NgModule, OnInit } from '@angular/core';
+import { DatabaseService } from 'src/app/database/database.service';
 
 export var lastWeek = [
   {
@@ -156,9 +157,13 @@ export var yearToDate = [
 })
 export class ActivityComponent implements OnInit {
   // selectedTimeFrame = 'lastWeek';
+  
+  // data from database
+  lastWeekData: any;
+  lastMonthData: any;
+  lastQuarterData: any;
+  yearToDateData: any;
 
-  ngOnInit(): void {
-  }
   multi: any;
   // view: any = [900, 500];
 
@@ -175,12 +180,29 @@ export class ActivityComponent implements OnInit {
   timeline: boolean = false;
   colorScheme = 'vivid';
 
-  constructor() {
+  constructor(private databaseService: DatabaseService) {
     Object.assign(this, this.multi);
-
   }
 
+  ngOnInit(): void {
+  //   this.databaseService.getApiData('user')
+  //   .subscribe((incomingData: any) => {
+  //     this.data = incomingData
+  //     console.log(this.data);
+  //   });
 
+  //   this.databaseService.getApiData('user')
+  //   .subscribe((incomingData: any) => {
+  //     this.data = incomingData
+  //     console.log(this.data);
+  //   });
+
+  // this.databaseService.getApiData('portfolio-manager/net-worth/today')
+  //   .subscribe((incomingData: any) => {
+  //     this.networthToday = incomingData
+  //     console.log(this.networthToday);
+  //   });
+  }
 
   onSelect(data: any): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));

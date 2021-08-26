@@ -25,6 +25,7 @@ import {MatCardModule} from '@angular/material/card';
 
 // External libraries
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { AdvancedPieChartComponent } from './dashboard/balances/advanced-pie-chart/advanced-pie-chart.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     IndicesComponent,
     GainersLosersComponent,
     PortfolioComponent,
+    AdvancedPieChartComponent,
   ],
   imports: [
     BrowserModule,

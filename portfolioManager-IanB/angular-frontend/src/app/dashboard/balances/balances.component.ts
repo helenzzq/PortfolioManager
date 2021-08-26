@@ -25,6 +25,7 @@ export var single =  [
   { name: 'ETFs', value: 20 },
 ];
 
+
 @Component({
   selector: 'app-balances',
   templateUrl: './balances.component.html',
@@ -35,7 +36,7 @@ export class BalancesComponent implements OnInit {
   today = new Date();
 
   // data from database
-  data: Object = {};
+  usersName: any;
   networthToday?: number;
 
   // currency table
@@ -60,6 +61,7 @@ export class BalancesComponent implements OnInit {
 
   // Pie Chart
   single: any;
+  singleAdvanced: any;
   // view: any = [];
   gradient: boolean = false;
   showLegend: boolean = false;
@@ -67,7 +69,10 @@ export class BalancesComponent implements OnInit {
   isDoughnut: boolean = false;
   // legendPosition: string = 'below';
   colorScheme: string = 'vivid';
-
+  // public formatFn = this.valueFormatting.bind(this);
+  // valueFormatting(data:any) {
+  //   return '$' + data;
+  // }
   constructor(private databaseService: DatabaseService) {
     Object.assign(this, { single });
    }
@@ -75,15 +80,15 @@ export class BalancesComponent implements OnInit {
   ngOnInit(): void {
     this.databaseService.getApiData('user')
       .subscribe((incomingData: any) => {
-        this.data = incomingData
-        console.log(this.data);
+        this.usersName = incomingData[0].name;
+        // console.log('user ' + JSON.stringify(this.data[0].name));
       });
 
-    this.databaseService.getApiData('portfolio-manager/net-worth/today')
-      .subscribe((incomingData: any) => {
-        this.networthToday = incomingData
-        console.log(this.networthToday);
-      });
+    // this.databaseService.getApiData('portfolio-manager/net-worth/today')
+    //   .subscribe((incomingData: any) => {
+    //     this.networthToday = incomingData
+    //     console.log(this.networthToday);
+    //   });
 
 
   }

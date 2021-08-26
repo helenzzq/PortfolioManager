@@ -13,3 +13,23 @@ tr.mat-footer-row {
     font-size: 15px;
     color: black;
   }
+
+  /deep/ .advanced-pie-legend /deep/ .legend-items-container /deep/ .legend-items /deep/ .legend-item /deep/ .item-value /deep/ 
+{
+    margin: 10px !important;
+    /* overflow: initial !important; */
+}
+
+/deep/ .total-value /deep/
+{
+  margin-bottom: 10px !important;
+}
+
+/* only applies to small mobile screens */
+@media (max-width: 355px) {
+  /deep/ .advanced-pie-legend /deep/ .legend-items-container /deep/ .legend-items /deep/
+  {
+   overflow: initial !important;
+ }
+}
+
