@@ -1,1 +1,21 @@
-<p>indices works!</p>
+<div id="container">
+    <h3>INDICES</h3>
+    <div id="index-box">
+        <div class="index">
+            <span class="index-name">{{indexNames[0]}}</span>
+            <span class="index-value" [ngClass]="{'gr': indexValues[0].charAt(0) != '-'}">{{indexValues[0]}}</span>
+        </div>
+        <div class="index">
+            <span class="index-name">{{indexNames[1]}}</span>
+            <span class="index-value" [ngClass]="{'gr': indexValues[1].charAt(0) != '-'}">{{indexValues[1]}}</span>
+        </div>
+        <div class="index">
+            <span class="index-name">{{indexNames[2]}}</span>
+            <span class="index-value" [ngClass]="{'gr': indexValues[2].charAt(0) != '-'}">{{indexValues[2]}}</span>
+        </div>
+        <div class="index">
+            <span class="index-name">{{indexNames[3]}}</span>
+            <span class="index-value" [ngClass]="{'gr': indexValues[3].charAt(0) != '-'}">{{indexValues[3]}}</span>
+        </div>
+    </div>   
+</div>

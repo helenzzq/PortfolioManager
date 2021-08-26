@@ -1,1 +1,95 @@
-<p>balances works!</p>
+<!-- <p>balances works!</p> -->
+
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-12">
+      <h2>{{usersName}}'s Balances - As of {{today | date:'long'}}</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <table mat-table [dataSource]="currencyDataSource" class="mat-elevation-z10">
+
+        <!-- Currency Column -->
+        <ng-container matColumnDef="currency">
+          <th mat-header-cell *matHeaderCellDef> Currency </th>
+          <td mat-cell *matCellDef="let row"> {{row.currency}} </td>
+        </ng-container>
+
+        <!-- Cash Column -->
+        <ng-container matColumnDef="cash">
+          <th mat-header-cell *matHeaderCellDef> Cash </th>
+          <td mat-cell *matCellDef="let row"> {{row.cash}} </td>
+        </ng-container>
+
+        <!-- Market Value Column -->
+        <ng-container matColumnDef="marketValue">
+          <th mat-header-cell *matHeaderCellDef> Market Value </th>
+          <td mat-cell *matCellDef="let row"> {{row.marketValue}} </td>
+        </ng-container>
+
+        <!-- Total Equity Column -->
+        <ng-container matColumnDef="totalEquity">
+          <th mat-header-cell *matHeaderCellDef> Total Equity </th>
+          <td mat-cell *matCellDef="let row"> {{row.totalEquity}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedCurrencyColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedCurrencyColumns;"></tr>
+
+      </table>
+    </div>
+  </div>
+
+  
+  <div class="row">
+    
+    <div class="col-12 col-xl-6" #containerRef>
+      <ngx-charts-pie-chart
+      [view]="[containerRef.offsetWidth, 450]"
+      [scheme]="colorScheme"
+      [results]="single"
+      [gradient]="gradient"
+      [legend]="showLegend"
+      [labels]="showLabels"
+      [doughnut]="isDoughnut"
+      (select)="onSelect($event)"
+      (activate)="onActivate($event)"
+      (deactivate)="onDeactivate($event)">
+    </ngx-charts-pie-chart>      
+    </div>
+
+    <div class="col-12 col-xl-6" style="margin: auto;">
+      <table mat-table [dataSource]="investmentTypeDataSource" class="mat-elevation-z10">
+
+        <ng-container matColumnDef="investmentType">
+          <th mat-header-cell *matHeaderCellDef> Investment Type </th>
+          <td mat-cell *matCellDef="let row"> {{row.investmentType}} </td>
+          <td mat-footer-cell *matFooterCellDef> Total </td>
+        </ng-container>
+
+        <ng-container matColumnDef="percentage">
+          <th mat-header-cell *matHeaderCellDef> % &nbsp; &nbsp; &nbsp; &nbsp;</th>
+          <td mat-cell *matCellDef="let row"> {{row.percentage}} </td>
+          <td mat-footer-cell *matFooterCellDef> {{calculatePercentageTotal()}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="marketValue">
+          <th mat-header-cell *matHeaderCellDef> Market Value </th>
+          <td mat-cell *matCellDef="let row"> {{row.marketValue}} </td>
+          <td mat-footer-cell *matFooterCellDef> {{calculateMarketValueTotal()}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedInvestmentTypeColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedInvestmentTypeColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedInvestmentTypeColumns"></tr>
+
+      </table>
+    </div>
+  </div>
+
+
+
+</div>

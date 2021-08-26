@@ -1,1 +1,61 @@
-<p>activity works!</p>
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <h2>Changes in your net worth, cash and investments over time</h2>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Choose timeframe</mat-label>
+            <mat-select (valueChange)="onSelectTimeFrame($event)">
+              <mat-option value="lastWeek">Last Week</mat-option>
+              <mat-option value="lastMonth">Last Month</mat-option>
+              <mat-option value="lastQuarter">Last Quarter</mat-option>
+              <mat-option value="yearToDate">Year to Date</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- <div class="col-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Choose value type</mat-label>
+            <mat-select>
+              <mat-option value="netWorth">Net Worth</mat-option>
+              <mat-option value="cash">Cash</mat-option>
+              <mat-option value="marketValue">Market Value</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div> -->
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-bottom: 40px;">
+
+    <mat-card class="mat-elevation-z10">
+      <div class="col-12" #containerRef>
+        <ngx-charts-line-chart
+        [view]="[containerRef.offsetWidth, 450]"
+        [scheme]="colorScheme"
+        [legend]="legend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [timeline]="timeline"
+        [results]="multi"
+        (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)">
+        </ngx-charts-line-chart>        
+      </div>
+    </mat-card>
+
+  </div>
+</div>
