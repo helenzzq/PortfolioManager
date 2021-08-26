@@ -104,10 +104,11 @@ public class UserAccountManagerServiceImpl implements UserAccountManagerService 
                 int timeLength = 3;
                 if (range.equals("yearToDate")) {
                     startMonth = 1;
-                    timeLength = 11;
+                    timeLength = LocalDate.now().getMonthValue();
                 }
 
                 for (int i = 0; i < timeLength; i++) {
+
                     List<AccountActivity> temp = accountActivityRepo.getAccountActivitiesByYearAndMonth(startMonth + i, 2021);
                     accountActivities.add(temp.get(temp.size() - 1));
                 }
