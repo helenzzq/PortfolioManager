@@ -67,6 +67,7 @@ public class MarketUpdaterServiceImpl implements MarketUpdaterServices {
         return indicesDownloader.getCurrPrice();
     }
 
+
     @Override
     public Double getIndicesChangeInPercent(String symbol) {
         setUpIndiceDownloader(symbol);

@@ -26,9 +26,9 @@ public interface PortfolioManagerService {
 
     /* buy and sell investment return its current quantity after buying/selling
     * returns null if failed */
-    Double buyInvestment(String type, String ticker, Double quantity) throws UnirestException;
-
-    Integer sellInvestment(String type,String ticker, Double quantity) throws UnirestException;
+//    Double buyInvestment(String type, String ticker, Double quantity) throws UnirestException;
+//
+//    Integer sellInvestment(String type,String ticker, Double quantity) throws UnirestException;
 
     Collection<Stock> getStocks();
 

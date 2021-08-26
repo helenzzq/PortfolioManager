@@ -3,10 +3,7 @@ package com.citi.training.portfolioManager.rest;
 import com.citi.training.portfolioManager.entities.*;
 import com.citi.training.portfolioManager.services.MarketUpdaterServices;
 import com.citi.training.portfolioManager.services.PortfolioManagerService;
-import com.citi.training.portfolioManager.services.PortfolioManagerServiceImpl;
 import com.citi.training.portfolioManager.services.UserManagerService;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +23,6 @@ public class PortfolioManagerController {
 
     @Autowired
     private MarketUpdaterServices marketUpdaterServices;
-
     @Autowired
     private UserManagerService userManagerService;
 
