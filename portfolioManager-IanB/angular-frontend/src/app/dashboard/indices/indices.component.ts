@@ -8,19 +8,24 @@ import { DatabaseService } from 'src/app/database/database.service'
 })
 export class IndicesComponent implements OnInit {
 
-  indexStr = "portfolio-manager/indices"
-  indicesData = [{}, {}, {}, {}]
+  indexStr = "portfolio-manager/indices/famous-indices"
+  indexNames = ["", "", "", ""]
+  indexValues = ["", "", "", ""]
+  symbols = ["", "", "", ""]
 
   constructor(private databaseService:DatabaseService) { }
 
   ngOnInit(): void {
-    this.getIndices();
+    this.getIndices()
   }
 
   getIndices() {
     this.databaseService.getApiData(this.indexStr).subscribe(
       (data:any) => {
-        this.indicesData = [data[0], data[1], data[2], data[3]]
+        console.log("Indices Loaded!")
+        this.indexNames = Object.keys(data);
+        this.indexValues = Object.values(data);
+        this.symbols = this.indexValues.map(str => str.charAt(0))
       },
       (err) => console.log(err)
     )

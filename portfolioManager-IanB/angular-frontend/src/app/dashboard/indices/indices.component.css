@@ -5,7 +5,7 @@
     flex-direction: column;
     flex-wrap: nowrap;
     padding: 10px 10px;
-    margin: 50px 0;
+    margin: 67px 50px 0;
     /* border-radius: 5px; */
 }
 
@@ -25,9 +25,29 @@ h3 {
 
 
 .index {
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.03);
     height: 50px;
     flex-grow: 1;
     margin: 5px;
     border-radius: 5px;
+    padding: 5px;
+}
+
+.index-name {
+    text-align: center;
+    font-weight: 600;
+}
+
+.index-value {
+    text-align: center;
+}
+
+.index-value {
+    color: red;
+}
+
+.gr {
+    color: green;
 }
