@@ -4,6 +4,7 @@ import com.citi.training.portfolioManager.entities.Bond;
 import com.citi.training.portfolioManager.entities.Etf;
 import com.citi.training.portfolioManager.entities.Investment;
 import com.citi.training.portfolioManager.entities.Stock;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
 import strategy.CollectionCast;
@@ -18,6 +19,8 @@ public class portfolioManagerRestTests {
 
     private RestTemplate portfolioTestAgent = new RestTemplate();
     ArrayList<Stock> expectedStocks = new ArrayList<>();
+
+    @BeforeAll
     public void setUpSampleStock() {
         Stock biliStock = new Stock("BILI",100.0,80.0,78.0);
         Stock gmeStock = new Stock("GME",10.0,180.0,210.29);

@@ -6,7 +6,7 @@ import com.citi.training.portfolioManager.entities.Stock;
 
 import com.citi.training.portfolioManager.services.MarketUpdaterServices;
 import com.citi.training.portfolioManager.services.PortfolioManagerService;
-import com.citi.training.portfolioManager.services.UserManagerService;
+import com.citi.training.portfolioManager.services.UserAccountManagerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,7 +38,7 @@ public class TestPortfolioManagerController {
     @MockBean
     private MarketUpdaterServices marketUpdaterServices;
     @MockBean
-    private UserManagerService userManagerService;
+    private UserAccountManagerService userAccountManagerService;
     @Autowired
     private
     ObjectMapper mapper;

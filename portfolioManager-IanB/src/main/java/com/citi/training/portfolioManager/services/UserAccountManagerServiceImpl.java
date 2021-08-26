@@ -14,7 +14,7 @@ import java.time.ZoneId;
 import java.util.*;
 
 @Service
-public class UserManagerServiceImpl implements UserManagerService {
+public class UserAccountManagerServiceImpl implements UserAccountManagerService {
 
     @Autowired
     private UserRepository userRepository;

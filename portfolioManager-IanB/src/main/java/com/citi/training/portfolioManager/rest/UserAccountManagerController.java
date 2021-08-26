@@ -3,7 +3,7 @@ package com.citi.training.portfolioManager.rest;
 import com.citi.training.portfolioManager.entities.AccountActivity;
 import com.citi.training.portfolioManager.entities.User;
 import com.citi.training.portfolioManager.services.PortfolioManagerService;
-import com.citi.training.portfolioManager.services.UserManagerService;
+import com.citi.training.portfolioManager.services.UserAccountManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +21,7 @@ public class UserAccountManagerController {
 
 
     @Autowired
-    private UserManagerService userManagerService;
+    private UserAccountManagerService userAccountManagerService;
     @Autowired
     private PortfolioManagerService portfolioManagerService;
 
@@ -31,13 +31,13 @@ public class UserAccountManagerController {
 
     @GetMapping()
     public Collection<User> getAllUser() {
-        return userManagerService.getUsers();
+        return userAccountManagerService.getUsers();
     }
 
 
     @GetMapping("/account")
     public Collection<AccountActivity> getAllActivity() {
-        return userManagerService.getAccountActivity();
+        return userAccountManagerService.getAccountActivity();
     }
 
 
@@ -51,7 +51,7 @@ public class UserAccountManagerController {
      * */
     @GetMapping("/account/range={range}")
     public Collection<AccountActivity> getAccountActivityByRange(@PathVariable("range") String range) {
-        return userManagerService.getAccountActivityByRange(range);
+        return userAccountManagerService.getAccountActivityByRange(range);
     }
 
     /**
@@ -60,7 +60,7 @@ public class UserAccountManagerController {
      * */
     @GetMapping("/account/net-worth/range={range}")
     public List<Double> getNetWorthByRange(@PathVariable("range") String range) {
-        return userManagerService.getNetWorthByRange(range);
+        return userAccountManagerService.getNetWorthByRange(range);
     }
     /**
      * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
@@ -68,7 +68,7 @@ public class UserAccountManagerController {
      * */
     @GetMapping("/account/cash/range={range}")
     public List<Double> getCashValueByRange(@PathVariable("range") String range) {
-        return userManagerService.getCashValueByRange(range);
+        return userAccountManagerService.getCashValueByRange(range);
     }
     /**
      * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
@@ -76,7 +76,7 @@ public class UserAccountManagerController {
      * */
     @GetMapping("/account/market-value/range={range}")
     public List<Double> getMarketValueByRange(@PathVariable("range") String range) {
-        return userManagerService.getInvestmentValueByRange(range);
+        return userAccountManagerService.getInvestmentValueByRange(range);
     }
     /**
      * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
@@ -84,7 +84,7 @@ public class UserAccountManagerController {
      * */
     @GetMapping("/account/total-equity/range={range}")
     public List<Double> getTotalEquityByRange(@PathVariable("range") String range) {
-        return userManagerService.getTotalEquityByRange(range);
+        return userAccountManagerService.getTotalEquityByRange(range);
     }
 
 
@@ -94,7 +94,7 @@ public class UserAccountManagerController {
     @PostMapping("/delete-account-activity/{date}")
     public void deleteAccountActivity(@PathVariable("date") String date) throws ParseException {
         Date dates = new SimpleDateFormat("dd-MM-yyyy").parse(date);
-        userManagerService.deleteAccountActivity(dates);
+        userAccountManagerService.deleteAccountActivity(dates);
     }
 
 }

@@ -4,7 +4,7 @@ package com.citi.training.portfolioManager.rest;
 import com.citi.training.portfolioManager.entities.AccountActivity;
 import com.citi.training.portfolioManager.entities.User;
 import com.citi.training.portfolioManager.services.PortfolioManagerService;
-import com.citi.training.portfolioManager.services.UserManagerService;
+import com.citi.training.portfolioManager.services.UserAccountManagerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ import static org.mockito.BDDMockito.given;
 @ContextConfiguration(classes = {com.citi.training.portfolioManager.AppConfig.class})
 public class TestUserManagerController {
     @MockBean
-    private UserManagerService userManagerService;
+    private UserAccountManagerService userAccountManagerService;
     @MockBean
     private PortfolioManagerService portfolioManagerService;
     @Autowired
@@ -41,7 +41,7 @@ public class TestUserManagerController {
         User user = new User(1,"Helen");
         Collection<User> users = new ArrayList<>();
         users.add(user);
-        given(userManagerService.getUsers()).willReturn(users);
+        given(userAccountManagerService.getUsers()).willReturn(users);
         MockMvcOperation.perform(mockMvc,"/user","$[0].name","Helen");
     }
     @Test
@@ -50,7 +50,7 @@ public class TestUserManagerController {
         AccountActivity ac = new AccountActivity(dates,750.0,1000.0,9000.0,10750.0);
         Collection<AccountActivity> accountActivities = new ArrayList<>();
         accountActivities.add(ac);
-        given(userManagerService.getAccountActivity()).willReturn(accountActivities);
+        given(userAccountManagerService.getAccountActivity()).willReturn(accountActivities);
         MockMvcOperation.perform(mockMvc,"/user/account","$[0].netWorth",750.0);
         MockMvcOperation.perform(mockMvc,"/user/account","$[0].cashValue",1000.0);
         MockMvcOperation.perform(mockMvc,"/user/account","$[0].investmentValue",9000.0);
@@ -61,7 +61,7 @@ public class TestUserManagerController {
         AccountActivity ac = new AccountActivity(dates,750.0,1000.0,9000.0,10750.0);
         Collection<AccountActivity> accountActivities = new ArrayList<>();
         accountActivities.add(ac);
-        given(userManagerService.getAccountActivityByRange("lastWeek")).willReturn(accountActivities);
+        given(userAccountManagerService.getAccountActivityByRange("lastWeek")).willReturn(accountActivities);
         MockMvcOperation.perform(mockMvc,"/user/account/range=lastWeek","$[0].netWorth",750.0);
 
     }
@@ -69,21 +69,21 @@ public class TestUserManagerController {
     public void testCanGetCashValueByRange() throws Exception {
         List<Double> cash = new ArrayList<>();
         cash.add(100.0);
-        given(userManagerService.getCashValueByRange("lastMonth")).willReturn(cash);
+        given(userAccountManagerService.getCashValueByRange("lastMonth")).willReturn(cash);
         MockMvcOperation.perform(mockMvc,"/user/account/cash/range=lastMonth","$[0]",100.0);
     }
     @Test
     public void testCanGetNetWorthByRange() throws Exception {
         List<Double> netWorth = new ArrayList<>();
         netWorth.add(7500.0);
-        given(userManagerService.getNetWorthByRange("lastQuarter")).willReturn(netWorth);
+        given(userAccountManagerService.getNetWorthByRange("lastQuarter")).willReturn(netWorth);
         MockMvcOperation.perform(mockMvc,"/user/account/net-worth/range=lastQuarter","$[0]",7500.0);
     }
     @Test
     public void testCanGetTotalEquityByRange() throws Exception {
         List<Double> totalEquity = new ArrayList<>();
         totalEquity.add(17500.0);
-        given(userManagerService.getTotalEquityByRange("lastQuarter")).willReturn(totalEquity);
+        given(userAccountManagerService.getTotalEquityByRange("lastQuarter")).willReturn(totalEquity);
         MockMvcOperation.perform(mockMvc,"/user/account/total-equity/range=lastQuarter","$[0]",17500.0);
     }
 }

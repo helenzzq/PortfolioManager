@@ -3,14 +3,12 @@ package com.citi.training.portfolioManager.rest;
 import com.citi.training.portfolioManager.entities.*;
 import com.citi.training.portfolioManager.services.MarketUpdaterServices;
 import com.citi.training.portfolioManager.services.PortfolioManagerService;
-import com.citi.training.portfolioManager.services.UserManagerService;
+import com.citi.training.portfolioManager.services.UserAccountManagerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -24,7 +22,7 @@ public class PortfolioManagerController {
     @Autowired
     private MarketUpdaterServices marketUpdaterServices;
     @Autowired
-    private UserManagerService userManagerService;
+    private UserAccountManagerService userAccountManagerService;
 
     /**
      * GET Requests
@@ -83,12 +81,12 @@ public class PortfolioManagerController {
 
     @PostMapping("/deposit/{cash}")
     public void deposit(@PathVariable("cash") double cash) {
-        userManagerService.deposit(cash, 1);
+        userAccountManagerService.deposit(cash, 1);
     }
 
     @PostMapping("/withdraw/{cash}")
     public void withdraw(@PathVariable("cash") double cash) {
-        Double response = userManagerService.withdraw(cash, 1);
+        Double response = userAccountManagerService.withdraw(cash, 1);
         if (response == null) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Sorry, there is no enough money in your cash account.");
