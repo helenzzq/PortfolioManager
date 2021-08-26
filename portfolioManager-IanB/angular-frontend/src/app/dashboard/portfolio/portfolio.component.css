@@ -1,6 +1,11 @@
+#table-title {
+  text-align: center;
+}
+
 table {
     width: 100%;
-  }
+    margin-top: 3rem;
+}
 
   
 tr.mat-footer-row {
