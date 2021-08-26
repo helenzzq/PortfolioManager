@@ -75,79 +75,79 @@ import { DatabaseService } from 'src/app/database/database.service';
 //   }
 // ];
 
-export var yearToDateGraphData = [
-  {
-    "name": "Net Worth",
-    "series": [
-      {
-        "name": "1990",
-        "value": 62000000
-      },
-      {
-        "name": "2010",
-        "value": 73000000
-      },
-      {
-        "name": "2011",
-        "value": 89400000
-      }
-    ]
-  },
+// export var yearToDateGraphData = [
+//   {
+//     "name": "Net Worth",
+//     "series": [
+//       {
+//         "name": "1990",
+//         "value": 62000000
+//       },
+//       {
+//         "name": "2010",
+//         "value": 73000000
+//       },
+//       {
+//         "name": "2011",
+//         "value": 89400000
+//       }
+//     ]
+//   },
 
-  {
-    "name": "Cash",
-    "series": [
-      {
-        "name": "1990",
-        "value": 250000000
-      },
-      {
-        "name": "2010",
-        "value": 309000000
-      },
-      {
-        "name": "2011",
-        "value": 311000000
-      }
-    ]
-  },
+//   {
+//     "name": "Cash",
+//     "series": [
+//       {
+//         "name": "1990",
+//         "value": 250000000
+//       },
+//       {
+//         "name": "2010",
+//         "value": 309000000
+//       },
+//       {
+//         "name": "2011",
+//         "value": 311000000
+//       }
+//     ]
+//   },
 
-  {
-    "name": "Market Value",
-    "series": [
-      {
-        "name": "1990",
-        "value": 58000000
-      },
-      {
-        "name": "2010",
-        "value": 50000020
-      },
-      {
-        "name": "2011",
-        "value": 58000000
-      }
-    ]
-  },
+//   {
+//     "name": "Market Value",
+//     "series": [
+//       {
+//         "name": "1990",
+//         "value": 58000000
+//       },
+//       {
+//         "name": "2010",
+//         "value": 50000020
+//       },
+//       {
+//         "name": "2011",
+//         "value": 58000000
+//       }
+//     ]
+//   },
 
-  {
-    "name": "Total Equity",
-    "series": [
-      {
-        "name": "1990",
-        "value": 45000000
-      },
-      {
-        "name": "2010",
-        "value": 22000000
-      },
-      {
-        "name": "2011",
-        "value": 83000000
-      }
-    ]
-  }
-];
+//   {
+//     "name": "Total Equity",
+//     "series": [
+//       {
+//         "name": "1990",
+//         "value": 45000000
+//       },
+//       {
+//         "name": "2010",
+//         "value": 22000000
+//       },
+//       {
+//         "name": "2011",
+//         "value": 83000000
+//       }
+//     ]
+//   }
+// ];
 
 
 @Component({
@@ -173,7 +173,14 @@ export class ActivityComponent implements OnInit {
   { name: 'Cash', series: [] },
   { name: 'Market Value', series: [] },
   { name: 'Total Equity', series: [] }];
-
+  lastQuarterGraphData: any = [{ name: 'Net Worth', series: [] },
+  { name: 'Cash', series: [] },
+  { name: 'Market Value', series: [] },
+  { name: 'Total Equity', series: [] }];
+  yearToDateGraphData: any = [{ name: 'Net Worth', series: [] },
+  { name: 'Cash', series: [] },
+  { name: 'Market Value', series: [] },
+  { name: 'Total Equity', series: [] }];
 
   multi: any;
   // view: any = [900, 500];
@@ -196,6 +203,9 @@ export class ActivityComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+      // _____________Last Week__________________
+
     this.databaseService.getApiData('user/account/net-worth/range=lastWeek')
       .subscribe((incomingData: any) => {
         // this.lastWeekData = incomingData
@@ -231,41 +241,89 @@ export class ActivityComponent implements OnInit {
       .subscribe((incomingData: any) => {
         // this.lastWeekData = incomingData
         // console.log(this.lastWeekData);
-        this.lastWeekData = this.mapLastMonthData(incomingData, 'Net Worth');
+        this.lastMonthData = this.mapLastMonthData(incomingData, 'Net Worth');
       });
 
     this.databaseService.getApiData('user/account/cash/range=lastMonth')
       .subscribe((incomingData: any) => {
         // this.lastWeekData = incomingData
         // console.log(this.lastWeekData);
-        this.lastWeekData = this.mapLastMonthData(incomingData, 'Cash');
+        this.lastMonthData = this.mapLastMonthData(incomingData, 'Cash');
       });
 
     this.databaseService.getApiData('user/account/market-value/range=lastMonth')
       .subscribe((incomingData: any) => {
         // this.lastWeekData = incomingData
         // console.log(this.lastWeekData);
-        this.lastWeekData = this.mapLastMonthData(incomingData, 'Market Value');
+        this.lastMonthData = this.mapLastMonthData(incomingData, 'Market Value');
       });
 
     this.databaseService.getApiData('user/account/total-equity/range=lastMonth')
       .subscribe((incomingData: any) => {
         // this.lastWeekData = incomingData
         // console.log(this.lastWeekData);
-        this.lastWeekData = this.mapLastMonthData(incomingData, 'Total Equity');
+        this.lastMonthData = this.mapLastMonthData(incomingData, 'Total Equity');
       });
 
-    //   this.databaseService.getApiData('user')
-    //   .subscribe((incomingData: any) => {
-    //     this.data = incomingData
-    //     console.log(this.data);
-    //   });
+      // _____________Last Quarter__________________
 
-    // this.databaseService.getApiData('portfolio-manager/net-worth/today')
-    //   .subscribe((incomingData: any) => {
-    //     this.networthToday = incomingData
-    //     console.log(this.networthToday);
-    //   });
+      this.databaseService.getApiData('user/account/net-worth/range=lastQuarter')
+      .subscribe((incomingData: any) => {
+        // this.lastWeekData = incomingData
+        // console.log(this.lastWeekData);
+        this.lastQuarterData = this.mapLastQuarterData(incomingData, 'Net Worth');
+      });
+
+    this.databaseService.getApiData('user/account/cash/range=lastQuarter')
+      .subscribe((incomingData: any) => {
+        // this.lastWeekData = incomingData
+        // console.log(this.lastWeekData);
+        this.lastQuarterData = this.mapLastQuarterData(incomingData, 'Cash');
+      });
+
+    this.databaseService.getApiData('user/account/market-value/range=lastQuarter')
+      .subscribe((incomingData: any) => {
+        // this.lastWeekData = incomingData
+        // console.log(this.lastWeekData);
+        this.lastQuarterData = this.mapLastQuarterData(incomingData, 'Market Value');
+      });
+
+    this.databaseService.getApiData('user/account/total-equity/range=lastQuarter')
+      .subscribe((incomingData: any) => {
+        // this.lastWeekData = incomingData
+        // console.log(this.lastWeekData);
+        this.lastQuarterData = this.mapLastQuarterData(incomingData, 'Total Equity');
+      });
+
+            // _____________Year to Date__________________
+
+            this.databaseService.getApiData('user/account/net-worth/range=yearToDate')
+            .subscribe((incomingData: any) => {
+              // this.lastWeekData = incomingData
+              // console.log(this.lastWeekData);
+              this.yearToDateData = this.mapYearToDateData(incomingData, 'Net Worth');
+            });
+      
+          this.databaseService.getApiData('user/account/cash/range=yearToDate')
+            .subscribe((incomingData: any) => {
+              // this.lastWeekData = incomingData
+              // console.log(this.lastWeekData);
+              this.yearToDateData = this.mapYearToDateData(incomingData, 'Cash');
+            });
+      
+          this.databaseService.getApiData('user/account/market-value/range=yearToDate')
+            .subscribe((incomingData: any) => {
+              // this.lastWeekData = incomingData
+              // console.log(this.lastWeekData);
+              this.yearToDateData = this.mapYearToDateData(incomingData, 'Market Value');
+            });
+      
+          this.databaseService.getApiData('user/account/total-equity/range=yearToDate')
+            .subscribe((incomingData: any) => {
+              // this.lastWeekData = incomingData
+              // console.log(this.lastWeekData);
+              this.yearToDateData = this.mapYearToDateData(incomingData, 'Total Equity');
+            });
   }
 
   onSelect(data: any): void {
@@ -342,10 +400,76 @@ export class ActivityComponent implements OnInit {
 
   }
 
+  mapLastQuarterData(incomingData: any, type: string) {
+    // this.lastWeekGraphData;
+    // console.log(incomingData);
+
+    // if () {}
+
+    switch (type) {
+      case 'Net Worth':
+        this.lastQuarterGraphData[0].series.push(...incomingData);
+        break;
+      case 'Cash':
+        this.lastQuarterGraphData[1].series.push(...incomingData);
+        break;
+      case 'Market Value':
+        this.lastQuarterGraphData[2].series.push(...incomingData);
+        break;
+      case 'Total Equity':
+        this.lastQuarterGraphData[3].series.push(...incomingData);
+        // console.log(JSON.stringify(incomingData));
+        // console.log(JSON.stringify(this.lastWeekGraphData));
+        // console.log('YTD: ' );
+        // console.log(JSON.stringify(yearToDateGraphData));
+        break;
+      default:
+        break;
+    }
+
+    
+  }
+
+  mapYearToDateData(incomingData: any, type: string) {
+    // this.lastWeekGraphData;
+    // console.log(incomingData);
+
+    // if () {}
+
+    switch (type) {
+      case 'Net Worth':
+        this.yearToDateGraphData[0].series.push(...incomingData);
+        break;
+      case 'Cash':
+        this.yearToDateGraphData[1].series.push(...incomingData);
+        break;
+      case 'Market Value':
+        this.yearToDateGraphData[2].series.push(...incomingData);
+        break;
+      case 'Total Equity':
+        this.yearToDateGraphData[3].series.push(...incomingData);
+        // console.log(JSON.stringify(incomingData));
+        // console.log(JSON.stringify(this.lastWeekGraphData));
+        // console.log('YTD: ' );
+        // console.log(JSON.stringify(yearToDateGraphData));
+        break;
+      default:
+        break;
+    }
+
+  // this.lastWeekGraphData = incomingData.map((obj:any) => {return {name: type,series: this.array.push(obj)}});
+  // this.lastWeekGraphData = incomingData.map((obj:any) => {return this.lastWeekGraphData[indexOfType] {name: type,series: this.array.push(obj)}});
+
+}
+
   onSelectTimeFrame(selectedTimeFrame: any) {
     console.log('selected: ' + selectedTimeFrame);
     // let val: string = '';
     switch (selectedTimeFrame) {
+      case 'lastWeek':
+        this.multi = this.lastWeekGraphData;
+        this.xAxisLabel = 'day';
+        break;
       case 'lastMonth':
         this.multi = this.lastMonthGraphData;
         this.xAxisLabel = 'day';
@@ -354,14 +478,18 @@ export class ActivityComponent implements OnInit {
         // data for this doesn't exist yet
         // this.multi = lastQuarterGraphData;
         // this.xAxisLabel = 'day';
+        this.multi = this.lastQuarterGraphData;
+        this.xAxisLabel = 'day';
         break;
       case 'yearToDate':
-        this.multi = yearToDateGraphData;
-        this.xAxisLabel = 'year';
+        this.multi = this.yearToDateGraphData;
+        // this.xAxisLabel = 'year';
+        // this.multi = this.lastMonthGraphData;
+        // this.xAxisLabel = 'day';
         break;
       default:
         this.multi = this.lastWeekGraphData;
-        this.xAxisLabel = 'day';
+        // this.xAxisLabel = 'day';
         break;
 
     }
