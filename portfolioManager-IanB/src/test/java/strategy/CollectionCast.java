@@ -1,7 +1,7 @@
 package strategy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
+
 import com.google.gson.Gson;
 
 import java.io.IOException;

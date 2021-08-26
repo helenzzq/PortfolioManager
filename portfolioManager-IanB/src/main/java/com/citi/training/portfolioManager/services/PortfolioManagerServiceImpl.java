@@ -58,6 +58,31 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     }
 
     @Override
+    public Collection<Stock> getStocks() {
+        return stockRepository.findAll();
+    }
+
+    @Override
+    public Collection<Bond> getBonds() {
+        return bondRepository.findAll();
+    }
+
+    @Override
+    public Collection<Etf> getEtf() {
+        return etfRepository.findAll();
+    }
+
+    @Override
+    public Collection<Future> getFuture() {
+        return futureRepository.findAll();
+    }
+
+
+    @Override
+    public HashMap<String, List<Investment>> getAllInvestment(Integer userId) {
+        return userRepository.getById(1).getInvestment();
+    }
+    @Override
     public Collection<AccountActivity> getAccountActivityByRange(String range) {
         LocalDate today = LocalDate.now();
         Collection<AccountActivity> accountActivities = null;
@@ -234,30 +259,5 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
 
 
-    @Override
-    public Collection<Stock> getStocks() {
-        return stockRepository.findAll();
-    }
-
-    @Override
-    public Collection<Bond> getBonds() {
-        return bondRepository.findAll();
-    }
-
-    @Override
-    public Collection<Etf> getEtf() {
-        return etfRepository.findAll();
-    }
-
-    @Override
-    public Collection<Future> getFuture() {
-        return futureRepository.findAll();
-    }
-
-
-    @Override
-    public HashMap<String, List<Investment>> getAllInvestment(Integer userId) {
-        return userRepository.getById(1).getInvestment();
-    }
 
 }
