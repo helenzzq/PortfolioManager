@@ -14,7 +14,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,8 +30,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 
 @ExtendWith(SpringExtension.class)
-@DataJpaTest() // use an in memory database
+@DataJpaTest
+@WebAppConfiguration
 @ContextConfiguration(classes = {com.citi.training.portfolioManager.AppConfig.class})
+
 public class TestAccountActivityRepo {
     @Autowired
     private TestEntityManager manager;

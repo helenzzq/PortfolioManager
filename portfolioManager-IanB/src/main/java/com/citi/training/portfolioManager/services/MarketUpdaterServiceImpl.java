@@ -77,7 +77,7 @@ public class MarketUpdaterServiceImpl implements MarketUpdaterServices {
 
     @Override
     public HashMap<String,String> getFamousIndicesInfo(){
-        indicesDownloader = new IndicesDownloader();
+        IndicesDownloader indicesDownloader = new IndicesDownloader();
         return indicesDownloader.getFamousIndices();
     }
 

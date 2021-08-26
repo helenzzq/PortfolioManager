@@ -48,7 +48,7 @@ public abstract class MarketDownloader {
 
     void downloadFromYahoo() throws UnirestException {
         String API_HOST = "apidojo-yahoo-finance-v1.p.rapidapi.com";
-        String API_KEY = "bdd16c27d4mshd5948dee3978ee3p1ea11fjsncc40f6d4e8ed";
+        String API_KEY = "afecc7b71emshfc255aa989092cbp14b434jsn56d7ba5167e7";
         data = Unirest.get(host + "?" + symbol)
                 .header("x-rapidapi-key", API_KEY)
                 .header("x-rapidapi-host", API_HOST)
