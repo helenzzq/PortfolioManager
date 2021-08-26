@@ -44,19 +44,13 @@ public class UserAccountManagerController {
 //    public void deposit(@PathVariable("date") long date) {
 //        portfolioManagerService.updateNetWorth(1, new Date(date));
 //    }
-    @GetMapping("/account/lastMonth")
-    public Collection<AccountActivity> getLastMonthAccountActivity() {
-        return portfolioManagerService.getAccountActivityByRange("lastMonth");
-    }
-
-    @GetMapping("/account/lastWeek")
-    public Collection<AccountActivity> getLastWeekAccountActivity() {
-        return portfolioManagerService.getAccountActivityByRange("lastWeek");
-    }
-
-    @GetMapping("/account/lastQuarter")
-    public Collection<AccountActivity> getLastQuarterAccountActivity() {
-        return portfolioManagerService.getAccountActivityByRange("lastQuarter");
+    /**
+     * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter]
+     * @Return A list of all account Activity within the time range
+     * */
+    @GetMapping("/account/range={range}")
+    public Collection<AccountActivity> getAccountActivityByRange(@PathVariable("range") String range) {
+        return portfolioManagerService.getAccountActivityByRange(range);
     }
 
     /*

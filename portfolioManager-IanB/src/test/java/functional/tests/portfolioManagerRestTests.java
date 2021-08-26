@@ -1,10 +1,6 @@
 package functional.tests;
 
-import com.citi.training.portfolioManager.entities.Investment;
 import com.citi.training.portfolioManager.entities.Stock;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
-import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
 import strategy.CollectionCast;
@@ -12,12 +8,10 @@ import strategy.CollectionCast;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
 
 public class portfolioManagerRestTests {
 
@@ -27,7 +21,7 @@ public class portfolioManagerRestTests {
     @Test
     public void testGetAllStocks() throws IOException {
         Collection<Stock> output = restTemplate.getForObject("http://localhost:8080/portfoliomanager/stocks", Collection.class);
-        List<Stock> stocks = CollectionCast.collectionToObjectList(output,Stock.class);
+        List<Stock> stocks = CollectionCast.toObjectList(output,Stock.class);
         assert stocks != null;
         Stock biliStock = new Stock("BILI",100.0,80.0,78.0);
         Stock gmeStock = new Stock("GME",10.0,180.0,210.29);
@@ -40,13 +34,7 @@ public class portfolioManagerRestTests {
             assertThat(stocks.get(i).getCostPerShare(),equalTo(expectedStocks.get(i).getCostPerShare()));
             assertThat(stocks.get(i).getQuantity(),equalTo(expectedStocks.get(i).getQuantity()));
         }
-
-
-
     }
-    @Test
-    public void testGetInvestment() {
 
-    }
 
 }
