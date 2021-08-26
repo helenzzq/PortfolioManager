@@ -36,9 +36,9 @@
 
   <div class="row">
 
-    <div class="col-12">
+    <div class="col-12" #containerRef>
         <ngx-charts-line-chart
-        [view]="view"
+        [view]="[containerRef.offsetWidth, 450]"
         [scheme]="colorScheme"
         [legend]="legend"
         [showXAxisLabel]="showXAxisLabel"
