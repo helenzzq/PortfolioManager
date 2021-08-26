@@ -61,7 +61,7 @@ export class BalancesComponent implements OnInit {
 
   // Pie Chart
   single: any;
-  singleAdvanced: any;
+  // singleAdvanced: any;
   // view: any = [];
   gradient: boolean = false;
   showLegend: boolean = false;

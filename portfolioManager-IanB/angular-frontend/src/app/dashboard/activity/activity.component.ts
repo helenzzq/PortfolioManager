@@ -1,81 +1,81 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/app/database/database.service';
 
-export var lastWeek = [
-  {
-    "name": "Net Worth",
-    "series": [
-      {
-        "name": "Mon",
-        "value": 55
-      },
-      {
-        "name": "Tues",
-        "value": 68
-      },
-      {
-        "name": "Wed",
-        "value": 72
-      }
-    ]
-  },
+// export var lastWeekGraphData = [
+//   {
+//     "name": "Net Worth",
+//     "series": [
+//       {
+//         "name": "Mon",
+//         "value": 55
+//       },
+//       {
+//         "name": "Tues",
+//         "value": 68
+//       },
+//       {
+//         "name": "Wed",
+//         "value": 72
+//       }
+//     ]
+//   },
 
-  {
-    "name": "Cash",
-    "series": [
-      {
-        "name": "Mon",
-        "value": 87
-      },
-      {
-        "name": "Tues",
-        "value": 92
-      },
-      {
-        "name": "Wed",
-        "value": 106
-      }
-    ]
-  },
+//   {
+//     "name": "Cash",
+//     "series": [
+//       {
+//         "name": "Mon",
+//         "value": 87
+//       },
+//       {
+//         "name": "Tues",
+//         "value": 92
+//       },
+//       {
+//         "name": "Wed",
+//         "value": 106
+//       }
+//     ]
+//   },
 
-  {
-    "name": "Market Value",
-    "series": [
-      {
-        "name": "Mon",
-        "value": 113
-      },
-      {
-        "name": "Tues",
-        "value": 128
-      },
-      {
-        "name": "Wed",
-        "value": 132
-      }
-    ]
-  },
+//   {
+//     "name": "Market Value",
+//     "series": [
+//       {
+//         "name": "Mon",
+//         "value": 113
+//       },
+//       {
+//         "name": "Tues",
+//         "value": 128
+//       },
+//       {
+//         "name": "Wed",
+//         "value": 132
+//       }
+//     ]
+//   },
 
-  {
-    "name": "Total Equity",
-    "series": [
-      {
-        "name": "Mon",
-        "value": 45
-      },
-      {
-        "name": "Tues",
-        "value": 22
-      },
-      {
-        "name": "Wed",
-        "value": 83
-      }
-    ]
-  }
-];
+//   {
+//     "name": "Total Equity",
+//     "series": [
+//       {
+//         "name": "Mon",
+//         "value": 45
+//       },
+//       {
+//         "name": "Tues",
+//         "value": 22
+//       },
+//       {
+//         "name": "Wed",
+//         "value": 83
+//       }
+//     ]
+//   }
+// ];
 
-export var yearToDate = [
+export var yearToDateGraphData = [
   {
     "name": "Net Worth",
     "series": [
@@ -163,6 +163,11 @@ export class ActivityComponent implements OnInit {
   lastMonthData: any;
   lastQuarterData: any;
   yearToDateData: any;
+  // data mapped to work with graph
+  lastWeekGraphData: any = [{name: 'Net Worth',series: []},
+  {name: 'Cash',series: []},
+  {name: 'Market Value',series: []},
+  {name: 'Total Equity',series: []}];
 
   multi: any;
   // view: any = [900, 500];
@@ -185,11 +190,33 @@ export class ActivityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  //   this.databaseService.getApiData('user')
-  //   .subscribe((incomingData: any) => {
-  //     this.data = incomingData
-  //     console.log(this.data);
-  //   });
+    this.databaseService.getApiData('user/account/net-worth/range=lastWeek')
+    .subscribe((incomingData: any) => {
+      // this.lastWeekData = incomingData
+      // console.log(this.lastWeekData);
+      this.lastWeekData = this.mapLastWeekData(incomingData, 'Net Worth');
+    });
+
+    this.databaseService.getApiData('user/account/cash/range=lastWeek')
+    .subscribe((incomingData: any) => {
+      // this.lastWeekData = incomingData
+      // console.log(this.lastWeekData);
+      this.lastWeekData = this.mapLastWeekData(incomingData, 'Cash');
+    });
+
+    this.databaseService.getApiData('user/account/market-value/range=lastWeek')
+    .subscribe((incomingData: any) => {
+      // this.lastWeekData = incomingData
+      // console.log(this.lastWeekData);
+      this.lastWeekData = this.mapLastWeekData(incomingData, 'Market Value');
+    });
+
+    this.databaseService.getApiData('user/account/total-equity/range=lastWeek')
+    .subscribe((incomingData: any) => {
+      // this.lastWeekData = incomingData
+      // console.log(this.lastWeekData);
+      this.lastWeekData = this.mapLastWeekData(incomingData, 'Total Equity');
+    });
 
   //   this.databaseService.getApiData('user')
   //   .subscribe((incomingData: any) => {
@@ -216,26 +243,39 @@ export class ActivityComponent implements OnInit {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
+  array: any[] = [];
+
+  mapLastWeekData(incomingData: any, type: string) {
+    this.lastWeekGraphData;
+    console.log(incomingData);
+
+    // if () {}
+
+    // this.lastWeekGraphData = incomingData.map((obj:any) => {return {name: type,series: this.array.push(obj)}});
+    // this.lastWeekGraphData = incomingData.map((obj:any) => {return this.lastWeekGraphData[indexOfType] {name: type,series: this.array.push(obj)}});
+    console.log(this.lastWeekGraphData);
+  }
+
   onSelectTimeFrame(selectedTimeFrame: any) {
     console.log('selected: ' + selectedTimeFrame);
     // let val: string = '';
     switch (selectedTimeFrame) {
       case 'lastMonth':
         // data for this doesn't exist yet
-        // this.multi = lastMonth;
+        // this.multi = lastMonthGraphData;
         // this.xAxisLabel = 'day';
         break;
       case 'lastQuarter':
         // data for this doesn't exist yet
-        // this.multi = lastQuarter;
+        // this.multi = lastQuarterGraphData;
         // this.xAxisLabel = 'day';
         break;
       case 'yearToDate':
-        this.multi = yearToDate;
+        this.multi = yearToDateGraphData;
         this.xAxisLabel = 'year';
         break;
       default:
-        this.multi = lastWeek;
+        this.multi = this.lastWeekGraphData;
         this.xAxisLabel = 'day';
         break;
 
