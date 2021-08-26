@@ -9,12 +9,7 @@ public interface PortfolioManagerService {
 
 
 
-    Collection<AccountActivity> getAccountActivityByRange(String range);
 
-    List<Double> getNetWorthByRange(String range);
-    List<Double> getCashValueByRange(String range);
-    List<Double> getInvestmentValueByRange(String range);
-    List<Double> getTotalEquityByRange(String range);
     //It should be called everytime when updatingMarketPrice and at the time
     Double getTodayNetWorth();
 
@@ -25,10 +20,10 @@ public interface PortfolioManagerService {
     Double getInvestmentValue(String type,String ticker);
 
     /* buy and sell investment return its current quantity after buying/selling
-     * returns null if failed */
-    Double buyInvestment(String type, String ticker, Double quantity) throws UnirestException;
-
-    Integer sellInvestment(String type,String ticker, Double quantity) throws UnirestException;
+    * returns null if failed */
+//    Double buyInvestment(String type, String ticker, Double quantity) throws UnirestException;
+//
+//    Integer sellInvestment(String type,String ticker, Double quantity) throws UnirestException;
 
     Collection<Stock> getStocks();
 
@@ -39,3 +34,7 @@ public interface PortfolioManagerService {
 
 
 }
+
+
+
+
