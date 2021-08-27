@@ -45,10 +45,7 @@ export class BalancesComponent implements OnInit {
   showLabels: boolean = true;
   isDoughnut: boolean = false;
   colorScheme: string = 'vivid';
-  // public formatFn = this.valueFormatting.bind(this);
-  // valueFormatting(data:any) {
-  //   return '$' + data;
-  // }
+
   constructor(private databaseService: DatabaseService) {
     Object.assign(this, this.single);
   }
