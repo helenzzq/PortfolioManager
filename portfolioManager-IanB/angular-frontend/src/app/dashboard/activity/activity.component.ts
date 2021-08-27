@@ -1,155 +1,6 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/app/database/database.service';
 
-// export var lastWeekGraphData = [
-//   {
-//     "name": "Net Worth",
-//     "series": [
-//       {
-//         "name": "Mon",
-//         "value": 55
-//       },
-//       {
-//         "name": "Tues",
-//         "value": 68
-//       },
-//       {
-//         "name": "Wed",
-//         "value": 72
-//       }
-//     ]
-//   },
-
-//   {
-//     "name": "Cash",
-//     "series": [
-//       {
-//         "name": "Mon",
-//         "value": 87
-//       },
-//       {
-//         "name": "Tues",
-//         "value": 92
-//       },
-//       {
-//         "name": "Wed",
-//         "value": 106
-//       }
-//     ]
-//   },
-
-//   {
-//     "name": "Market Value",
-//     "series": [
-//       {
-//         "name": "Mon",
-//         "value": 113
-//       },
-//       {
-//         "name": "Tues",
-//         "value": 128
-//       },
-//       {
-//         "name": "Wed",
-//         "value": 132
-//       }
-//     ]
-//   },
-
-//   {
-//     "name": "Total Equity",
-//     "series": [
-//       {
-//         "name": "Mon",
-//         "value": 45
-//       },
-//       {
-//         "name": "Tues",
-//         "value": 22
-//       },
-//       {
-//         "name": "Wed",
-//         "value": 83
-//       }
-//     ]
-//   }
-// ];
-
-// export var yearToDateGraphData = [
-//   {
-//     "name": "Net Worth",
-//     "series": [
-//       {
-//         "name": "1990",
-//         "value": 62000000
-//       },
-//       {
-//         "name": "2010",
-//         "value": 73000000
-//       },
-//       {
-//         "name": "2011",
-//         "value": 89400000
-//       }
-//     ]
-//   },
-
-//   {
-//     "name": "Cash",
-//     "series": [
-//       {
-//         "name": "1990",
-//         "value": 250000000
-//       },
-//       {
-//         "name": "2010",
-//         "value": 309000000
-//       },
-//       {
-//         "name": "2011",
-//         "value": 311000000
-//       }
-//     ]
-//   },
-
-//   {
-//     "name": "Market Value",
-//     "series": [
-//       {
-//         "name": "1990",
-//         "value": 58000000
-//       },
-//       {
-//         "name": "2010",
-//         "value": 50000020
-//       },
-//       {
-//         "name": "2011",
-//         "value": 58000000
-//       }
-//     ]
-//   },
-
-//   {
-//     "name": "Total Equity",
-//     "series": [
-//       {
-//         "name": "1990",
-//         "value": 45000000
-//       },
-//       {
-//         "name": "2010",
-//         "value": 22000000
-//       },
-//       {
-//         "name": "2011",
-//         "value": 83000000
-//       }
-//     ]
-//   }
-// ];
-
-
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
@@ -193,7 +44,7 @@ export class ActivityComponent implements OnInit {
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = '';
+  xAxisLabel: string = 'Day';
   yAxisLabel: string = 'USD';
   timeline: boolean = false;
   colorScheme = 'vivid';
@@ -327,15 +178,15 @@ export class ActivityComponent implements OnInit {
   }
 
   onSelect(data: any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
 
   onActivate(data: any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
+    // console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
   onDeactivate(data: any): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+    // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
   // array: any[] = [];
@@ -348,6 +199,7 @@ export class ActivityComponent implements OnInit {
 
     switch (type) {
       case 'Net Worth':
+        // The ... spread notation removes square brackets from incomingdata
         this.lastWeekGraphData[0].series.push(...incomingData);
         break;
       case 'Cash':
@@ -376,6 +228,7 @@ export class ActivityComponent implements OnInit {
   
       switch (type) {
         case 'Net Worth':
+        // The ... spread notation removes square brackets from incomingdata
           this.lastMonthGraphData[0].series.push(...incomingData);
           break;
         case 'Cash':
@@ -408,6 +261,7 @@ export class ActivityComponent implements OnInit {
 
     switch (type) {
       case 'Net Worth':
+        // The ... spread notation removes square brackets from incomingdata
         this.lastQuarterGraphData[0].series.push(...incomingData);
         break;
       case 'Cash':
@@ -438,6 +292,7 @@ export class ActivityComponent implements OnInit {
 
     switch (type) {
       case 'Net Worth':
+        // The ... spread notation removes square brackets from incomingdata
         this.yearToDateGraphData[0].series.push(...incomingData);
         break;
       case 'Cash':
@@ -468,28 +323,28 @@ export class ActivityComponent implements OnInit {
     switch (selectedTimeFrame) {
       case 'lastWeek':
         this.multi = this.lastWeekGraphData;
-        this.xAxisLabel = 'day';
+        // this.xAxisLabel = 'Day';
         break;
       case 'lastMonth':
         this.multi = this.lastMonthGraphData;
-        this.xAxisLabel = 'day';
+        // this.xAxisLabel = 'Day';
         break;
       case 'lastQuarter':
         // data for this doesn't exist yet
         // this.multi = lastQuarterGraphData;
         // this.xAxisLabel = 'day';
         this.multi = this.lastQuarterGraphData;
-        this.xAxisLabel = 'day';
+        // this.xAxisLabel = 'Day';
         break;
       case 'yearToDate':
         this.multi = this.yearToDateGraphData;
         // this.xAxisLabel = 'year';
         // this.multi = this.lastMonthGraphData;
-        // this.xAxisLabel = 'day';
+        // this.xAxisLabel = 'Day';
         break;
       default:
         this.multi = this.lastWeekGraphData;
-        // this.xAxisLabel = 'day';
+        // this.xAxisLabel = 'Day';
         break;
 
     }
