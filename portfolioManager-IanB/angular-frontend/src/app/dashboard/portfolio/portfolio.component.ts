@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { DatabaseService } from 'src/app/database/database.service'
+// import {MatTableDataSource} from '@angular/material/table';
 
 
 export interface portfolioTableRow {
@@ -89,7 +90,9 @@ export class PortfolioComponent implements OnInit{
             grouped: x.grouped
           }
         })
+
         this.portfolioDataSource = this.tableData
+        
       },
       (err) => console.log(err)
     )
@@ -98,4 +101,14 @@ export class PortfolioComponent implements OnInit{
   displayedPortfolioColumns: string[] = ['ticker', 'type','marketPrice', 'percentRetained'];
   groupedColumns: string[] = ['grouped'];
   portfolioDataSource = PORTFOLIO_TABLE_DATA;
+  // portfolioDataSource = new MatTableDataSource(PORTFOLIO_TABLE_DATA);
+
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.portfolioDataSource.filter = filterValue.trim().toLowerCase();
+  // }
+
+  // applyFilter(filterValue: string) {    
+  //   this.portfolioDataSource.filter = filterValue.trim().toLowerCase();
+  // }
 }
