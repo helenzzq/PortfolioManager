@@ -32,7 +32,7 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
     private HashMap<String, JpaRepository> investmentsRepos = new HashMap<>();
 
-    List<String> INVESTMENTS = Arrays.asList("Stock", "Bond", "Future", "Etf");
+    List<String> INVESTMENTS = Arrays.asList("Stock", "Bond", "Future", "ETF");
 
     private void updateInvestmentRepo() {
         investmentsRepos.put("Stock", stockRepository);
