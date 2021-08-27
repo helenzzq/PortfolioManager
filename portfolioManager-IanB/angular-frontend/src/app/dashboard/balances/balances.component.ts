@@ -17,13 +17,13 @@ export interface investmentTypeTableRow {
 }
 
 // Pie chart
-export var single = [
-  { name: 'Cash', value: 20 },
-  { name: 'Stocks', value: 15 },
-  { name: 'Bonds', value: 25 },
-  { name: 'Futures', value: 20 },
-  { name: 'ETFs', value: 20 },
-];
+// export var single = [
+//   { name: 'Cash', value: 20 },
+//   { name: 'Stocks', value: 15 },
+//   { name: 'Bonds', value: 25 },
+//   { name: 'Futures', value: 20 },
+//   { name: 'ETFs', value: 20 },
+// ];
 
 
 @Component({
@@ -51,15 +51,18 @@ export class BalancesComponent implements OnInit {
   currencyDataSource: any;
 
   // investmentType table
-  INVESTMENT_TYPE_TABLE_DATA: investmentTypeTableRow[] = [
-    { investmentType: 'Stocks', percentage: 15, marketValue: 33 },
-    { investmentType: 'Bonds', percentage: 25, marketValue: 44 },
-    { investmentType: 'Futures', percentage: 20, marketValue: 55 },
-    { investmentType: 'ETFs', percentage: 20, marketValue: 66 },
-  ];
+  // INVESTMENT_TYPE_TABLE_DATA: investmentTypeTableRow[] = [
+  //   { investmentType: 'Stocks', percentage: 15, marketValue: 33 },
+  //   { investmentType: 'Bonds', percentage: 25, marketValue: 44 },
+  //   { investmentType: 'Futures', percentage: 20, marketValue: 55 },
+  //   { investmentType: 'ETFs', percentage: 20, marketValue: 66 },
+  // ];
   displayedInvestmentTypeColumns: string[] = ['investmentType', 'percentage', 'marketValue'];
-  investmentTypeDataSource = this.INVESTMENT_TYPE_TABLE_DATA;
-  // investmentTypeDataSource: any;
+  // investmentTypeDataSource = this.INVESTMENT_TYPE_TABLE_DATA;
+  investmentTypeDataSource: any;
+percentageTotal: number = 0;
+marketValueTotal: number = 0;
+
 
   // Pie Chart
   single: any;
@@ -76,7 +79,7 @@ export class BalancesComponent implements OnInit {
   //   return '$' + data;
   // }
   constructor(private databaseService: DatabaseService) {
-    Object.assign(this, { single });
+    Object.assign(this, this.single );
   }
 
   ngOnInit(): void {
@@ -102,24 +105,39 @@ export class BalancesComponent implements OnInit {
       });
 
     // investment table
-    this.databaseService.getApiData('portfolio-manager/investments/userId=1')
+    this.databaseService.getApiData('portfolio-manager/investments/portfolio-percentage/userId=1')
       .subscribe((incomingData: any) => {
-        // let INVESTMENT_TYPE_TABLE_DATA: investmentTypeTableRow[] = incomingData;
-        // this.investmentTypeDataSource = INVESTMENT_TYPE_TABLE_DATA;
+        console.log(incomingData);
+        let INVESTMENT_TYPE_TABLE_DATA: investmentTypeTableRow[] = incomingData;
+        this.investmentTypeDataSource = INVESTMENT_TYPE_TABLE_DATA;
+        this.percentageTotal = INVESTMENT_TYPE_TABLE_DATA.map(t => t.percentage).reduce((acc, value) => acc + value, 0);
+        this.marketValueTotal = INVESTMENT_TYPE_TABLE_DATA.map(t => t.marketValue).reduce((acc, value) => acc + value, 0);
+
+        // pie chart
+        this.mapToPieChart(incomingData);
       });
+  }
+
+  mapToPieChart(incomingData: any) {
+    this.single = incomingData.map((x: { investmentType: any; percentage: any; }) => {
+      return {
+        name: x.investmentType,
+        value: x.percentage, 
+      }
+    })
   }
 
   //  --------------------- investmentType Table ---------------------
 
 
 
-  calculatePercentageTotal() {
-    return this.INVESTMENT_TYPE_TABLE_DATA.map(t => t.percentage).reduce((acc, value) => acc + value, 0);
-  }
+  // calculatePercentageTotal() {
+  //   return this.INVESTMENT_TYPE_TABLE_DATA.map(t => t.percentage).reduce((acc, value) => acc + value, 0);
+  // }
 
-  calculateMarketValueTotal() {
-    return this.INVESTMENT_TYPE_TABLE_DATA.map(t => t.marketValue).reduce((acc, value) => acc + value, 0);
-  }
+  // calculateMarketValueTotal() {
+  //   return this.INVESTMENT_TYPE_TABLE_DATA.map(t => t.marketValue).reduce((acc, value) => acc + value, 0);
+  // }
   //  --------------------- /investmentType Table ---------------------
 
 }
