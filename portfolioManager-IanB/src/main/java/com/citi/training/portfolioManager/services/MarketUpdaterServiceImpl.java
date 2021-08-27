@@ -24,7 +24,6 @@ public class MarketUpdaterServiceImpl implements MarketUpdaterServices {
     }
 
     public HashMap<Integer, String> getDailyLosers() {
-        marketMovers.retrieveData();
         return marketMovers.getLosers();
     }
 
