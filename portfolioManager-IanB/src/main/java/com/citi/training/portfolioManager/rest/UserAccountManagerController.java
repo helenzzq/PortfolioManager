@@ -42,10 +42,6 @@ public class UserAccountManagerController {
     }
 
 
-//    @PostMapping("/update-networth/{date}")
-//    public void deposit(@PathVariable("date") long date) {
-//        portfolioManagerService.updateNetWorth(1, new Date(date));
-//    }
     /**
      * @Param range: the range that user want to filter, should be in [lastMonth,lastWeek,lastQuarter,yearToDate]
      * @Return A list of all account Activity within the time range
