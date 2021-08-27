@@ -31,13 +31,13 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
     private HashMap<String, JpaRepository> investmentsRepos = new HashMap<>();
 
-    List<String> INVESTMENTS = Arrays.asList("Stocks", "Bonds", "Futures", "Etfs");
+    List<String> INVESTMENTS = Arrays.asList("Stock", "Bond", "Future", "Etf");
 
     private void updateInvestmentRepo() {
-        investmentsRepos.put("Stocks", stockRepository);
-        investmentsRepos.put("Bonds", bondRepository);
-        investmentsRepos.put("Etfs", etfRepository);
-        investmentsRepos.put("Futures", futureRepository);
+        investmentsRepos.put("Stock", stockRepository);
+        investmentsRepos.put("Bond", bondRepository);
+        investmentsRepos.put("Etf", etfRepository);
+        investmentsRepos.put("Future", futureRepository);
     }
 
     private Investment getInvestmentFromRepo(String type, String ticker) {
