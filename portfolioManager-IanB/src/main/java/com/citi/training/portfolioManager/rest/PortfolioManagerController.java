@@ -48,6 +48,11 @@ public class PortfolioManagerController {
     public Double getInvestmentValue(@PathVariable("type") String type, @PathVariable("ticker") String ticker) {
         return portfolioManagerService.getInvestmentValue(type, ticker);
     }
+    @GetMapping("/investments/portfolio-percentage/userId={id}")
+    public List<HashMap<String, Object>> getInvestmentPercentage(@PathVariable("id") Integer id) {
+        return portfolioManagerService.getInvestmentPercentage(id);
+    }
+
 
     @GetMapping("/stocks")
     public Collection<Stock> getAllStocks(){
@@ -98,6 +103,7 @@ public class PortfolioManagerController {
                     HttpStatus.BAD_REQUEST, "Sorry, there is no enough money in your cash account.");
         }
     }
+
 
 //    @PostMapping("/buy/{ticker}/{quantity}")
 //    public void buyInvestment(@PathVariable("type") String type, @PathVariable("ticker") String ticker, @PathVariable("quantity") Double quantity) throws UnirestException {
