@@ -24,13 +24,19 @@ export class AdvancedPieChartComponent implements OnInit {
   ngOnInit(): void {
     this.databaseService.getApiData('portfolio-manager/investments/portfolio-percentage/userId=1')
       .subscribe((incomingData: any) => {
-        this.singleAdvanced = incomingData.map((x: { investmentType: any; percentage: any; }) => {
+        this.singleAdvanced = incomingData.map((x: { investmentType: any; marketValue: any; }) => {
           return {
             name: x.investmentType,
-            value: x.percentage,
+            value: x.marketValue,
           }
         })
       });
   }
+
+    // for adding a currency value to the numbers
+    // (I only got it to work for the biggest number, not the smaller ones)
+    valueFormattingFn(value:any) {
+      return value + ' USD';
+    }
 
 }

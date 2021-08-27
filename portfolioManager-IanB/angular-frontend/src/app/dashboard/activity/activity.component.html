@@ -10,7 +10,7 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Choose timeframe</mat-label>
-            <mat-select (valueChange)="onSelectTimeFrame($event)">
+            <mat-select [value]="selectedOptionOnLineGraphDropdown" (valueChange)="onSelectTimeFrame($event)">
               <mat-option value="lastWeek">Last Week</mat-option>
               <mat-option value="lastMonth">Last Month</mat-option>
               <mat-option value="lastQuarter">Last Quarter</mat-option>
