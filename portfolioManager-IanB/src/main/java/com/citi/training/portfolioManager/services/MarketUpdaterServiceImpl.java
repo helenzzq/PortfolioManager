@@ -1,6 +1,6 @@
 package com.citi.training.portfolioManager.services;
 
-import com.citi.training.portfolioManager.services.marketDataDownloaders.*;
+import com.citi.training.portfolioManager.model.marketDataDownloaders.*;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.stereotype.Service;
 

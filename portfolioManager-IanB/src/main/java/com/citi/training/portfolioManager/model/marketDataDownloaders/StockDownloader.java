@@ -1,4 +1,4 @@
-package com.citi.training.portfolioManager.services.marketDataDownloaders;
+package com.citi.training.portfolioManager.model.marketDataDownloaders;
 
 import com.google.gson.JsonParser;
 import com.mashape.unirest.http.exceptions.UnirestException;

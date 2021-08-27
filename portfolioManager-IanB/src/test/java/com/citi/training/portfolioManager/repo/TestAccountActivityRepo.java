@@ -31,7 +31,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@WebAppConfiguration
 @ContextConfiguration(classes = {com.citi.training.portfolioManager.AppConfig.class})
 
 public class TestAccountActivityRepo {

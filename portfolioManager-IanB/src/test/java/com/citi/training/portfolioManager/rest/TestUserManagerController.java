@@ -55,35 +55,14 @@ public class TestUserManagerController {
         MockMvcOperation.perform(mockMvc,"/user/account","$[0].cashValue",1000.0);
         MockMvcOperation.perform(mockMvc,"/user/account","$[0].investmentValue",9000.0);
     }
-//    @Test
-//    public void testCanGetAccountActivityByRange() throws Exception {
-//        Date dates = new SimpleDateFormat("dd-MM-yyyy").parse("16-07-2021");
-//        AccountActivity ac = new AccountActivity(dates,750.0,1000.0,9000.0,10750.0);
-//        Collection<AccountActivity> accountActivities = new ArrayList<>();
-//        accountActivities.add(ac);
-//        given(userAccountManagerService.getAccountActivityByRange("lastWeek")).willReturn(accountActivities);
-//        MockMvcOperation.perform(mockMvc,"/user/account/range=lastWeek","$[0].netWorth",750.0);
-//
-//    }
-//    @Test
-//    public void testCanGetCashValueByRange() throws Exception {
-//        List<Double> cash = new ArrayList<>();
-//        cash.add(100.0);
-//        given(userAccountManagerService.getCashValueByRange("lastMonth")).willReturn();
-//        MockMvcOperation.perform(mockMvc,"/user/account/cash/range=lastMonth","$[0]",100.0);
-//    }
-//    @Test
-//    public void testCanGetNetWorthByRange() throws Exception {
-//        List<Double> netWorth = new ArrayList<>();
-//        netWorth.add(7500.0);
-//        given(userAccountManagerService.getNetWorthByRange("lastQuarter")).willReturn(netWorth);
-//        MockMvcOperation.perform(mockMvc,"/user/account/net-worth/range=lastQuarter","$[0]",7500.0);
-//    }
-//    @Test
-//    public void testCanGetTotalEquityByRange() throws Exception {
-//        List<Double> totalEquity = new ArrayList<>();
-//        totalEquity.add(17500.0);
-//        given(userAccountManagerService.getTotalEquityByRange("lastQuarter")).willReturn(totalEquity);
-//        MockMvcOperation.perform(mockMvc,"/user/account/total-equity/range=lastQuarter","$[0]",17500.0);
-//    }
+
+    @Test
+    public void testCanGetTotalEquityByRange() throws Exception {
+        List<HashMap<String,Object>> totalEquity = new ArrayList<>();
+        HashMap<String, Object> map = new HashMap<>();
+
+        totalEquity.add(map);
+        given(userAccountManagerService.getTotalEquityByRange("lastQuarter")).willReturn(totalEquity);
+        MockMvcOperation.perform(mockMvc,"/user/account/total-equity/range=lastQuarter","$[0]",map);
+    }
 }
