@@ -1,5 +1,3 @@
-<!-- <p>balances works!</p> -->
-
 <div class="container-fluid">
 
   <div class="row">
@@ -44,9 +42,8 @@
     </div>
   </div>
 
-  
   <div class="row">
-    
+
     <div class="col-12 col-xl-6" #containerRef>
       <ngx-charts-pie-chart
       [view]="[containerRef.offsetWidth, 450]"
@@ -55,11 +52,8 @@
       [gradient]="gradient"
       [legend]="showLegend"
       [labels]="showLabels"
-      [doughnut]="isDoughnut"
-      (select)="onSelect($event)"
-      (activate)="onActivate($event)"
-      (deactivate)="onDeactivate($event)">
-    </ngx-charts-pie-chart>      
+      [doughnut]="isDoughnut">
+    </ngx-charts-pie-chart>
     </div>
 
     <div class="col-12 col-xl-6" style="margin: auto;">
@@ -90,7 +84,5 @@
       </table>
     </div>
   </div>
-
-
 
 </div>

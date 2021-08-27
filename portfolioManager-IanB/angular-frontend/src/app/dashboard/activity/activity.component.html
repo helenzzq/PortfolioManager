@@ -19,17 +19,6 @@
           </mat-form-field>
         </div>
 
-        <!-- <div class="col-6">
-          <mat-form-field appearance="outline">
-            <mat-label>Choose value type</mat-label>
-            <mat-select>
-              <mat-option value="netWorth">Net Worth</mat-option>
-              <mat-option value="cash">Cash</mat-option>
-              <mat-option value="marketValue">Market Value</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div> -->
-
       </div>
     </div>
   </div>
@@ -49,11 +38,8 @@
         [xAxisLabel]="xAxisLabel"
         [yAxisLabel]="yAxisLabel"
         [timeline]="timeline"
-        [results]="multi"
-        (select)="onSelect($event)"
-        (activate)="onActivate($event)"
-        (deactivate)="onDeactivate($event)">
-        </ngx-charts-line-chart>        
+        [results]="multi">
+        </ngx-charts-line-chart>   
       </div>
     </mat-card>
 

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
 // Advanced Pie chart
 export var singleAdvanced =  [
   { name: 'Cash', value: 22},
@@ -17,37 +16,19 @@ export var singleAdvanced =  [
 })
 export class AdvancedPieChartComponent implements OnInit {
 
-   // Pie Chart
+   // Advanced Pie Chart
    singleAdvanced: any;
-   // view: any = [];
    gradient: boolean = false;
    showLegend: boolean = false;
    showLabels: boolean = true;
    isDoughnut: boolean = false;
-   // legendPosition: string = 'below';
    colorScheme: string = 'vivid';
 
   constructor() { 
     Object.assign(this, { singleAdvanced });
-
   }
 
   ngOnInit(): void {
   }
-
-  
-  //  --------------------- Pie Chart ---------------------
-  onSelect(data: any): void {
-    // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
-
-  onActivate(data: any): void {
-    // console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data: any): void {
-    // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  }
-  //  --------------------- /Pie Chart ---------------------
 
 }

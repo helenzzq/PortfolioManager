@@ -58,8 +58,8 @@ export class BalancesComponent implements OnInit {
     { investmentType: 'ETFs', percentage: 20, marketValue: 66 },
   ];
   displayedInvestmentTypeColumns: string[] = ['investmentType', 'percentage', 'marketValue'];
-  // investmentTypeDataSource = this.INVESTMENT_TYPE_TABLE_DATA;
-  investmentTypeDataSource: any;
+  investmentTypeDataSource = this.INVESTMENT_TYPE_TABLE_DATA;
+  // investmentTypeDataSource: any;
 
   // Pie Chart
   single: any;
@@ -104,10 +104,8 @@ export class BalancesComponent implements OnInit {
     // investment table
     this.databaseService.getApiData('portfolio-manager/investments/userId=1')
       .subscribe((incomingData: any) => {
-        // this.exchangeRate = incomingData
-        // console.log(this.networthToday);
-        let INVESTMENT_TYPE_TABLE_DATA: investmentTypeTableRow[] = incomingData;
-        this.investmentTypeDataSource = INVESTMENT_TYPE_TABLE_DATA;
+        // let INVESTMENT_TYPE_TABLE_DATA: investmentTypeTableRow[] = incomingData;
+        // this.investmentTypeDataSource = INVESTMENT_TYPE_TABLE_DATA;
       });
   }
 
@@ -123,22 +121,5 @@ export class BalancesComponent implements OnInit {
     return this.INVESTMENT_TYPE_TABLE_DATA.map(t => t.marketValue).reduce((acc, value) => acc + value, 0);
   }
   //  --------------------- /investmentType Table ---------------------
-
-
-
-  //  --------------------- Pie Chart ---------------------
-  onSelect(data: any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
-
-  onActivate(data: any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data: any): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  }
-  //  --------------------- /Pie Chart ---------------------
-
 
 }
