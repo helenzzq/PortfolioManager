@@ -1,0 +1,22 @@
+#banner {
+    background-color: rgba(35, 56, 116, 0.616);
+    margin: 0;
+    padding:12px 15px;
+    color: white;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+#title {
+    font-weight: 600;
+}
+
+#banner-container {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.container-fluid {
+    padding: 0;
+}

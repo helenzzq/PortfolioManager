@@ -1,10 +1,9 @@
-<!-- <p>balances works!</p> -->
-
 <div class="container-fluid">
 
   <div class="row">
     <div class="col-12">
       <h2>{{usersName}}'s Balances - As of {{today | date:'long'}}</h2>
+      <p style="font-weight: bold;">Exchange Rate: 1 USD = {{exchangeRate}} CAD</p>
     </div>
   </div>
 
@@ -43,9 +42,8 @@
     </div>
   </div>
 
-  
   <div class="row">
-    
+
     <div class="col-12 col-xl-6" #containerRef>
       <ngx-charts-pie-chart
       [view]="[containerRef.offsetWidth, 450]"
@@ -54,11 +52,9 @@
       [gradient]="gradient"
       [legend]="showLegend"
       [labels]="showLabels"
-      [doughnut]="isDoughnut"
-      (select)="onSelect($event)"
-      (activate)="onActivate($event)"
-      (deactivate)="onDeactivate($event)">
-    </ngx-charts-pie-chart>      
+      [labelFormatting]="labelFormattingFn"
+      [doughnut]="isDoughnut">
+    </ngx-charts-pie-chart>
     </div>
 
     <div class="col-12 col-xl-6" style="margin: auto;">
@@ -73,13 +69,13 @@
         <ng-container matColumnDef="percentage">
           <th mat-header-cell *matHeaderCellDef> % &nbsp; &nbsp; &nbsp; &nbsp;</th>
           <td mat-cell *matCellDef="let row"> {{row.percentage}} </td>
-          <td mat-footer-cell *matFooterCellDef> {{calculatePercentageTotal()}} </td>
+          <td mat-footer-cell *matFooterCellDef> {{percentageTotal}} </td>
         </ng-container>
 
         <ng-container matColumnDef="marketValue">
           <th mat-header-cell *matHeaderCellDef> Market Value </th>
           <td mat-cell *matCellDef="let row"> {{row.marketValue}} </td>
-          <td mat-footer-cell *matFooterCellDef> {{calculateMarketValueTotal()}} </td>
+          <td mat-footer-cell *matFooterCellDef> {{marketValueTotal}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedInvestmentTypeColumns"></tr>
@@ -89,7 +85,5 @@
       </table>
     </div>
   </div>
-
-
 
 </div>

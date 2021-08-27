@@ -1,14 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-
-// Advanced Pie chart
-export var singleAdvanced =  [
-  { name: 'Cash', value: 22},
-  { name: 'Stocks', value: 33 },
-  { name: 'Bonds', value: 44 },
-  { name: 'Futures', value: 55 },
-  { name: 'ETFs', value: 66 },
-];
+import { DatabaseService } from 'src/app/database/database.service';
 
 @Component({
   selector: 'app-advanced-pie-chart',
@@ -17,37 +9,28 @@ export var singleAdvanced =  [
 })
 export class AdvancedPieChartComponent implements OnInit {
 
-   // Pie Chart
-   singleAdvanced: any;
-   // view: any = [];
-   gradient: boolean = false;
-   showLegend: boolean = false;
-   showLabels: boolean = true;
-   isDoughnut: boolean = false;
-   // legendPosition: string = 'below';
-   colorScheme: string = 'vivid';
+  // Advanced Pie Chart Options
+  singleAdvanced: any;
+  gradient: boolean = false;
+  showLegend: boolean = false;
+  showLabels: boolean = true;
+  isDoughnut: boolean = false;
+  colorScheme: string = 'vivid';
 
-  constructor() { 
-    Object.assign(this, { singleAdvanced });
-
+  constructor(private databaseService: DatabaseService) {
+    Object.assign(this, this.singleAdvanced);
   }
 
   ngOnInit(): void {
+    this.databaseService.getApiData('portfolio-manager/investments/portfolio-percentage/userId=1')
+      .subscribe((incomingData: any) => {
+        this.singleAdvanced = incomingData.map((x: { investmentType: any; percentage: any; }) => {
+          return {
+            name: x.investmentType,
+            value: x.percentage,
+          }
+        })
+      });
   }
-
-  
-  //  --------------------- Pie Chart ---------------------
-  onSelect(data: any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
-
-  onActivate(data: any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data: any): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  }
-  //  --------------------- /Pie Chart ---------------------
 
 }

@@ -1,7 +1,7 @@
+/* These styles are here because the ngx-charts library's default advanced pie chart has some issues where numbers get cut off */
 /deep/ .advanced-pie-legend /deep/ .legend-items-container /deep/ .legend-items /deep/ .legend-item /deep/ .item-value /deep/ 
 {
     margin: 10px !important;
-    /* overflow: initial !important; */
 }
 
 /deep/ .total-value /deep/

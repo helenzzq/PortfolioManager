@@ -13,6 +13,7 @@ import { ActivityComponent } from './dashboard/activity/activity.component';
 import { IndicesComponent } from './dashboard/indices/indices.component';
 import { GainersLosersComponent } from './dashboard/gainers-losers/gainers-losers.component';
 import { PortfolioComponent } from './dashboard/portfolio/portfolio.component';
+import { AdvancedPieChartComponent } from './dashboard/balances/advanced-pie-chart/advanced-pie-chart.component';
 
 // Angular Material modules
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,7 +26,6 @@ import {MatCardModule} from '@angular/material/card';
 
 // External libraries
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { AdvancedPieChartComponent } from './dashboard/balances/advanced-pie-chart/advanced-pie-chart.component';
 
 
 @NgModule({
