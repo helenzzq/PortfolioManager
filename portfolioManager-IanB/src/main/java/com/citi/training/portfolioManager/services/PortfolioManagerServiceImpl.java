@@ -37,7 +37,7 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     private void updateInvestmentRepo() {
         investmentsRepos.put("Stock", stockRepository);
         investmentsRepos.put("Bond", bondRepository);
-        investmentsRepos.put("Etf", etfRepository);
+        investmentsRepos.put("ETF", etfRepository);
         investmentsRepos.put("Future", futureRepository);
     }
 
