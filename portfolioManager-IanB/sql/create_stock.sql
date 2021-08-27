@@ -10,5 +10,6 @@ CREATE TABLE `conygre`.`stock` (
                                          `percent_retained` DECIMAL(10,2) NOT NULL,
                                          `percent_port` DECIMAL(10,2) NOT NULL,
                                          PRIMARY KEY (`ticker`));
-INSERT INTO `conygre`.`stock` (`ticker`, `portfolio_id`, `currency`, `quantity`, `cost_per_share`, `market_price`, `market_value`, `profit_and_loss`, `percent_retained`, `percent_port`) VALUES ('BILI', '1', 'USD', '100', '80', '78', '7841', '-159', '1.99', '80');
-INSERT INTO `conygre`.`stock` (`ticker`, `portfolio_id`, `currency`, `quantity`, `cost_per_share`, `market_price`, `market_value`, `profit_and_loss`, `percent_retained`, `percent_port`) VALUES ('GME', '1', 'USD', '10', '180', '210.29', '2103', '302.9', '16.8', '18');
+INSERT INTO `conygre`.`stock` (`ticker`, `portfolio_id`, `currency`, `quantity`, `cost_per_share`, `market_price`, `market_value`, `profit_and_loss`, `percent_retained`, `percent_port`) VALUES ('BILI', '1', 'USD', '13', '80', '78', '1060', '-26', '1.99', '15');
+INSERT INTO `conygre`.`stock` (`ticker`, `portfolio_id`, `currency`, `quantity`, `cost_per_share`, `market_price`, `market_value`, `profit_and_loss`, `percent_retained`, `percent_port`) VALUES ('GME', '1', 'USD', '12', '180', '210.29', '2654', '363', '16.8', '26');
+INSERT INTO `conygre`.`stock` (`ticker`, `portfolio_id`, `currency`, `quantity`, `cost_per_share`, `market_price`, `market_value`, `profit_and_loss`, `percent_retained`, `percent_port`) VALUES ('SU', '1', 'USD', '59', '17.66', '18.66', '1101', '59', '5.64', '9');

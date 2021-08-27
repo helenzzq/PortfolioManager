@@ -10,6 +10,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+import static java.lang.Math.round;
+
 @Service
 public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
@@ -29,13 +31,13 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
     private HashMap<String, JpaRepository> investmentsRepos = new HashMap<>();
 
-    List<String> INVESTMENTS = Arrays.asList("Stocks", "Bonds", "Futures", "Etfs");
+    List<String> INVESTMENTS = Arrays.asList("Stock", "Bond", "Future", "Etf");
 
     private void updateInvestmentRepo() {
-        investmentsRepos.put("Stocks", stockRepository);
-        investmentsRepos.put("Bonds", bondRepository);
-        investmentsRepos.put("Etfs", etfRepository);
-        investmentsRepos.put("Futures", futureRepository);
+        investmentsRepos.put("Stock", stockRepository);
+        investmentsRepos.put("Bond", bondRepository);
+        investmentsRepos.put("Etf", etfRepository);
+        investmentsRepos.put("Future", futureRepository);
     }
 
     private Investment getInvestmentFromRepo(String type, String ticker) {
@@ -54,10 +56,12 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         List<HashMap<String, Object>> investmentMap = new ArrayList<>();
         AccountActivity ac = userRepository.getById(1).getTodayAccountActivity();
         HashMap<String, Object> investmentEntry = new HashMap<>();
-
+        double cash = ac.getCashValue();
+        double total = ac.getTotalEquity();
         investmentEntry.put("investmentType", "Cash");
-        investmentEntry.put("marketValue", ac.getCashValue());
-        investmentEntry.put("percentage", ac.getCashValue()/ac.getTotalEquity());
+        investmentEntry.put("marketValue", (float)cash);
+        float p = (float)cash*100/(float)total;
+        investmentEntry.put("percentage", round(p*100.0)/100.0);
         investmentMap.add(investmentEntry);
         for (int i = 0; i < 4; i++) {
             investmentEntry = new HashMap<>();

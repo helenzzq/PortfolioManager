@@ -52,8 +52,6 @@ public class PortfolioManagerController {
     public List<HashMap<String, Object>> getInvestmentPercentage(@PathVariable("id") Integer id) {
         return portfolioManagerService.getInvestmentPercentage(id);
     }
-
-
     @GetMapping("/stocks")
     public Collection<Stock> getAllStocks(){
         return portfolioManagerService.getStocks();
