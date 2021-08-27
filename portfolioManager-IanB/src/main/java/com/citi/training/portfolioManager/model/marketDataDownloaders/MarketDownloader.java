@@ -32,8 +32,8 @@ public abstract class MarketDownloader {
 
     Double downloadTimeSeriesFromTwelveData(String interval) throws IOException {
         this.host = "https://api.twelvedata.com/time_series";
-//        String apiKey = "5e0210e890b64501b5fadda2756fc2c0";
-        String apiKey = "wrongAPIKEY";
+        String apiKey = "5e0210e890b64501b5fadda2756fc2c0";
+
         URL url = new URL(host + "?symbol=" + symbol + "&interval=" + interval + "&apikey=" + apiKey);
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
@@ -49,7 +49,7 @@ public abstract class MarketDownloader {
 
     void downloadFromYahoo() throws UnirestException {
         String API_HOST = "apidojo-yahoo-finance-v1.p.rapidapi.com";
-        String API_KEY = "afecc7b71emshfc255aa989092cbp14b434jsn56d7ba5167e7";
+        String API_KEY = "775807d4b3mshca44f2a53beece0p1118d1jsne77e1f67b60d";
         data = Unirest.get(host + "?" + symbol)
                 .header("x-rapidapi-key", API_KEY)
                 .header("x-rapidapi-host", API_HOST)
