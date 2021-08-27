@@ -10,3 +10,4 @@ CREATE TABLE `conygre`.`etf` (
                                    `percent_retained` DECIMAL(10,2) NOT NULL,
                                    `percent_port` DECIMAL(10,2) NOT NULL,
                                    PRIMARY KEY (`ticker`));
+                                   INSERT INTO `conygre`.`etf` (`ticker`, `portfolio_id`, `currency`, `quantity`, `cost_per_share`, `market_price`, `market_value`, `profit_and_loss`, `percent_retained`, `percent_port`) VALUES ('DWCR', '1', 'USD', '55', '35.5', '36.15', '1988.25', '35.75', '1.83', '18');
