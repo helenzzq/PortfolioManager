@@ -2,19 +2,12 @@ package com.citi.training.portfolioManager.services;
 
 import com.citi.training.portfolioManager.entities.*;
 import com.citi.training.portfolioManager.repo.*;
-import com.google.gson.JsonParser;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import org.threeten.extra.YearQuarter;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 @Service
@@ -36,11 +29,13 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 
     private HashMap<String, JpaRepository> investmentsRepos = new HashMap<>();
 
+    List<String> INVESTMENTS = Arrays.asList("Stocks", "Bonds", "Futures", "Etfs");
+
     private void updateInvestmentRepo() {
-        investmentsRepos.put("Stock", stockRepository);
-        investmentsRepos.put("Bond", bondRepository);
-        investmentsRepos.put("Etf", etfRepository);
-        investmentsRepos.put("Future", futureRepository);
+        investmentsRepos.put("Stocks", stockRepository);
+        investmentsRepos.put("Bonds", bondRepository);
+        investmentsRepos.put("Etfs", etfRepository);
+        investmentsRepos.put("Futures", futureRepository);
     }
 
     private Investment getInvestmentFromRepo(String type, String ticker) {
@@ -54,13 +49,44 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         return investment;
     }
 
+    @Override
+    public List<HashMap<String, Object>> getInvestmentPercentage(Integer userId) {
+        List<HashMap<String, Object>> investmentMap = new ArrayList<>();
+        AccountActivity ac = userRepository.getById(1).getTodayAccountActivity();
+        HashMap<String, Object> investmentEntry = new HashMap<>();
+
+        investmentEntry.put("investmentType", "Cash");
+        investmentEntry.put("marketValue", ac.getCashValue());
+        investmentEntry.put("percentage", ac.getCashValue()/ac.getTotalEquity());
+        investmentMap.add(investmentEntry);
+        for (int i = 0; i < 4; i++) {
+            investmentEntry = new HashMap<>();
+
+            String types = INVESTMENTS.get(i);
+            updateInvestmentRepo();
+
+            Collection<Investment> investments = investmentsRepos.get(types).findAll();
+            Double marketValue = 0.0;
+            Double percentage = 0.0;
+            for (Investment investment : investments) {
+                marketValue += investment.getMarketValue();
+                percentage += investment.getPercentInPort();
+            }
+            investmentEntry.put("investmentType", types);
+            investmentEntry.put("marketValue", marketValue);
+            investmentEntry.put("percentage", percentage);
+            investmentMap.add(investmentEntry);
+        }
+
+        return investmentMap;
+    }
 
     @Override
     public Double getTodayNetWorth() {
         Double netWorth = 0.0;
-        List<String> typeLst = Arrays.asList("Stock", "Etf", "Bond", "Future");
+
         for (int i = 0; i < 4; i++) {
-            String types = typeLst.get(i);
+            String types = INVESTMENTS.get(i);
             updateInvestmentRepo();
             Collection<Investment> investments = investmentsRepos.get(types).findAll();
             for (Investment investment : investments) {
@@ -164,7 +190,6 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
 //
 //        return 200;
 //    }
-
 
 
     @Override

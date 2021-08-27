@@ -90,7 +90,7 @@ public class UserAccountManagerServiceImpl implements UserAccountManagerService 
                 }
                 break;
         }
-        System.out.println(accountActivities);
+
         return accountActivities;
 
     }

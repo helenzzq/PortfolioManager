@@ -8,7 +8,7 @@ import java.util.*;
 public interface PortfolioManagerService {
 
 
-
+    List<HashMap<String,Object>> getInvestmentPercentage(Integer userId);
 
     //It should be called everytime when updatingMarketPrice and at the time
     Double getTodayNetWorth();
