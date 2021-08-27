@@ -149,7 +149,7 @@ public class UserAccountManagerServiceImpl implements UserAccountManagerService 
     @Override
     public List<HashMap<String, Object>> getTodayAccountBalance(Integer userId) {
         User user = userRepository.getById(1);
-        ExchangeRateDownloader ex = new ExchangeRateDownloader("CAD/USD");
+        ExchangeRateDownloader ex = new ExchangeRateDownloader("USD/CAD");
         try {
             ex.retrieveData();
         } catch (IOException e) {
