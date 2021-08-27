@@ -10,6 +10,7 @@ export class DashboardComponent implements OnInit {
 
   getStr = "portfolio-manager/net-worth/today"
   netWorthToday = 0
+  todaysDate = new Date();
 
   constructor(private databaseService:DatabaseService) { }
 

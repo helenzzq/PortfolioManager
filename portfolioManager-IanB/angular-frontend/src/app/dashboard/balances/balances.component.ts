@@ -21,7 +21,6 @@ export interface investmentTypeTableRow {
 })
 
 export class BalancesComponent implements OnInit {
-  today = new Date();
 
   // data from database
   usersName: string = '';
