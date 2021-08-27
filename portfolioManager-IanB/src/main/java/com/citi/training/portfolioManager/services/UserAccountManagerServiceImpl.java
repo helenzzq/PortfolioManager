@@ -155,7 +155,7 @@ public class UserAccountManagerServiceImpl implements UserAccountManagerService 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Double rate = ex.getExchangeRate();
+        Double rate = 1.27;
         AccountActivity ac = user.getTodayAccountActivity();
         List<HashMap<String, Object>> balances = new ArrayList<>();
         HashMap<String, Object> balanceEntry = new HashMap<>();

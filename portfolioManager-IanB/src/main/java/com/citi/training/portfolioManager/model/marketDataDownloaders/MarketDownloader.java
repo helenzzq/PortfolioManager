@@ -32,12 +32,13 @@ public abstract class MarketDownloader {
 
     Double downloadTimeSeriesFromTwelveData(String interval) throws IOException {
         this.host = "https://api.twelvedata.com/time_series";
-        String apiKey = "aadf3ea56e98461492e8c3fba24b7830";
+//        String apiKey = "5e0210e890b64501b5fadda2756fc2c0";
+        String apiKey = "wrongAPIKEY";
         URL url = new URL(host + "?symbol=" + symbol + "&interval=" + interval + "&apikey=" + apiKey);
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
             data = reader.readLine();
-
+            System.out.println(data);
             JsonArray arr = JsonParser.parseString(data)
                     .getAsJsonObject().get("values").getAsJsonArray();
             return arr.get(0).getAsJsonObject().get("open").getAsDouble();

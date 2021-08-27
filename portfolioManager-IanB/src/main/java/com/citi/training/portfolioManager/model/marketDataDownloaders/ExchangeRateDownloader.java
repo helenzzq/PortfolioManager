@@ -16,7 +16,9 @@ public class ExchangeRateDownloader extends MarketDownloader{
     @Override
     public void retrieveData() throws IOException {
         this.host = "https://api.twelvedata.com/exchange_rate";
-        String apiKey = "5e0210e890b64501b5fadda2756fc2c0";
+
+        String apiKey = "wrongApi";
+//        String apiKey = "5e0210e890b64501b5fadda2756fc2c0";
         URL url = new URL(host + "?symbol=" + symbol + "&apikey=" + apiKey);
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
