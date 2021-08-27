@@ -2,15 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { DatabaseService } from 'src/app/database/database.service';
 
-// Advanced Pie chart
-// export var singleAdvanced = [
-//   { name: 'Cash', value: 22 },
-//   { name: 'Stocks', value: 33 },
-//   { name: 'Bonds', value: 44 },
-//   { name: 'Futures', value: 55 },
-//   { name: 'ETFs', value: 66 },
-// ];
-
 @Component({
   selector: 'app-advanced-pie-chart',
   templateUrl: './advanced-pie-chart.component.html',

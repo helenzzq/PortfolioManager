@@ -218,7 +218,6 @@ export class ActivityComponent implements OnInit {
   }
 
   onSelectTimeFrame(selectedTimeFrame: any) {
-    console.log('selected: ' + selectedTimeFrame);
     switch (selectedTimeFrame) {
       case 'lastWeek':
         this.multi = this.lastWeekGraphData;
