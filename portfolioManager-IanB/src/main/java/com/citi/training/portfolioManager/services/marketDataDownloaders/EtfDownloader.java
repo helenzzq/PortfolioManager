@@ -1,4 +1,4 @@
-package com.citi.training.portfolioManager.services.marketData;
+package com.citi.training.portfolioManager.services.marketDataDownloaders;
 
 
 import java.io.IOException;

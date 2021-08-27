@@ -4,7 +4,7 @@ import com.citi.training.portfolioManager.entities.AccountActivity;
 import com.citi.training.portfolioManager.entities.User;
 import com.citi.training.portfolioManager.repo.AccountRepository;
 import com.citi.training.portfolioManager.repo.UserRepository;
-import com.citi.training.portfolioManager.services.marketData.ExchangeRateDownloader;
+import com.citi.training.portfolioManager.services.marketDataDownloaders.ExchangeRateDownloader;
 import com.citi.training.portfolioManager.strategy.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

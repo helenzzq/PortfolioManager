@@ -1,15 +1,20 @@
-package com.citi.training.portfolioManager.entities;
+package com.citi.training.portfolioManager.entities.investments;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
-// add an annotations specifying the table that this will map to
+/**
+ * An Entity Class that is mapped to the "future" table in database
+ *
+ * */
 @Entity
-@Table(name="stock")
-public class Stock implements Serializable,Investment  {
+@Table(name="future")
+public class Future implements Serializable,Investment {
     @Id
     @Column(name="ticker") private String ticker;
-
     @Column(name="currency")  private String currency;
     @Column(name="quantity")  private Double quantity;
     @Column(name="costPerShare")  private Double costPerShare;
@@ -19,7 +24,7 @@ public class Stock implements Serializable,Investment  {
     @Column(name="percentRetained")  private Double percentRetained;
     @Column(name="percentPort")  private Double percentInPort;
     @Column(name="portfolioId")  private Integer portfolioId;
-    public Stock(String ticker,Double quantity,Double buyInPrice, Double marketPrice){
+    public Future(String ticker, Double quantity, Double buyInPrice, Double marketPrice){
         this.ticker = ticker;
         this.marketPrice = marketPrice;
         this.quantity = quantity;
@@ -30,7 +35,7 @@ public class Stock implements Serializable,Investment  {
         this.percentInPort = 0.0;
     }
 
-    public Stock() {
+    public Future() {
 
     }
     @Override
@@ -40,10 +45,12 @@ public class Stock implements Serializable,Investment  {
         this.costPerShare = price;
         this.marketPrice = marketPrice;
         this.profitNLoss = marketPrice-price;
-        this.percentRetained= profitNLoss/(quantity*costPerShare);
+        this.percentRetained= marketPrice/costPerShare;
 
     }
-
+    /**
+     * Getter And Setter For attributes
+     * */
     public String getTicker() {
         return ticker;
     }

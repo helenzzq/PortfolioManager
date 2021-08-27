@@ -1,8 +1,6 @@
-package com.citi.training.portfolioManager.services.marketData;
+package com.citi.training.portfolioManager.services.marketDataDownloaders;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
 import java.io.BufferedReader;
 import java.io.IOException;

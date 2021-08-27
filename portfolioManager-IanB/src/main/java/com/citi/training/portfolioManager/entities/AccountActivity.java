@@ -8,7 +8,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 
-// add an annotations specifying the table that this will map to
+/**
+ * An Entity Class that is mapped to the "account_activity" table database
+* */
 @Entity
 @Table(name = "account_activity")
 public class AccountActivity implements Serializable {
@@ -38,6 +40,9 @@ public class AccountActivity implements Serializable {
     public AccountActivity() {
     }
 
+    /**
+     * Getter And Setter For attributes
+     * */
     public Date getDate() {
         return date;
     }

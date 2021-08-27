@@ -1,4 +1,4 @@
-package com.citi.training.portfolioManager.entities;
+package com.citi.training.portfolioManager.entities.investments;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,7 +6,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-// add an annotations specifying the table that this will map to
+/**
+ * An Entity Class that is mapped to the "bond" table in database
+ * */
 @Entity
 @Table(name="bond")
 public class Bond implements Serializable,Investment {
@@ -47,6 +49,9 @@ public class Bond implements Serializable,Investment {
         this.percentRetained= profitNLoss/(quantity*costPerShare);
 
     }
+    /**
+     * Getter And Setter For attributes
+     * */
     public String getTicker() {
         return ticker;
     }

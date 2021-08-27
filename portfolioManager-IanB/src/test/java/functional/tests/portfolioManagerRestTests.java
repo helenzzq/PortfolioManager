@@ -1,9 +1,9 @@
 package functional.tests;
 
-import com.citi.training.portfolioManager.entities.Bond;
-import com.citi.training.portfolioManager.entities.Etf;
-import com.citi.training.portfolioManager.entities.Investment;
-import com.citi.training.portfolioManager.entities.Stock;
+import com.citi.training.portfolioManager.entities.investments.Bond;
+import com.citi.training.portfolioManager.entities.investments.Etf;
+import com.citi.training.portfolioManager.entities.investments.Investment;
+import com.citi.training.portfolioManager.entities.investments.Stock;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
@@ -20,8 +20,8 @@ public class portfolioManagerRestTests {
     private RestTemplate portfolioTestAgent = new RestTemplate();
     ArrayList<Stock> expectedStocks = new ArrayList<>();
 
-    @BeforeAll
-    public void setUpSampleStock() {
+
+    void setUpSampleStock() {
         Stock biliStock = new Stock("BILI",100.0,80.0,78.0);
         Stock gmeStock = new Stock("GME",10.0,180.0,210.29);
         expectedStocks.add(biliStock);
@@ -31,7 +31,7 @@ public class portfolioManagerRestTests {
 
     @Test
     public void testGetAllStocks() throws IOException {
-        Collection<Stock> output = portfolioTestAgent.getForObject("http://localhost:8080/portfoliomanager/stocks", Collection.class);
+        Collection<Stock> output = portfolioTestAgent.getForObject("http://localhost:8080/portfolio-manager/stocks", Collection.class);
         List<Stock> stocks = CollectionCast.toObjectList(output,Stock.class);
         assert stocks != null;
         setUpSampleStock();

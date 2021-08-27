@@ -1,27 +1,39 @@
-package com.citi.training.portfolioManager.entities;
+package com.citi.training.portfolioManager.entities.investments;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
-// add an annotations specifying the table that this will map to
+/**
+ * An Entity Class that is mapped to the "Stock" table in database
+ *
+ * */
 @Entity
-@Table(name="future")
-public class Future implements Serializable,Investment {
+@Table(name = "stock")
+public class Stock implements Serializable, Investment {
     @Id
-    @Column(name="ticker") private String ticker;
-    @Column(name="currency")  private String currency;
-    @Column(name="quantity")  private Double quantity;
-    @Column(name="costPerShare")  private Double costPerShare;
-    @Column(name="marketPrice")  private Double marketPrice;
-    @Column(name="marketValue")  private Double marketValue;
-    @Column(name="profitAndLoss")  private Double profitNLoss;
-    @Column(name="percentRetained")  private Double percentRetained;
-    @Column(name="percentPort")  private Double percentInPort;
-    @Column(name="portfolioId")  private Integer portfolioId;
-    public Future(String ticker, Double quantity, Double buyInPrice, Double marketPrice){
+    @Column(name = "ticker")
+    private String ticker;
+
+    @Column(name = "currency")
+    private String currency;
+    @Column(name = "quantity")
+    private Double quantity;
+    @Column(name = "costPerShare")
+    private Double costPerShare;
+    @Column(name = "marketPrice")
+    private Double marketPrice;
+    @Column(name = "marketValue")
+    private Double marketValue;
+    @Column(name = "profitAndLoss")
+    private Double profitNLoss;
+    @Column(name = "percentRetained")
+    private Double percentRetained;
+    @Column(name = "percentPort")
+    private Double percentInPort;
+    @Column(name = "portfolioId")
+    private Integer portfolioId;
+
+    public Stock(String ticker, Double quantity, Double buyInPrice, Double marketPrice) {
         this.ticker = ticker;
         this.marketPrice = marketPrice;
         this.quantity = quantity;
@@ -32,19 +44,23 @@ public class Future implements Serializable,Investment {
         this.percentInPort = 0.0;
     }
 
-    public Future() {
+    public Stock() {
 
     }
-    @Override
-    public void updateInvestment(Double quantity, Double price, Double marketPrice){
 
+    @Override
+    public void updateInvestment(Double quantity, Double price, Double marketPrice) {
         this.quantity = quantity;
         this.costPerShare = price;
         this.marketPrice = marketPrice;
-        this.profitNLoss = marketPrice-price;
-        this.percentRetained= marketPrice/costPerShare;
+        this.profitNLoss = marketPrice - price;
+        this.percentRetained = profitNLoss / (quantity * costPerShare);
 
     }
+
+    /**
+     * Getter And Setter For attributes
+     */
     public String getTicker() {
         return ticker;
     }

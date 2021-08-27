@@ -1,10 +1,13 @@
-package com.citi.training.portfolioManager.entities;
+package com.citi.training.portfolioManager.entities.investments;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+/**
+ * An Entity Class that represents an investment
+ *
+ * */
 @Entity
-
 public interface Investment {
     void updateInvestment(Double quantity, Double price, Double marketPrice);
 

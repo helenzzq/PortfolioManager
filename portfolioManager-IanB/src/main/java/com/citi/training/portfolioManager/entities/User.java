@@ -1,11 +1,16 @@
 package com.citi.training.portfolioManager.entities;
 
+import com.citi.training.portfolioManager.entities.investments.*;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * An Entity Class that is mapped to the "user" table in database
+ */
 @Entity
 @Table(name = "user")
 
@@ -15,13 +20,12 @@ public class User implements Serializable {
     @Column(name = "id")
     private int id;
 
-    // add attributes for all the remaining properties
     @Column(name = "name")
     private String name;
 
     @JoinColumn(name = "accountActivityId", referencedColumnName = "id")
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, targetEntity = AccountActivity.class)
-    private List<AccountActivity> accountActivity =new ArrayList<>();
+    private List<AccountActivity> accountActivity = new ArrayList<>();
 
 
     @JoinColumn(name = "portfolioId", referencedColumnName = "id")
@@ -42,6 +46,17 @@ public class User implements Serializable {
     @Transient
     private HashMap<String, List<Investment>> investment = new HashMap<>();
 
+    //Constructor
+    public User(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public User() {
+
+
+    }
+
     public HashMap<String, List<Investment>> getInvestment() {
         investment.put("Stock", stocks);
         investment.put("Bond", bonds);
@@ -50,6 +65,18 @@ public class User implements Serializable {
 
         return investment;
     }
+
+    public AccountActivity getTodayAccountActivity() {
+        if (accountActivity.size() != 0) {
+            return accountActivity.get(accountActivity.size() - 1);
+        }
+        return null;
+    }
+
+
+    /**
+     * Getter And Setter For attributes
+     */
     public List<Investment> getStocks() {
         return stocks;
     }
@@ -64,24 +91,6 @@ public class User implements Serializable {
 
     public List<Investment> getFuture() {
         return future;
-    }
-
-    //Constructor
-    public User(Integer id, String name) {
-        this.id=id;
-        this.name = name;
-    }
-
-    public User() {
-
-
-    }
-
-    public AccountActivity getTodayAccountActivity() {
-        if (accountActivity.size() != 0) {
-            return accountActivity.get(accountActivity.size() - 1);
-        }
-        return null;
     }
 
 

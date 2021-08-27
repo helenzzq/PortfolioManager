@@ -1,8 +1,8 @@
 package com.citi.training.portfolioManager.rest;
 
-import com.citi.training.portfolioManager.entities.Bond;
-import com.citi.training.portfolioManager.entities.Etf;
-import com.citi.training.portfolioManager.entities.Stock;
+import com.citi.training.portfolioManager.entities.investments.Bond;
+import com.citi.training.portfolioManager.entities.investments.Etf;
+import com.citi.training.portfolioManager.entities.investments.Stock;
 
 import com.citi.training.portfolioManager.services.MarketUpdaterServices;
 import com.citi.training.portfolioManager.services.PortfolioManagerService;

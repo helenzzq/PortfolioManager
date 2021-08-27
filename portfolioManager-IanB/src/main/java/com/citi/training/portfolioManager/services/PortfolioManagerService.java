@@ -1,35 +1,31 @@
 package com.citi.training.portfolioManager.services;
 
-import com.citi.training.portfolioManager.entities.*;
-import com.mashape.unirest.http.exceptions.UnirestException;
+import com.citi.training.portfolioManager.entities.investments.*;
 
 import java.util.*;
 
 public interface PortfolioManagerService {
 
+    List<HashMap<String, Object>> getInvestmentPercentage(Integer userId);
 
-    List<HashMap<String,Object>> getInvestmentPercentage(Integer userId);
-
-    //It should be called everytime when updatingMarketPrice and at the time
     Double getTodayNetWorth();
 
-    void updateNetWorth(Integer id, Date date);
-
-    Double getCashAccountByDate(Date date);
-
-    Double getInvestmentValue(String type,String ticker);
+    Double getInvestmentValue(String type, String ticker);
 
     /* buy and sell investment return its current quantity after buying/selling
-    * returns null if failed */
-//    Double buyInvestment(String type, String ticker, Double quantity) throws UnirestException;
-//
-//    Integer sellInvestment(String type,String ticker, Double quantity) throws UnirestException;
+     * returns null if failed */
+    Double buyInvestment(String type, String ticker, Double quantity);
+
+    Integer sellInvestment(String type, String ticker, Double quantity);
 
     Collection<Stock> getStocks();
 
     Collection<Bond> getBonds();
+
     Collection<Etf> getEtf();
+
     Collection<Future> getFuture();
+
     HashMap<String, List<Investment>> getAllInvestment(Integer userId);
 
 

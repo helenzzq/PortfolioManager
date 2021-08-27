@@ -1,12 +1,15 @@
 package com.citi.training.portfolioManager.services;
 
-import com.citi.training.portfolioManager.services.marketData.*;
+import com.citi.training.portfolioManager.services.marketDataDownloaders.*;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ *
+ * */
 @Service
 public class MarketUpdaterServiceImpl implements MarketUpdaterServices {
 
@@ -21,7 +24,6 @@ public class MarketUpdaterServiceImpl implements MarketUpdaterServices {
     }
 
     public HashMap<Integer, String> getDailyLosers() {
-
         marketMovers.retrieveData();
         return marketMovers.getLosers();
     }

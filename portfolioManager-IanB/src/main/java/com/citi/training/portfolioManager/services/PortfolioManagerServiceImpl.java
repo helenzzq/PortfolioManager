@@ -1,6 +1,7 @@
 package com.citi.training.portfolioManager.services;
 
 import com.citi.training.portfolioManager.entities.*;
+import com.citi.training.portfolioManager.entities.investments.*;
 import com.citi.training.portfolioManager.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -102,15 +103,6 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     }
 
     @Override
-    public void updateNetWorth(Integer id, Date date) {
-    }
-
-    @Override
-    public Double getCashAccountByDate(Date date) {
-        return null;
-    }
-
-    @Override
     public Double getInvestmentValue(String type, String ticker) {
 
         return getInvestmentFromRepo(type, ticker).getMarketValue();
@@ -129,72 +121,6 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
         return investment;
 
     }
-//
-//    @Override
-//    public Double buyInvestment(String type, String ticker, Double quantity) {
-//        Double currentQuantity = 0.0;
-//        //Check if current investment exist
-//        Investment investment = getInvestmentFromRepo(type, ticker);
-//        //Step 1: Identify investment type
-//        //Case 1: Buy Stock
-//        Double price = marketUpdaterServices.getInvestmentPrice(type, ticker);
-//        String className = "com.citi.training.portfolioManager.entities." + type;
-//        Investment investment1 = null;
-//        try {
-//            investment1 = initInvestmentByName(type, ticker, quantity, price);
-//            //Store it into the corresponding repo
-//            investmentsRepos.get(type).save(Class.forName(className).cast(investment1));
-//
-//        } catch (ClassNotFoundException | NoSuchMethodException e) {
-//            e.printStackTrace();
-//        }
-//
-//        Date today = new Date();
-//        AccountActivity accountActivity = accountActivityRepo.getById(today);
-//
-//        // If no enough cash value:
-//        if (quantity * price > accountActivity.getCashValue()) return null;
-//
-//        // buy it successfully
-//        currentQuantity = investment.getQuantity();
-//        Double resultQuantity = currentQuantity + quantity;
-//        accountActivity.withdraw(quantity * price);
-//        investment.setQuantity(resultQuantity);
-//        return resultQuantity;
-//    }
-
-//    @Override
-//    public Integer sellInvestment(String type, String ticker, Double quantity) throws UnirestException {
-//        Double currentQuantity = 0.0;
-//        // check if this investment ticker exist
-//        Investment investment = getInvestmentFromRepo(type, ticker);
-//        if (investment == null) {
-//            return 404;
-//        } else {
-//            currentQuantity = investment.getQuantity();
-//            if (currentQuantity < quantity) return 406;
-//        }
-//
-//        AccountActivity accountActivity = accountActivityRepo.getById(new Date());
-//
-//
-//        Double price = marketUpdaterServices.getStockPrice(ticker);
-//        // If there is no that many investment to sell, return null.
-//        JpaRepository targetRepo = investmentsRepos.get(type);
-//
-//        // If selling all of the given investment, delete it from the table.
-//        if (currentQuantity.equals(quantity)) {
-//            targetRepo.deleteById(ticker);
-//        } else {
-//            // Sell at marketPrice
-//            Double resultQuantity = currentQuantity - quantity;
-//            targetRepo.save(investment);
-//            accountActivity.deposit(quantity * price);
-//        }
-//
-//        return 200;
-//    }
-
 
     @Override
     public Collection<Stock> getStocks() {
@@ -221,5 +147,71 @@ public class PortfolioManagerServiceImpl implements PortfolioManagerService {
     public HashMap<String, List<Investment>> getAllInvestment(Integer userId) {
         return userRepository.getById(1).getInvestment();
     }
+
+    @Override
+    public Double buyInvestment(String type, String ticker, Double quantity) {
+        Double currentQuantity = 0.0;
+        //Check if current investment exist
+        Investment investment = getInvestmentFromRepo(type, ticker);
+        //Step 1: Identify investment type
+        //Case 1: Buy Stock
+        Double price = 0.0;
+        String className = "com.citi.training.portfolioManager.entities." + type;
+        Investment investment1 = null;
+        try {
+            investment1 = initInvestmentByName(type, ticker, quantity, price);
+            //Store it into the corresponding repo
+            investmentsRepos.get(type).save(Class.forName(className).cast(investment1));
+
+        } catch (ClassNotFoundException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
+        Date today = new Date();
+        AccountActivity accountActivity = accountActivityRepo.getById(today);
+
+        // If no enough cash value:
+        if (quantity * price > accountActivity.getCashValue()) return null;
+
+        // buy it successfully
+        currentQuantity = investment.getQuantity();
+        Double resultQuantity = currentQuantity + quantity;
+        accountActivity.withdraw(quantity * price);
+        investment.setQuantity(resultQuantity);
+        return resultQuantity;
+    }
+
+    @Override
+    public Integer sellInvestment(String type, String ticker, Double quantity) {
+        Double currentQuantity = 0.0;
+        // check if this investment ticker exist
+        Investment investment = getInvestmentFromRepo(type, ticker);
+        if (investment == null) {
+            return 404;
+        } else {
+            currentQuantity = investment.getQuantity();
+            if (currentQuantity < quantity) return 406;
+        }
+
+        AccountActivity accountActivity = accountActivityRepo.getById(new Date());
+
+
+        Double price = 0.0;
+        // If there is no that many investment to sell, return null.
+        JpaRepository targetRepo = investmentsRepos.get(type);
+
+        // If selling all of the given investment, delete it from the table.
+        if (currentQuantity.equals(quantity)) {
+            targetRepo.deleteById(ticker);
+        } else {
+            // Sell at marketPrice
+            Double resultQuantity = currentQuantity - quantity;
+            targetRepo.save(investment);
+            accountActivity.deposit(quantity * price);
+        }
+
+        return 200;
+    }
+
 
 }
