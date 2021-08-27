@@ -33,10 +33,10 @@ export class AdvancedPieChartComponent implements OnInit {
       });
   }
 
-    // for adding a dollar sign to the front of the numbers
+    // for adding a currency value to the numbers
     // (I only got it to work for the biggest number, not the smaller ones)
     valueFormattingFn(value:any) {
-      return '$' + value;
+      return value + ' USD';
     }
 
 }

@@ -7,6 +7,7 @@ import { DatabaseService } from 'src/app/database/database.service';
   styleUrls: ['./activity.component.css']
 })
 export class ActivityComponent implements OnInit {
+  selectedOptionOnLineGraphDropdown?:string;
 
   // data mapped to work with line graph
   lastWeekGraphData: any = [{ name: 'Net Worth', series: [] },
@@ -67,6 +68,10 @@ export class ActivityComponent implements OnInit {
     this.databaseService.getApiData('user/account/total-equity/range=lastWeek')
       .subscribe((incomingData: any) => {
         this.mapLastWeekData(incomingData, 'Total Equity');
+        
+        // show 'lastWeek' data on line graph by default
+        this.selectedOptionOnLineGraphDropdown = 'lastWeek';
+        this.onSelectTimeFrame(this.selectedOptionOnLineGraphDropdown);
       });
 
 
