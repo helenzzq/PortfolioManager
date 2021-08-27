@@ -64,14 +64,14 @@ export class BalancesComponent implements OnInit {
         this.exchangeRate = incomingData
       });
 
-    // currency table
+    // Currency Table
     this.databaseService.getApiData('user/account/balance/userid=1')
       .subscribe((incomingData: any) => {
         let CURRENCY_TABLE_DATA: currencyTableRow[] = incomingData;
         this.currencyDataSource = CURRENCY_TABLE_DATA;
       });
 
-    // investment table
+    // Investment Table
     this.databaseService.getApiData('portfolio-manager/investments/portfolio-percentage/userId=1')
       .subscribe((incomingData: any) => {
         let INVESTMENT_TYPE_TABLE_DATA: investmentTypeTableRow[] = incomingData;
@@ -91,6 +91,18 @@ export class BalancesComponent implements OnInit {
         value: x.percentage,
       }
     })
+  }
+
+  // for making the data visible on the pie chart
+  labelFormattingFn(name:any) {
+    let self: any = this; // this "this" refers to the chart component
+    let data = self.series.filter((x:any) => x.name == name);
+
+    if(data.length > 0) {
+      return `${data[0].name}:${data[0].value}%`;
+    } else {
+      return name;
+    }
   }
 
 }

@@ -13,3 +13,9 @@ tr.mat-footer-row {
     font-size: 15px;
     color: black;
   }
+
+  /* editing the ngx pie chart */
+  /deep/ .pie-label /deep/
+{
+  font-size: 20px !important;
+}
