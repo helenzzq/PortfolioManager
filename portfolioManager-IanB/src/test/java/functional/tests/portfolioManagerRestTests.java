@@ -55,12 +55,12 @@ public class portfolioManagerRestTests {
     }
     @Test
     public void testGetAllFuture() {
-        Collection<Bond> output = portfolioTestAgent.getForObject("http://localhost:8080/portfoliomanager/future", Collection.class);
+        Collection<Bond> output = portfolioTestAgent.getForObject("http://localhost:8080/portfolio-manager/future", Collection.class);
         assertThat(output.isEmpty(),equalTo(true));
     }
     @Test
     public void testGetAllInvestment(){
-        HashMap<String,List<Investment>> investments = portfolioTestAgent.getForObject("http://localhost:8080/portfoliomanager/investments/userId=1", HashMap.class);
+        HashMap<String,List<Investment>> investments = portfolioTestAgent.getForObject("http://localhost:8080/portfolio-manager/investments/userId=1", HashMap.class);
         assertThat(investments.size(),equalTo(4));
         String[] types = {"ETF","Bond","Stock","Future"};
         assertThat(investments.keySet().containsAll(Arrays.asList(types)),equalTo(true));

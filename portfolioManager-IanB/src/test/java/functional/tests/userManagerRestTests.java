@@ -27,7 +27,7 @@ public class userManagerRestTests {
     @Test
     public void testGetAllAccountActivity(){
         Collection<AccountActivity> accounts = userTestAgent.getForObject("http://localhost:8080/user/account", Collection.class);
-        assertThat(accounts.size(),equalTo(10));
+        assertThat(accounts.size(),equalTo(27));
     }
     @Test
     public void testGetAccountActivityByRange() throws ParseException, IOException {
@@ -35,8 +35,8 @@ public class userManagerRestTests {
         List<AccountActivity> accountActivities = CollectionCast.toObjectList(accounts,AccountActivity.class);
         AccountActivity outputAccount =accountActivities.get(0);
         Date dates = new SimpleDateFormat("dd-MM-yyyy").parse("16-07-2021");
-        AccountActivity ac = new AccountActivity(dates,750.0,1000.0,9000.0,10750.0);
-        assertThat(accounts.size(),equalTo(1));
+        AccountActivity ac = new AccountActivity(dates,750.0,2600.0,7700.0,10300.0);
+        assertThat(accounts.size(),equalTo(10));
 
         assertThat(outputAccount.getCashValue(),equalTo(ac.getCashValue()));
         assertThat(outputAccount.getInvestmentValue(),equalTo(ac.getInvestmentValue()));
